@@ -1,0 +1,25 @@
+{
+  "name": "backbone-on-fire",
+  "version": "0.0.0",
+  "description": "Backbone plus everything else needed to write modern fat-client web applications",
+  "main": "backbone-on-fire.js",
+  "scripts": {
+    "test": "testem"
+  },
+  "keywords": [
+    "backbone"
+  ],
+  "author": "Dayton Nolan",
+  "license": "Apache 2.0",
+  "dependencies": {
+    "backbone": "^1.1.2"
+  },
+  "devDependencies": {
+    "chai": "^1.9.1",
+    "gulp": "^3.6.2",
+    "gulp-concat": "^2.2.0",
+    "gulp-uglify": "^0.3.0",
+    "mocha": "^1.18.2",
+    "sinon": "^1.9.1"
+  }
+}
