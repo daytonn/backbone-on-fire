@@ -23,6 +23,9 @@ describe("Controller", function() {
 
   describe("with options", function() {
     beforeEach(function() {
+      var ApplicationController = Backbone.Controller.extend("application", {
+        bar: "bar"
+      });
       var TestController = Backbone.Controller.extend("test", {
         foo: "foo"
       });

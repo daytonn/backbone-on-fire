@@ -52,7 +52,30 @@ describe("Application", function() {
     it("overrides the default objects", function() {
       ['Models', 'Collections', 'Views', 'Controllers'].forEach(function(obj) {
         expect(subject[obj]).to.equal(obj);
-      })
+      });
+    });
+  });
+
+  describe("createController", function() {
+    var controller;
+    beforeEach(function() {
+      controller = subject.createController("test");
+    });
+
+    it("creates a controller", function() {
+      expect(controller.constructor.name).to.equal("Controller");
+    });
+
+    it("assings the controller constrcutor to the Controllers namespace", function() {
+
+    });
+
+    it("assigns a controller instance to the application namespace", function() {
+      expect(subject.TestController).to.equal(controller);
+    });
+
+    it("sets the controller dispatcher to the application dispatcher", function() {
+      expect(controller.dispatcher).to.equal(subject.Dispatcher);
     });
   });
 });

@@ -5,9 +5,20 @@
 </head>
 <body>
   <h1>Hello</h1>
+  <a href="/#/foo">Foo</a>
   <script src="vendor/underscore/underscore.js"></script>
   <script src="vendor/jquery/dist/jquery.js"></script>
   <script src="vendor/backbone/backbone.js"></script>
   <script src="vendor/backbone-on-fire/backbone-on-fire.js"></script>
+  <script>
+    var App = Backbone.Application.create();
+    App.Router.route('/*', function() {
+      alert("route");
+    });
+    App.Router.route('foo', function() {
+      alert("foo");
+    });
+    Backbone.history.start({ pushState: false });
+  </script>
 </body>
 </html>
