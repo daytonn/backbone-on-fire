@@ -8,6 +8,8 @@ Development
 
 Install dependencies
 ```sh
+npm install -g gulp
+npm install -g karma
 npm install
 ```
 
