@@ -66,8 +66,8 @@ describe("Application", function() {
       expect(controller.constructor.name).to.equal("Controller");
     });
 
-    it("assings the controller constrcutor to the Controllers namespace", function() {
-
+    it("assings the controller constructor to the Controllers namespace", function() {
+      expect(subject.Controllers.Test).to.be.defined;
     });
 
     it("assigns a controller instance to the application namespace", function() {
@@ -76,6 +76,10 @@ describe("Application", function() {
 
     it("sets the controller dispatcher to the application dispatcher", function() {
       expect(controller.dispatcher).to.equal(subject.Dispatcher);
+    });
+
+    it("sets the controller router to the application router", function() {
+      expect(controller.router).to.equal(subject.Router);
     });
   });
 });

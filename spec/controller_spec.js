@@ -84,27 +84,79 @@ describe("Controller", function() {
     });
   });
 
-  describe("actions", function() {
-    var dispatcher;
+  describe("routes", function() {
+    var router;
     beforeEach(function() {
-      dispatcher = _.clone(Backbone.Events);
-      sinon.spy(dispatcher, "on");
-      sinon.spy(dispatcher, "off");
+      router = {
+        route: sinon.spy()
+      };
       var TestController = Backbone.Controller.extend("test", {
-        actions: ['edit'],
+        router: router,
+        routes: ['new', 'show/:id', 'edit/:id', '/beginning', 'ending/', '/both/'],
+        index: sinon.spy(),
+        new: sinon.spy(),
+        show: sinon.spy(),
         edit: sinon.spy(),
-        dispatcher: dispatcher
+        beginning: sinon.spy(),
+        ending: sinon.spy(),
+        both: sinon.spy()
       });
       subject = new TestController;
     });
 
-    it("creates dummy action methods if none are defined", function() {
-      expect(subject.edit).to.be.a.function;
+    it("registers the index route by default", function() {
+      expect(router.route).to.have.been.calledWith('test', subject.index);
     });
 
-    it("registers events for given actions", function() {
-      dispatcher.trigger("controller:test:edit");
-      expect(subject.edit).to.have.been.called;
+    it("registers the routes", function() {
+      expect(router.route).to.have.been.calledWith('test/new', subject.new);
+      expect(router.route).to.have.been.calledWith('test/show/:id', subject.show);
+      expect(router.route).to.have.been.calledWith('test/edit/:id', subject.edit);
+    });
+
+    it("fixes routes with beginning slashes", function() {
+      expect(router.route).to.have.been.calledWith('test/beginning', subject.beginning);
+    });
+
+    it("fixes routes with ending slashes", function() {
+      expect(router.route).to.have.been.calledWith('test/ending', subject.ending);
+    });
+
+    it("fixes routes with beginning and ending slashes", function() {
+      expect(router.route).to.have.been.calledWith('test/both', subject.both);
+    });
+
+    describe("without a router", function() {
+      var TestController;
+      beforeEach(function() {
+        TestController = Backbone.Controller.extend("test", {
+          routes: ['index']
+        });
+      });
+
+      it("throws an error if it has routes and no router", function() {
+        expect(function() {
+          new TestController;
+        }).to.throw("TestController: router is undefined");
+      });
+    });
+
+    describe("without an action", function() {
+      var TestController;
+      beforeEach(function() {
+        TestController = Backbone.Controller.extend("test", {
+          router: {
+            route: sinon.spy()
+          },
+          routes: ['index']
+        });
+      });
+
+      it("throws an error if a route has no action", function() {
+        expect(function() {
+          new TestController;
+        }).to.throw("TestController: has no action matching route 'index'");
+      });
     });
   });
 });
