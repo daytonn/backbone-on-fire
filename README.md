@@ -23,6 +23,12 @@ Run the specs
 karma start karma.config
 ```
 
+Install Example dependencies
+```sh
+cd example
+bower install
+```
+
 Run the example site
 ```sh
 node server.js
