@@ -39,6 +39,6 @@
     "node-inspector": "^0.7.3",
     "sinon": "^1.9.1",
     "underscore": "^1.6.0",
-    "underwear": "^2.0.4"
+    "underwear": "^2.0.5"
   }
 }

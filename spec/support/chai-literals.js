@@ -33,7 +33,7 @@ chai.use(function(_chai, utils) {
 
   utils.addProperty(_chai.Assertion.prototype, 'false', function () {
     this.assert(
-      this._obj === true,
+      this._obj === false,
       'expected #{this} to be false',
       'expected #{this} to be true'
     );

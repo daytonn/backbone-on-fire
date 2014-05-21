@@ -2,3 +2,4 @@ node_modules
 dist
 /example/vendor
 coverage
+.DS_Store
