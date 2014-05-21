@@ -10,6 +10,7 @@ gulp.task('compile-app', function() {
     'node_modules/underwear/dist/string.js',
     'node_modules/underwear/dist/array.js',
     'node_modules/underwear/dist/utilities.js',
+    'lib/namespace.js',
     'lib/route_creator.js',
     'lib/controller.js',
     'lib/application.js'

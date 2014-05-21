@@ -1,7 +1,7 @@
 describe("Application", function() {
   var subject;
   beforeEach(function() {
-    subject = Backbone.Application.create();
+    subject = Backbone.OnFire.Application.create();
   });
 
   it("has an initialize method", function() {
@@ -32,11 +32,15 @@ describe("Application", function() {
     expect(subject.Router).to.be.defined;
   });
 
+  it("has an 'abstract' ApplicationController", function() {
+    expect(subject.Controllers.Application).to.be.defined;
+  });
+
   describe("with options", function() {
     var customDispatcher;
     beforeEach(function() {
       customDispatcher = "CustomDispatcher";
-      subject = Backbone.Application.create({
+      subject = Backbone.OnFire.Application.create({
         Dispatcher: customDispatcher,
         Models: 'Models',
         Collections: 'Collections',
@@ -59,7 +63,12 @@ describe("Application", function() {
   describe("createController", function() {
     var controller;
     beforeEach(function() {
-      controller = subject.createController("test");
+      subject.createController("ApplicationController", {
+        initialize: function() {
+          this.extendsApplicationController = true;
+        }
+      });
+      controller = subject.createController("TestController");
     });
 
     it("creates a controller", function() {
@@ -80,6 +89,17 @@ describe("Application", function() {
 
     it("sets the controller router to the application router", function() {
       expect(controller.router).to.equal(subject.Router);
+    });
+
+    it("extends the application controller", function() {
+      expect(controller.extendsApplicationController).to.be.true;
+    });
+
+    describe("ApplicationController", function() {
+      it("does not instantiate the application controller", function() {
+        subject.createController("ApplicationController");
+        expect(subject.ApplicationController).to.be.undefined;
+      });
     });
   });
 });

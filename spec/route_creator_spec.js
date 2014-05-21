@@ -15,7 +15,7 @@ describe("RouteCreator", function() {
       ending: sinon.spy(),
       both: sinon.spy()
     };
-    subject = new Backbone.RouteCreator(controller);
+    subject = new Backbone.OnFire.RouteCreator(controller);
   });
 
   it("has a reference to the controller", function() {
@@ -203,6 +203,7 @@ describe("RouteCreator", function() {
 
   describe("createRoutes", function() {
     beforeEach(function() {
+      _.bindAll = sinon.spy();
       controller = {
         name: "TestController",
         routes: ['edit/:id', '/beginning', 'ending/', '/both/'],
@@ -213,7 +214,7 @@ describe("RouteCreator", function() {
         ending: sinon.spy(),
         both: sinon.spy()
       };
-      subject = new Backbone.RouteCreator(controller);
+      subject = new Backbone.OnFire.RouteCreator(controller);
       subject.createRoutes();
     });
 
@@ -223,6 +224,14 @@ describe("RouteCreator", function() {
       expect(router.route).to.have.been.calledWith("test/beginning", controller.beginning);
       expect(router.route).to.have.been.calledWith("test/ending", controller.ending);
       expect(router.route).to.have.been.calledWith("test/both", controller.both);
+    });
+
+    it("binds the route actions to the controller", function() {
+      expect(_.bindAll).to.have.been.calledWith(controller, "index");
+      expect(_.bindAll).to.have.been.calledWith(controller, "edit");
+      expect(_.bindAll).to.have.been.calledWith(controller, "beginning");
+      expect(_.bindAll).to.have.been.calledWith(controller, "ending");
+      expect(_.bindAll).to.have.been.calledWith(controller, "both");
     });
   });
 });

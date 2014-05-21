@@ -1,16 +1,16 @@
 describe("Controller", function() {
   var subject;
   beforeEach(function() {
-    var TestController = Backbone.Controller.extend("Test");
+    var TestController = Backbone.OnFire.Controller.extend("Test");
     subject = new TestController;
   });
 
   it("requires a name", function() {
-    expect(Backbone.Controller.extend).to.throw("Backbone.Controller.extend(name, options): name is undefined");
+    expect(Backbone.OnFire.Controller.extend).to.throw("Backbone.OnFire.Controller.extend(name, options): name is undefined");
   });
 
   it("expects name to be a string", function() {
-    expect(function() { Backbone.Controller.extend({}); }).to.throw("Backbone.Controller.extend(name, options): name is expected to be a string got [object Object]");
+    expect(function() { Backbone.OnFire.Controller.extend({}); }).to.throw("Backbone.OnFire.Controller.extend(name, options): name is expected to be a string got [object Object]");
   });
 
   it("sets the name on the instance", function() {
@@ -23,10 +23,10 @@ describe("Controller", function() {
 
   describe("with options", function() {
     beforeEach(function() {
-      var ApplicationController = Backbone.Controller.extend("application", {
+      var ApplicationController = Backbone.OnFire.Controller.extend("application", {
         bar: "bar"
       });
-      var TestController = Backbone.Controller.extend("test", {
+      var TestController = Backbone.OnFire.Controller.extend("test", {
         foo: "foo"
       });
       subject = new TestController;
@@ -39,7 +39,7 @@ describe("Controller", function() {
 
   describe("initialize", function() {
     it("calls initialize when instantiated", function() {
-      var TestController = Backbone.Controller.extend("test", {
+      var TestController = Backbone.OnFire.Controller.extend("test", {
         initialize: function() {
           this.initialized = true;
         }
@@ -57,7 +57,7 @@ describe("Controller", function() {
       dispatcher = _.clone(Backbone.Events);
       sinon.spy(dispatcher, "on");
       sinon.spy(dispatcher, "off");
-      var TestController = Backbone.Controller.extend("test", {
+      var TestController = Backbone.OnFire.Controller.extend("test", {
         dispatcher: dispatcher
       });
       subject = new TestController;
@@ -73,7 +73,7 @@ describe("Controller", function() {
     });
 
     it("it throws an error if there is no dispatcher", function() {
-      var TestController = Backbone.Controller.extend("test");
+      var TestController = Backbone.OnFire.Controller.extend("test");
       subject = new TestController;
       expect(function() {
         subject.on("test", handler, subject);

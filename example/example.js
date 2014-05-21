@@ -1,21 +1,29 @@
-var App = Backbone.Application.create();
+var App = Backbone.OnFire.Application.create();
+
+App.createController("ApplicationController", {
+  initialize: function() {
+    $("body").append('<ul id="' + this.name.toLowerCase() + '-messages"/>');
+  },
+
+  logAction: function() {
+    var message = [].slice.call(arguments, 0).join(" ");
+    $("#" + this.name.toLowerCase() + "-messages").append("<li>" + message + "</li>");
+  }
+});
 
 App.createController("TestController", {
   routes: ['edit/:id', 'show/:id'],
 
   index: function() {
-    console.log("index action");
-    alert("index action");
+    this.logAction("index action");
   },
 
   edit: function(id) {
-    console.log("edit action", id);
-    alert("edit action: " + id);
+    this.logAction("edit action", id);
   },
 
   show: function(id) {
-    console.log("show action", id);
-    alert("show action: " + id);
+    this.logAction("show action", id);
   }
 });
 App.start();
