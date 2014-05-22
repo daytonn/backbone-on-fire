@@ -234,4 +234,81 @@ describe("RouteCreator", function() {
       expect(_.bindAll).to.have.been.calledWith(controller, "both");
     });
   });
+
+  describe("isIndexController", function() {
+    it("determines if the controller is the index controller", function() {
+      controller.name = "IndexController";
+      expect(subject.isIndexController()).to.be.true;
+      controller.name = "Indexcontroller";
+      expect(subject.isIndexController()).to.be.true;
+      controller.name = "indexController";
+      expect(subject.isIndexController()).to.be.true;
+      controller.name = "indexcontroller";
+      expect(subject.isIndexController()).to.be.true;
+      controller.name = "Index";
+      expect(subject.isIndexController()).to.be.true;
+      controller.name = "index";
+      expect(subject.isIndexController()).to.be.true;
+
+      controller.name = "ControllerIndex";
+      expect(subject.isIndexController()).to.be.false;
+      controller.name = "IndexFoo";
+      expect(subject.isIndexController()).to.be.false;
+    });
+  });
+
+  describe("IndexController", function() {
+    beforeEach(function() {
+      controller = {
+        name: "IndexController",
+        router: router,
+        index: sinon.spy()
+      };
+      subject = new Backbone.OnFire.RouteCreator(controller);
+    });
+
+    it("doesn't create a rootSegment", function() {
+      expect(subject.rootSegment).to.be.undefined;
+    });
+
+    it("doesn't create a routeActions map", function() {
+      expect(subject.routeActions).to.be.undefined;
+    });
+
+    it("creates a root route with the index action", function() {
+      expect(router.route).to.have.been.calledWith("", controller.index);
+    });
+
+    it("binds index to the controller", function() {
+      expect(_.bindAll).to.have.been.calledWith(controller, "index");
+    });
+
+    describe("createIndexRoutes", function() {
+      beforeEach(function() {
+        controller = {
+          name: "IndexController",
+          router: router,
+          index: sinon.spy()
+        };
+        _.bindAll = sinon.spy();
+        subject = new Backbone.OnFire.RouteCreator(controller);
+        subject.createIndexRoutes();
+      });
+
+      it("throws an error if no index action is defined", function() {
+        controller.index = undefined;
+        expect(function() {
+          subject.createIndexRoutes();
+        }).to.throw(controller.name + ": index action is undefined");
+      });
+
+      it("creates a root route with the index action", function() {
+        expect(router.route).to.have.been.calledWith("", controller.index);
+      });
+
+      it("binds index to the controller", function() {
+        expect(_.bindAll).to.have.been.calledWith(controller, "index");
+      });
+    });
+  });
 });

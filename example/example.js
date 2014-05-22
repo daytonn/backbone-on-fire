@@ -6,8 +6,14 @@ App.createController("ApplicationController", {
   },
 
   logAction: function() {
-    var message = [].slice.call(arguments, 0).join(" ");
+    var message = this.name + ": " + [].slice.call(arguments, 0).join(" ");
     $("#" + this.name.toLowerCase() + "-messages").append("<li>" + message + "</li>");
+  }
+});
+
+App.createController("IndexController", {
+  index: function(id) {
+    this.logAction("show action", id);
   }
 });
 
