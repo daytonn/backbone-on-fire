@@ -20,7 +20,11 @@ gulp
 
 Run the specs
 ```sh
-karma start karma.config
+./node_modules/karma/bin/karma start karma.conf.js
+```
+or if you have the `karma-cli` installed
+```sh
+karma start karma.conf.js
 ```
 (view mocha specs in the browser at [http://localhost:9876/debug.html](http://localhost:9876/debug.html))
 
