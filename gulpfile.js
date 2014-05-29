@@ -1,9 +1,11 @@
 var concat = require('gulp-concat');
+var docco = require('gulp-docco');
 var exec = require('child_process').exec;
 var gulp = require('gulp');
-var util = require('gulp-util');
 var rename = require('gulp-rename');
 var uglify = require('gulp-uglify');
+var util = require('gulp-util');
+var yuidoc = require("gulp-yuidoc");
 
 gulp.task('compile-app', function() {
   return gulp.src([
@@ -27,7 +29,13 @@ gulp.task('minify-app', ['compile-app'], function() {
     .pipe(gulp.dest('dist'));
 });
 
-gulp.task('build', ['minify-app']);
+gulp.task('src-docs', function() {
+  exec('yuidoc -t assets/friendly-theme -o source-documentation lib', function(err, stdout, stderr) {
+    console.log(stdout);
+  });
+});
+
+gulp.task('build', ['minify-app', 'src-docs']);
 
 gulp.task('watch', function() {
   gulp.watch(['lib/**/*'], ['build']);

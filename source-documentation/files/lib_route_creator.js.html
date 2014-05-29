@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>lib/route_creator.js</title>
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+    <script src="../assets/vendor/yui-min.js"></script>
+</head>
+<body>
+
+<div id="doc">
+    <header class="main-header">
+        <div class="content">
+            <div class="project-title">
+                
+                
+                
+            </div>
+            <ul class="jump-links">
+                <li><a href="#index" class="index-jump-link">index</a></li>
+                <li><a href="#top" class="top-jump-link">top</a></li>
+            </ul>
+        </div>
+    </header>
+    <div id="bd" class="main-body">
+
+        <div id="docs-sidebar" class="sidebar apidocs">
+            <div id="api-list">
+    <div id="api-tabview" class="tabview">
+        <ul class="tabs">
+            <li><a href="#api-classes">Classes</a></li>
+            <li><a href="#api-modules">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul id="api-classes" class="apis classes">
+            
+                <li><a class="type" href="../classes/Application.html">Application</a></li>
+            
+                <li><a class="type" href="../classes/Controller.html">Controller</a></li>
+            
+                <li><a class="type" href="../classes/RouteCreator.html">RouteCreator</a></li>
+            
+            </ul>
+
+            <ul id="api-modules" class="apis modules">
+            
+                <li><a class="module" href="../modules/Backbone.OnFire.html">Backbone.OnFire</a></li>
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+        </div>
+
+        <div id="docs-main" class="apidocs">
+            <div class="content container">
+                <h1 class="file-heading">File: lib/route_creator.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+/**
+ * Factory to create routes for a given controller.
+ *
+ * @class RouteCreator
+ * @constructor
+ * @param controller {Controller} Controller to generate route for
+ * @example
+ *     new Backbone.OnFire.RouteCreator(controller);
+ */
+Backbone.OnFire.RouteCreator = (function() {
+  function RouteCreator(controller) {
+    this.controller = controller;
+    if (this.isIndexController()) {
+      this.createIndexRoutes();
+    } else {
+      this.createRootSegment();
+      this.createRouteActions();
+      this.validateRoutes();
+      this.createRoutes();
+    }
+  }
+
+  _.extend(RouteCreator.prototype, {
+    /**
+     * Trim slashes from the beginning and ending of a string.
+     *
+     * @method trimSlashes
+     * @param string {String} String to trim.
+     * @return {String} Copy of string without beginning or ending slashes.
+     */
+    trimSlashes: function(string) {
+      return string.replace(/^\//, &#x27;&#x27;).replace(/\/$/, &#x27;&#x27;);
+    },
+
+    /**
+     * Get the first segment of a given path.
+     *
+     * @method firstSegment
+     * @param string {String} Path.
+     * @return {String} First segment of the path.
+     */
+    firstSegment: function(string) {
+      return this.trimSlashes(string).split(&quot;/&quot;).first();
+    },
+
+    /**
+     * Create an action/route mapping for the index action.
+     *
+     * @method createIndexRouteAction
+     */
+    createIndexRouteAction: function() {
+      if (this.hasIndexRoute()) {
+        var segments = this.getIndexRoute().split(&quot;/&quot;).rest().join(&quot;/&quot;);
+        var dynamicSegments = segments ? &quot;/&quot; + segments : &quot;&quot;;
+        this.routeActions[this.getIndexRoute()] = &quot;index&quot;;
+      } else {
+        if (isFunction(this.controller.index)) {
+          this.controller.routes.push(&quot;index&quot;);
+          this.routeActions[&quot;index&quot;] = &quot;index&quot;;
+        }
+      }
+    },
+
+    /**
+     * Create route mappings for all of the Controller&#x27;s routes.
+     *
+     * @method createRouteActions
+     */
+    createRouteActions: function() {
+      this.routeActions = {};
+      this.normalizeRoutes();
+      this.controller.routes.each(this.createRouteAction, this);
+      this.createIndexRouteAction();
+    },
+
+    /**
+     * Create route mappings for a given Controller&#x27;s routes.
+     *
+     * @method createRouteActions
+     * @param route {String} A given route to create a mapping for.
+     */
+    createRouteAction: function(route) {
+      var routeRoot = this.firstSegment(route);
+      if (routeRoot !== &quot;index&quot;) this.routeActions[route] = routeRoot;
+    },
+
+    /**
+     * Create a &#x60;rootSegment&#x60; based on the Controller name or the root.
+     * Given a Controller name of PostsController, the &#x60;rootSegement&#x60;
+     * would be set to &#x60;posts&#x60;. If a Controller defines a &#x60;root&#x60; property
+     * the &#x60;root&#x60; property will be used instead.
+     * @method createRouteActions
+     */
+    createRootSegment: function() {
+      this.rootSegment = this.controller.root ? this.controller.root : this.normalizedControllerName();
+    },
+
+    /**
+     * Create route mappings on the Controller&#x27;s router
+     * for all of the Controller&#x27;s routes.
+     *
+     * @method createRoutes
+     */
+    createRoutes: function() {
+      this.controller.routes.each(function(route) {
+        _.bindAll(this.controller, this.routeActions[route]);
+        var fullRoute = this.trimSlashes(this.rootSegment + &quot;/&quot; + route.replace(/^index\/?/, &#x27;&#x27;));
+        this.controller.router.route(fullRoute, this.controller[this.routeActions[route]]);
+      }, this);
+    },
+
+    /**
+     * @method normalizedControllerName
+     * @return {String} Controller name without the &quot;Controller&quot; suffix in lower case.
+     */
+    normalizedControllerName: function() {
+      return this.controller.name.replace(/(c|C)ontroller$/, &#x27;&#x27;).toLowerCase();
+    },
+
+    /**
+     * Determine if the Controller has an explicit index route.
+     *
+     * @method hasIndexRoute
+     * @return {Boolean} Whether or not the Controller defines an index route.
+     */
+    hasIndexRoute: function() {
+      return this.controller.routes.any(function(route) {
+        return !!route.match(/^\/?index/);
+      });
+    },
+
+    /**
+     * @method getIndexRoute
+     * @return {String} The explicitly defined index route.
+     */
+    getIndexRoute: function() {
+      return this.controller.routes.find(function(route) {
+        return !!route.match(/^\/?index/);
+      });
+    },
+
+    /**
+     * Remove beginning and trailing slashes on all defined routes.
+     *
+     * @method normalizeRoutes
+     */
+    normalizeRoutes: function() {
+      this.controller.routes.each(function(route, i) {
+        this.controller.routes.push(this.trimSlashes(route));
+        this.controller.routes[i] = undefined;
+      }, this);
+      this.controller.routes = this.controller.routes.compact();
+    },
+
+    /**
+     * Ensure all routes have corresponding actions defined on the Controller.
+     * @method validateRoutes
+     */
+    validateRoutes: function() {
+      if (this.controller.routes.isNotEmpty() &amp;&amp; !this.controller.router) {
+        throw new Error(this.controller.name + &quot;: router is undefined&quot;);
+      }
+      this.controller.routes.each(function(route) {
+        var firstSegment = this.firstSegment(route);
+        if (!this.controller[firstSegment]) {
+          throw new Error(this.controller.name + &quot;: has no action matching route &#x27;&quot; + firstSegment + &quot;&#x27;&quot;);
+        }
+      }, this);
+    },
+
+    /**
+     * Deterimine if this is the IndexController.
+     * @method isIndexController
+     * @return {Boolean} Whether or not this controller is the IndexController.
+     */
+    isIndexController: function() {
+      return !!this.controller.name.match(/^index(controller)?$/i);
+    },
+
+    /**
+     * Create default routes for the IndexController.
+     * @method createIndexRoutes
+     */
+    createIndexRoutes: function() {
+      if (!isFunction(this.controller.index)) throw new Error(this.controller.name + &quot;: index action is undefined&quot;);
+      _.bindAll(this.controller, &quot;index&quot;);
+      this.controller.router.route(&quot;&quot;, this.controller.index);
+    }
+  });
+
+  return RouteCreator;
+})();
+
+    </pre>
+</div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/vendor/jquery.min.js"></script>
+<script src="../assets/js/jquery-offscreen-trigger.js"></script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

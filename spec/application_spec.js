@@ -68,7 +68,9 @@ describe("Application", function() {
           this.extendsApplicationController = true;
         }
       });
-      controller = subject.createController("TestController");
+      controller = subject.createController("TestController", {
+        foo: "foo"
+      });
     });
 
     it("creates a controller", function() {
@@ -93,6 +95,10 @@ describe("Application", function() {
 
     it("extends the application controller", function() {
       expect(controller.extendsApplicationController).to.be.true;
+    });
+
+    it("doesn't pollute the ApplicationController", function() {
+      expect(subject.Controllers.Application.prototype.foo).to.be.undefined;
     });
 
     describe("ApplicationController", function() {
