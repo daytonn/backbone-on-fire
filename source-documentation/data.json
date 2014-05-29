@@ -1,0 +1,557 @@
+{
+    "project": {},
+    "files": {
+        "lib/application.js": {
+            "name": "lib/application.js",
+            "modules": {},
+            "classes": {
+                "Application": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "lib/controller.js": {
+            "name": "lib/controller.js",
+            "modules": {},
+            "classes": {
+                "Controller": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "lib/namespace.js": {
+            "name": "lib/namespace.js",
+            "modules": {
+                "Backbone.OnFire": 1
+            },
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "lib/route_creator.js": {
+            "name": "lib/route_creator.js",
+            "modules": {},
+            "classes": {
+                "RouteCreator": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        }
+    },
+    "modules": {
+        "Backbone.OnFire": {
+            "name": "Backbone.OnFire",
+            "submodules": {},
+            "classes": {
+                "Application": 1,
+                "Controller": 1,
+                "RouteCreator": 1
+            },
+            "fors": {},
+            "namespaces": {},
+            "tag": "module",
+            "file": "lib/route_creator.js",
+            "line": 1,
+            "description": "Public interface to Backbone On Fire global methods."
+        }
+    },
+    "classes": {
+        "Application": {
+            "name": "Application",
+            "shortname": "Application",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "Backbone.OnFire",
+            "file": "lib/application.js",
+            "line": 1,
+            "description": "The Application serves as a namespace as\nwell as providing the interface to define\nand interact with the Backbone On Fire application."
+        },
+        "Controller": {
+            "name": "Controller",
+            "shortname": "Controller",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "Backbone.OnFire",
+            "file": "lib/controller.js",
+            "line": 1,
+            "description": "A Controller manages routes and handles\nthe setup and coordination of views, models,\nand collections within a given root segment."
+        },
+        "RouteCreator": {
+            "name": "RouteCreator",
+            "shortname": "RouteCreator",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "Backbone.OnFire",
+            "namespace": "",
+            "file": "lib/route_creator.js",
+            "line": 1,
+            "description": "Factory to create routes for a given controller.",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "controller",
+                    "description": "Controller to generate route for",
+                    "type": "Controller"
+                }
+            ],
+            "example": [
+                "\n    new Backbone.OnFire.RouteCreator(controller);"
+            ]
+        }
+    },
+    "classitems": [
+        {
+            "file": "lib/application.js",
+            "line": 11,
+            "description": "Namespace to contain Model constructors.",
+            "itemtype": "property",
+            "name": "Models",
+            "type": "Object",
+            "default": "{}",
+            "class": "Application"
+        },
+        {
+            "file": "lib/application.js",
+            "line": 19,
+            "description": "Namespace to contain Collection constructors.",
+            "itemtype": "property",
+            "name": "Collections",
+            "type": "Object",
+            "default": "{}",
+            "class": "Application"
+        },
+        {
+            "file": "lib/application.js",
+            "line": 27,
+            "description": "Namespace to contain View constructors.",
+            "itemtype": "property",
+            "name": "Views",
+            "type": "Object",
+            "default": "{}",
+            "class": "Application"
+        },
+        {
+            "file": "lib/application.js",
+            "line": 35,
+            "description": "Namespace to contain Controller constructors.",
+            "itemtype": "property",
+            "name": "Controllers",
+            "type": "Object",
+            "default": "{}",
+            "class": "Application"
+        },
+        {
+            "file": "lib/application.js",
+            "line": 45,
+            "description": "Global event dispatcher to coordinate events.",
+            "itemtype": "property",
+            "name": "Dispatcher",
+            "type": "Backbone.Events",
+            "default": "_.clone(Backbone.Events)",
+            "class": "Application"
+        },
+        {
+            "file": "lib/application.js",
+            "line": 56,
+            "description": "Create a Controller constructor and an\ninstance attached to the application object",
+            "itemtype": "method",
+            "name": "createController",
+            "static": 1,
+            "params": [
+                {
+                    "name": "name",
+                    "description": "Controller name",
+                    "type": "String"
+                },
+                {
+                    "name": "options",
+                    "description": "Options object which\ndefines methods and properties of the\nController constructor.",
+                    "type": "Object",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "Instance of the created Controller",
+                "type": "Controller"
+            },
+            "example": [
+                "\n    App.createController(\"PostsController\", {\n      route: ['show/:id', 'edit/:id'],\n\n      index: function() {\n        // do index stuff\n      },\n\n      show: function(id) {\n        // do show stuff\n      },\n\n      edit: function(id) {\n        // do edit stuff\n      },\n    });"
+            ],
+            "class": "Application"
+        },
+        {
+            "file": "lib/application.js",
+            "line": 103,
+            "description": "Initialize the application and start the history.",
+            "itemtype": "method",
+            "name": "start",
+            "static": 1,
+            "params": [
+                {
+                    "name": "options",
+                    "description": "Options object",
+                    "type": "Object",
+                    "optional": true
+                }
+            ],
+            "class": "Application"
+        },
+        {
+            "file": "lib/application.js",
+            "line": 120,
+            "description": "Create a Backbone On Fire application.",
+            "itemtype": "method",
+            "name": "create",
+            "static": 1,
+            "params": [
+                {
+                    "name": "options",
+                    "description": "Options object",
+                    "type": "Object",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "New Backbone On Fire Application",
+                "type": "Application"
+            },
+            "example": [
+                "\n    var App = Backbone.OnFire.Application.create();"
+            ],
+            "class": "Application"
+        },
+        {
+            "file": "lib/controller.js",
+            "line": 10,
+            "description": "Initialization function called when a\ncontroller is instantiated. By default\n`initialize` is a noop left to be implemented\nby the child class.",
+            "itemtype": "method",
+            "name": "initialize",
+            "class": "Controller"
+        },
+        {
+            "file": "lib/controller.js",
+            "line": 19,
+            "description": "Convenience method to call through to the\ndispatcher and register events.",
+            "itemtype": "method",
+            "name": "on",
+            "params": [
+                {
+                    "name": "event",
+                    "description": "\nName of the event to register.",
+                    "type": "String"
+                },
+                {
+                    "name": "handler",
+                    "description": "\nFunction to be called when the event\nis triggered.",
+                    "type": "Function"
+                }
+            ],
+            "class": "Controller"
+        },
+        {
+            "file": "lib/controller.js",
+            "line": 31,
+            "description": "Convenience method to call through to the\ndispatcher and deregister events.",
+            "itemtype": "method",
+            "name": "off",
+            "params": [
+                {
+                    "name": "event",
+                    "description": "Name of the event to deregister.",
+                    "type": "String"
+                },
+                {
+                    "name": "handler",
+                    "description": "\nHandler function to remove a specific\nevent handler. If handler is ommitted\nall events attached to the event will\nbe removed.",
+                    "type": "Function",
+                    "optional": true
+                }
+            ],
+            "class": "Controller"
+        },
+        {
+            "file": "lib/controller.js",
+            "line": 45,
+            "description": "Route definitions for the controller.",
+            "itemtype": "property",
+            "name": "routes",
+            "type": "Array",
+            "default": "[]",
+            "class": "Controller"
+        },
+        {
+            "file": "lib/controller.js",
+            "line": 55,
+            "description": "Creates a method on the controller\nwhich calls the given method on the dispatcher.",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "method",
+            "name": "dispatcherMethod",
+            "class": "Controller"
+        },
+        {
+            "file": "lib/controller.js",
+            "line": 69,
+            "description": "Validate controller name is defined\nand is a `String`.",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "method",
+            "name": "validateName",
+            "params": [
+                {
+                    "name": "name",
+                    "description": "Controller name.",
+                    "type": "String"
+                }
+            ],
+            "class": "Controller"
+        },
+        {
+            "file": "lib/controller.js",
+            "line": 82,
+            "description": "Convenience method to create vanilla Controller constructors.",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "method",
+            "name": "defaultController",
+            "params": [
+                {
+                    "name": "name",
+                    "description": "Controller name.",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "Vanilla Controller constructor function.",
+                "type": "Controller"
+            },
+            "class": "Controller"
+        },
+        {
+            "file": "lib/controller.js",
+            "line": 99,
+            "description": "Convenience method to extend a given Controller\nprototype with an options object.",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "method",
+            "name": "extendController",
+            "params": [
+                {
+                    "name": "Controller",
+                    "description": "A Controller constructor.",
+                    "type": "Controller"
+                },
+                {
+                    "name": "options",
+                    "description": "Options object.",
+                    "type": "Object",
+                    "optional": true
+                }
+            ],
+            "class": "Controller"
+        },
+        {
+            "file": "lib/controller.js",
+            "line": 115,
+            "itemtype": "method",
+            "name": "extend",
+            "static": 1,
+            "params": [
+                {
+                    "name": "name",
+                    "description": "Name of controller.\nThe \"Controller\" suffix will be added if ommitted.",
+                    "type": "String"
+                },
+                {
+                    "name": "options",
+                    "description": "Optional methods and properties\nbelonging to the Controller constrcutor's prototype.",
+                    "type": "Object",
+                    "optional": true
+                }
+            ],
+            "example": [
+                "\n    Backbone.OnFire.Controller.extend({\n      route: ['show/:id', 'edit/:id'],\n\n      index: function() {\n        // do index stuff\n      },\n\n      show: function(id) {\n        // do show stuff\n      },\n\n      edit: function(id) {\n        // do edit stuff\n      },\n    });"
+            ],
+            "class": "Controller"
+        },
+        {
+            "file": "lib/route_creator.js",
+            "line": 24,
+            "description": "Trim slashes from the beginning and ending of a string.",
+            "itemtype": "method",
+            "name": "trimSlashes",
+            "params": [
+                {
+                    "name": "string",
+                    "description": "String to trim.",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "Copy of string without beginning or ending slashes.",
+                "type": "String"
+            },
+            "class": "RouteCreator",
+            "module": "Backbone.OnFire"
+        },
+        {
+            "file": "lib/route_creator.js",
+            "line": 35,
+            "description": "Get the first segment of a given path.",
+            "itemtype": "method",
+            "name": "firstSegment",
+            "params": [
+                {
+                    "name": "string",
+                    "description": "Path.",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "First segment of the path.",
+                "type": "String"
+            },
+            "class": "RouteCreator",
+            "module": "Backbone.OnFire"
+        },
+        {
+            "file": "lib/route_creator.js",
+            "line": 46,
+            "description": "Create an action/route mapping for the index action.",
+            "itemtype": "method",
+            "name": "createIndexRouteAction",
+            "class": "RouteCreator",
+            "module": "Backbone.OnFire"
+        },
+        {
+            "file": "lib/route_creator.js",
+            "line": 64,
+            "description": "Create route mappings for all of the Controller's routes.",
+            "itemtype": "method",
+            "name": "createRouteActions",
+            "class": "RouteCreator",
+            "module": "Backbone.OnFire"
+        },
+        {
+            "file": "lib/route_creator.js",
+            "line": 76,
+            "description": "Create route mappings for a given Controller's routes.",
+            "itemtype": "method",
+            "name": "createRouteActions",
+            "params": [
+                {
+                    "name": "route",
+                    "description": "A given route to create a mapping for.",
+                    "type": "String"
+                }
+            ],
+            "class": "RouteCreator",
+            "module": "Backbone.OnFire"
+        },
+        {
+            "file": "lib/route_creator.js",
+            "line": 87,
+            "description": "Create a `rootSegment` based on the Controller name or the root.\nGiven a Controller name of PostsController, the `rootSegement`\nwould be set to `posts`. If a Controller defines a `root` property\nthe `root` property will be used instead.",
+            "itemtype": "method",
+            "name": "createRouteActions",
+            "class": "RouteCreator",
+            "module": "Backbone.OnFire"
+        },
+        {
+            "file": "lib/route_creator.js",
+            "line": 98,
+            "description": "Create route mappings on the Controller's router\nfor all of the Controller's routes.",
+            "itemtype": "method",
+            "name": "createRoutes",
+            "class": "RouteCreator",
+            "module": "Backbone.OnFire"
+        },
+        {
+            "file": "lib/route_creator.js",
+            "line": 112,
+            "itemtype": "method",
+            "name": "normalizedControllerName",
+            "return": {
+                "description": "Controller name without the \"Controller\" suffix in lower case.",
+                "type": "String"
+            },
+            "class": "RouteCreator",
+            "module": "Backbone.OnFire"
+        },
+        {
+            "file": "lib/route_creator.js",
+            "line": 120,
+            "description": "Determine if the Controller has an explicit index route.",
+            "itemtype": "method",
+            "name": "hasIndexRoute",
+            "return": {
+                "description": "Whether or not the Controller defines an index route.",
+                "type": "Boolean"
+            },
+            "class": "RouteCreator",
+            "module": "Backbone.OnFire"
+        },
+        {
+            "file": "lib/route_creator.js",
+            "line": 132,
+            "itemtype": "method",
+            "name": "getIndexRoute",
+            "return": {
+                "description": "The explicitly defined index route.",
+                "type": "String"
+            },
+            "class": "RouteCreator",
+            "module": "Backbone.OnFire"
+        },
+        {
+            "file": "lib/route_creator.js",
+            "line": 142,
+            "description": "Remove beginning and trailing slashes on all defined routes.",
+            "itemtype": "method",
+            "name": "normalizeRoutes",
+            "class": "RouteCreator",
+            "module": "Backbone.OnFire"
+        },
+        {
+            "file": "lib/route_creator.js",
+            "line": 155,
+            "description": "Ensure all routes have corresponding actions defined on the Controller.",
+            "itemtype": "method",
+            "name": "validateRoutes",
+            "class": "RouteCreator",
+            "module": "Backbone.OnFire"
+        },
+        {
+            "file": "lib/route_creator.js",
+            "line": 171,
+            "description": "Deterimine if this is the IndexController.",
+            "itemtype": "method",
+            "name": "isIndexController",
+            "return": {
+                "description": "Whether or not this controller is the IndexController.",
+                "type": "Boolean"
+            },
+            "class": "RouteCreator",
+            "module": "Backbone.OnFire"
+        },
+        {
+            "file": "lib/route_creator.js",
+            "line": 180,
+            "description": "Create default routes for the IndexController.",
+            "itemtype": "method",
+            "name": "createIndexRoutes",
+            "class": "RouteCreator",
+            "module": "Backbone.OnFire"
+        }
+    ],
+    "warnings": []
+}

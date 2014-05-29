@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>lib/application.js</title>
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+    <script src="../assets/vendor/yui-min.js"></script>
+</head>
+<body>
+
+<div id="doc">
+    <header class="main-header">
+        <div class="content">
+            <div class="project-title">
+                
+                
+                
+            </div>
+            <ul class="jump-links">
+                <li><a href="#index" class="index-jump-link">index</a></li>
+                <li><a href="#top" class="top-jump-link">top</a></li>
+            </ul>
+        </div>
+    </header>
+    <div id="bd" class="main-body">
+
+        <div id="docs-sidebar" class="sidebar apidocs">
+            <div id="api-list">
+    <div id="api-tabview" class="tabview">
+        <ul class="tabs">
+            <li><a href="#api-classes">Classes</a></li>
+            <li><a href="#api-modules">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul id="api-classes" class="apis classes">
+            
+                <li><a class="type" href="../classes/Application.html">Application</a></li>
+            
+                <li><a class="type" href="../classes/Controller.html">Controller</a></li>
+            
+                <li><a class="type" href="../classes/RouteCreator.html">RouteCreator</a></li>
+            
+            </ul>
+
+            <ul id="api-modules" class="apis modules">
+            
+                <li><a class="module" href="../modules/Backbone.OnFire.html">Backbone.OnFire</a></li>
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+        </div>
+
+        <div id="docs-main" class="apidocs">
+            <div class="content container">
+                <h1 class="file-heading">File: lib/application.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+ /**
+  * The Application serves as a namespace as
+  * well as providing the interface to define
+  * and interact with the Backbone On Fire application.
+  *
+  * @class Application
+  **/
+(function() {
+  var Router = Backbone.Router.extend();
+  var defaultApplication = {
+    /**
+     * Namespace to contain Model constructors.
+     *
+     * @property Models
+     * @type Object
+     * @default {}
+     */
+    Models: {},
+    /**
+     * Namespace to contain Collection constructors.
+     *
+     * @property Collections
+     * @type Object
+     * @default {}
+     */
+    Collections: {},
+    /**
+     * Namespace to contain View constructors.
+     *
+     * @property Views
+     * @type Object
+     * @default {}
+     */
+    Views: {},
+    /**
+     * Namespace to contain Controller constructors.
+     *
+     * @property Controllers
+     * @type Object
+     * @default {}
+     */
+    Controllers: {
+      Application: Backbone.OnFire.Controller.extend(&quot;ApplicationController&quot;, {})
+    },
+    /**
+     * Global event dispatcher to coordinate events.
+     *
+     * @property Dispatcher
+     * @type Backbone.Events
+     * @default _.clone(Backbone.Events)
+     */
+    Dispatcher: _.clone(Backbone.Events),
+    Router: new Router,
+
+    initialize: function() { return void(0); },
+    /**
+     * Create a Controller constructor and an
+     * instance attached to the application object
+     *
+     * @method createController
+     * @static
+     * @param name {String} Controller name
+     * @param [options] {Object} Options object which
+     * defines methods and properties of the
+     * Controller constructor.
+     * @return {Controller} Instance of the created Controller
+     *
+     * @example
+     *     App.createController(&quot;PostsController&quot;, {
+     *       route: [&#x27;show/:id&#x27;, &#x27;edit/:id&#x27;],
+     *
+     *       index: function() {
+     *         // do index stuff
+     *       },
+     *
+     *       show: function(id) {
+     *         // do show stuff
+     *       },
+     *
+     *       edit: function(id) {
+     *         // do edit stuff
+     *       },
+     *     });
+     */
+    createController: function(name, options) {
+      var baseName = name.replace(/(c|C)ontroller$/, &#x27;&#x27;).toLowerCase();
+      var controllerName = baseName.constantize() + &quot;Controller&quot;;
+      options = options || {};
+
+      _(options).defaults(_.extend(this.Controllers.Application.prototype, {
+        dispatcher: this.Dispatcher,
+        router: this.Router
+      }));
+
+      var Controller = this.Controllers[baseName.constantize()] = Backbone.OnFire.Controller.extend(baseName, options);
+
+      if (baseName !== &quot;application&quot;) {
+        var controllerInstance = new Controller;
+        return this[controllerName] = controllerInstance;
+      }
+    },
+
+    /**
+     * Initialize the application and start the history.
+     *
+     * @method start
+     * @static
+     * @param [options] {Object} Options object
+     */
+    start: function(options) {
+      options = options || {};
+      this.initialize(options);
+      var routerOptions = typeof options.pushState !== &#x27;undefined&#x27; ? { pushState: options.pushState } : { pushState: false };
+      Backbone.history.start(routerOptions);
+    }
+  };
+
+
+  Backbone.OnFire.Application = {
+    /**
+     * Create a Backbone On Fire application.
+     *
+     * @method create
+     * @static
+     * @param [options] {Object} Options object
+     * @return {Application} New Backbone On Fire Application
+     *
+     * @example
+     *     var App = Backbone.OnFire.Application.create();
+     */
+    create: function(options) {
+      options = options || {};
+      var app = _.extend({}, defaultApplication, options);
+      return app;
+    }
+  };
+})();
+
+    </pre>
+</div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/vendor/jquery.min.js"></script>
+<script src="../assets/js/jquery-offscreen-trigger.js"></script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>
