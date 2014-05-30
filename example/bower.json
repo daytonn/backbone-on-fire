@@ -1,0 +1,23 @@
+{
+  "name": "backbone-on-fire-example",
+  "version": "0.0.0",
+  "authors": [
+    "Dayton Nolan <daytonn@gmail.com>"
+  ],
+  "description": "Example application for Backbone on Fire",
+  "main": "index.html",
+  "license": "Apache 2.0",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "vendor",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "backbone": "~1.1.2",
+    "jquery": "~2.1.1"
+  }
+}
