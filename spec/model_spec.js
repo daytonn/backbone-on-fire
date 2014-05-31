@@ -1,5 +1,5 @@
 describe("Model", function() {
-  var BaseModel;
+  var TestModel;
   var ChildModel;
   var ChildCollection;
   var data;
@@ -14,7 +14,7 @@ describe("Model", function() {
     };
     ChildModel = Backbone.OnFire.Model.extend();
     ChildCollection = Backbone.Collection.extend();
-    BaseModel = Backbone.OnFire.Model.extend({
+    TestModel = Backbone.OnFire.Model.extend({
       urlRoot: "http://localhost:9876/debug.html#save",
       relationships: {
         first_child: ChildModel,
@@ -23,7 +23,13 @@ describe("Model", function() {
       }
     });
     data = { first_child: { id: 1 }};
-    subject = new BaseModel();
+    subject = new TestModel();
+  });
+
+  it("has a default relationships object", function() {
+    TestModel = Backbone.OnFire.Model.extend();
+    subject = new TestModel;
+    expect(subject.relationships).to.be.like({});
   });
 
   describe("deserialize", function() {
@@ -45,7 +51,7 @@ describe("Model", function() {
 
   describe("parse", function() {
     beforeEach(function() {
-      subject = new BaseModel(data);
+      subject = new TestModel(data);
     });
 
     it("sets the default data to an empty object", function() {
@@ -88,22 +94,19 @@ describe("Model", function() {
         second_child: secondChildAttributes,
         child_collection: childCollectionAttributes
       };
-      subject = new BaseModel(attributes);
+      subject = new TestModel(attributes);
     });
 
     it("serializes the relationships", function() {
       var json = subject.toJSON();
-      expect(json.first_child_attributes).to.be.like(firstChildAttributes);
-      expect(json.first_child).to.be.undefined;
-      expect(json.second_child_attributes).to.be.like(secondChildAttributes);
-      expect(json.second_child).to.be.undefined;
-      expect(json.child_collection_attributes).to.be.like(childCollectionAttributes);
-      expect(json.child_collection).to.be.undefined;
+      expect(json.first_child).to.be.like(firstChildAttributes);
+      expect(json.second_child).to.be.like(secondChildAttributes);
+      expect(json.child_collection).to.be.like(childCollectionAttributes);
     });
 
     describe("with custom toJSON method", function() {
       beforeEach(function() {
-        BaseModel = Backbone.OnFire.Model.extend({
+        TestModel = Backbone.OnFire.Model.extend({
           urlRoot: "http://localhost:9876/debug.html#save",
           relationships: {
             first_child: ChildModel,
@@ -114,18 +117,15 @@ describe("Model", function() {
             return { foo: "bar" };
           }
         });
-        subject = new BaseModel(attributes);
+        subject = new TestModel(attributes);
       });
 
       it("serializes the relationships", function() {
         var json = subject.toJSON();
         expect(json.foo).to.equal("bar");
-        expect(json.first_child_attributes).to.be.like(firstChildAttributes);
-        expect(json.first_child).to.be.undefined;
-        expect(json.second_child_attributes).to.be.like(secondChildAttributes);
-        expect(json.second_child).to.be.undefined;
-        expect(json.child_collection_attributes).to.be.like(childCollectionAttributes);
-        expect(json.child_collection).to.be.undefined;
+        expect(json.first_child).to.be.like(firstChildAttributes);
+        expect(json.second_child).to.be.like(secondChildAttributes);
+        expect(json.child_collection).to.be.like(childCollectionAttributes);
       });
     });
   });
@@ -147,7 +147,7 @@ describe("Model", function() {
         second_child: secondChildAttributes,
         child_collection: childCollectionAttributes
       };
-      subject = new BaseModel(attributes);
+      subject = new TestModel(attributes);
       subject.save().done(function() {
         done();
       });
@@ -172,3 +172,4 @@ describe("Model", function() {
     });
   });
 });
+

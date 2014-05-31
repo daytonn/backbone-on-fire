@@ -102,7 +102,7 @@
             "extension_for": [],
             "module": "Backbone.OnFire",
             "file": "lib/model.js",
-            "line": 12,
+            "line": 15,
             "description": "Backbone.OnFire models always parse when instantiated\nto ensure relationships are instantiated.",
             "is_constructor": 1,
             "params": [
@@ -423,7 +423,7 @@
         },
         {
             "file": "lib/model.js",
-            "line": 1,
+            "line": 2,
             "static": 1,
             "itemtype": "method",
             "name": "extend",
@@ -442,8 +442,8 @@
         },
         {
             "file": "lib/model.js",
-            "line": 43,
-            "description": "Placeholder method to allow custom deserialization of\nserver side JSON payload.",
+            "line": 46,
+            "description": "Placeholder method to allow custom deserialization of\nserver side JSON payload after it is parsed.",
             "itemtype": "method",
             "name": "deserialize",
             "params": [
@@ -461,7 +461,26 @@
         },
         {
             "file": "lib/model.js",
-            "line": 55,
+            "line": 58,
+            "description": "Placeholder method to allow custom serialization of\nclient side JSON payload.",
+            "itemtype": "method",
+            "name": "serialize",
+            "params": [
+                {
+                    "name": "data",
+                    "description": "JSON to serialize",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "Serialized JSON.",
+                "type": "Object"
+            },
+            "class": "Model"
+        },
+        {
+            "file": "lib/model.js",
+            "line": 70,
             "description": "Instantiate a relationship of a given type with the given attributes.",
             "itemtype": "method",
             "name": "instatiateRelationship",
@@ -489,7 +508,26 @@
         },
         {
             "file": "lib/model.js",
-            "line": 72,
+            "line": 87,
+            "description": "Placeholder method to allow manipulation of\nserver side JSON payload before it is parsed.",
+            "itemtype": "method",
+            "name": "serialize",
+            "params": [
+                {
+                    "name": "data",
+                    "description": "JSON to serialize",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "Serialized JSON.",
+                "type": "Object"
+            },
+            "class": "Model"
+        },
+        {
+            "file": "lib/model.js",
+            "line": 99,
             "description": "Automatically instantiate relationships when data\nis set/changed if relationships are defined.",
             "itemtype": "method",
             "name": "parse",
@@ -508,7 +546,7 @@
         },
         {
             "file": "lib/model.js",
-            "line": 90,
+            "line": 118,
             "description": "Convenience method to determine if the model\nhas been persisted. This method is the inverse\nof `isNew`.",
             "itemtype": "method",
             "name": "isPersisted",
@@ -691,7 +729,7 @@
     "warnings": [
         {
             "message": "replacing incorrect tag: params with param",
-            "line": " lib/model.js:12"
+            "line": " lib/model.js:15"
         }
     ]
 }

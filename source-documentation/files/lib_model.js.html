@@ -68,109 +68,136 @@
 
 <div class="file">
     <pre class="code prettyprint linenums">
-/**
-  @static
-  @method extend
-  @param [options] {Object} Object defining methods and
-  properties of the model
-  @example
-      var MyModel = Backbone.OnFire.Model.extend({
-        urlRoot: &quot;/mymodels&quot;
-      });
-*/
-Backbone.OnFire.Model = Backbone.Model.extend({
-  /**
-    Backbone.OnFire models always parse when instantiated
-    to ensure relationships are instantiated.
-
-    @class Model
-    @constructor
-    @param [attributes] {Object}
-    When creating an instance of a model,
-    you can pass in the initial values of
-    the attributes, which will be set on
-    the model.
-    @params [options] {Object}
-    If you pass a &#x60;{collection: ...}&#x60; as
-    the options, the model gains a collection
-    property that will be used to indicate
-    which collection the model belongs to,
-    and is used to help compute the model&#x27;s
-    url. The model.collection property is
-    normally created automatically when you
-    first add a model to a collection. Note
-    that the reverse is not true, as passing
-    this option to the constructor will not
-    automatically add the model to the collection.
-    Useful, sometimes.
-  */
-  constructor: function(attributes, options) {
-    options = options || {};
-    options.parse = true;
-    Backbone.Model.call(this, attributes, options);
-  },
-
-  /**
-    Placeholder method to allow custom deserialization of
-    server side JSON payload.
-
-    @method deserialize
-    @param data {Object} JSON to deserialize
-    @return {Object} Deserialized JSON.
-  */
-  deserialize: function(data) {
-    return data;
-  },
-
-  /**
-    Instantiate a relationship of a given type with the given attributes.
-
-    @method instatiateRelationship
-    @param attributes {Object} Parent model attributes containing child attributes.
-    @param key {String} Child attributes key.
-    @param Class {Function} Constructor function to instantiate with child attributes.
-    @example
-        modelInstance.instantiateRelationship({ user: { id: 1 }}, &quot;user&quot;, App.Models.User);
-  */
-  instantiateRelationship: function(attributes, key, Class) {
-    var value = attributes[key];
-    if (attributes[key] &amp;&amp; !isTypeof(Class, value)) {
-      attributes[key] = new Class(value);
-    }
-  },
-
-  /**
-    Automatically instantiate relationships when data
-    is set/changed if relationships are defined.
-
-    @method parse
-    @param data {Object} Model data that has been set/changed.
-    @return {Object} Parsed data.
-  */
-  parse: function(data) {
-    data = this.deserialize(data || {});
-    if (this.relationships) {
-      _(this.relationships).each(function(Class, attr) {
-        this.instantiateRelationship(data, attr, Class);
-      }, this);
-    }
-    return data;
-  },
-
-  /**
-    Convenience method to determine if the model
-    has been persisted. This method is the inverse
-    of &#x60;isNew&#x60;.
-
-    @method isPersisted
-    @return {Boolean} Wheter or not the model has been persisted.
-  */
-  isPersisted: function() {
-    return !this.isNew();
-  }
-});
-
 (function() {
+  /**
+    @static
+    @method extend
+    @param [options] {Object} Object defining methods and
+    properties of the model
+    @example
+        var MyModel = Backbone.OnFire.Model.extend({
+          urlRoot: &quot;/mymodels&quot;
+        });
+  */
+  Backbone.OnFire.Model = Backbone.Model.extend({
+    relationships: {},
+
+    /**
+      Backbone.OnFire models always parse when instantiated
+      to ensure relationships are instantiated.
+
+      @class Model
+      @constructor
+      @param [attributes] {Object}
+      When creating an instance of a model,
+      you can pass in the initial values of
+      the attributes, which will be set on
+      the model.
+      @params [options] {Object}
+      If you pass a &#x60;{collection: ...}&#x60; as
+      the options, the model gains a collection
+      property that will be used to indicate
+      which collection the model belongs to,
+      and is used to help compute the model&#x27;s
+      url. The model.collection property is
+      normally created automatically when you
+      first add a model to a collection. Note
+      that the reverse is not true, as passing
+      this option to the constructor will not
+      automatically add the model to the collection.
+      Useful, sometimes.
+    */
+    constructor: function(attributes, options) {
+      options = options || {};
+      options.parse = true;
+      Backbone.Model.call(this, attributes, options);
+    },
+
+    /**
+      Placeholder method to allow custom deserialization of
+      server side JSON payload after it is parsed.
+
+      @method deserialize
+      @param data {Object} JSON to deserialize
+      @return {Object} Deserialized JSON.
+    */
+    deserialize: function(data) {
+      return data;
+    },
+
+    /**
+      Placeholder method to allow custom serialization of
+      client side JSON payload.
+
+      @method serialize
+      @param data {Object} JSON to serialize
+      @return {Object} Serialized JSON.
+    */
+    serialize: function(data) {
+      return data;
+    },
+
+    /**
+      Instantiate a relationship of a given type with the given attributes.
+
+      @method instatiateRelationship
+      @param attributes {Object} Parent model attributes containing child attributes.
+      @param key {String} Child attributes key.
+      @param Class {Function} Constructor function to instantiate with child attributes.
+      @example
+          modelInstance.instantiateRelationship({ user: { id: 1 }}, &quot;user&quot;, App.Models.User);
+    */
+    instantiateRelationship: function(attributes, key, Class) {
+      var value = attributes[key];
+      if (attributes[key] &amp;&amp; !isTypeof(Class, value)) {
+        attributes[key] = new Class(value);
+      }
+    },
+
+    /**
+      Placeholder method to allow manipulation of
+      server side JSON payload before it is parsed.
+
+      @method serialize
+      @param data {Object} JSON to serialize
+      @return {Object} Serialized JSON.
+    */
+    preParse: function(data) {
+      return data;
+    },
+
+    /**
+      Automatically instantiate relationships when data
+      is set/changed if relationships are defined.
+
+      @method parse
+      @param data {Object} Model data that has been set/changed.
+      @return {Object} Parsed data.
+    */
+    parse: function(data) {
+      data = this.preParse(data || {});
+      if (this.relationships) {
+        _(this.relationships).each(function(Class, attr) {
+          this.instantiateRelationship(data, attr, Class);
+        }, this);
+      }
+      data = this.deserialize(data || {});
+      return data;
+    },
+
+    /**
+      Convenience method to determine if the model
+      has been persisted. This method is the inverse
+      of &#x60;isNew&#x60;.
+
+      @method isPersisted
+      @return {Boolean} Wheter or not the model has been persisted.
+    */
+    isPersisted: function() {
+      return !this.isNew();
+    }
+  });
+
   var extend = Backbone.OnFire.Model.extend;
 
   Backbone.OnFire.Model.extend = function(options) {
@@ -182,11 +209,11 @@ Backbone.OnFire.Model = Backbone.Model.extend({
       _(this.relationships).each(function(relationshipClass, relationship) {
         delete attributes[relationship];
         if (this.get(relationship).models) {
-          attributes[relationship + &quot;_attributes&quot;] = this.get(relationship).models.map(function(model) {
+          attributes[relationship] = this.get(relationship).models.map(function(model) {
             return _.clone(model.attributes);
           });
         } else {
-          attributes[relationship + &quot;_attributes&quot;] = _.clone(this.get(relationship).attributes);
+          attributes[relationship] = _.clone(this.get(relationship).attributes);
         }
       }, this);
       return _.extend(attributes, customAttributes);
