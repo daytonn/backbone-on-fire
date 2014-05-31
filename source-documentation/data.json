@@ -19,6 +19,15 @@
             "fors": {},
             "namespaces": {}
         },
+        "lib/model.js": {
+            "name": "lib/model.js",
+            "modules": {},
+            "classes": {
+                "Model": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
         "lib/namespace.js": {
             "name": "lib/namespace.js",
             "modules": {
@@ -45,6 +54,7 @@
             "classes": {
                 "Application": 1,
                 "Controller": 1,
+                "Model": 1,
                 "RouteCreator": 1
             },
             "fors": {},
@@ -81,6 +91,34 @@
             "file": "lib/controller.js",
             "line": 1,
             "description": "A Controller manages routes and handles\nthe setup and coordination of views, models,\nand collections within a given root segment."
+        },
+        "Model": {
+            "name": "Model",
+            "shortname": "Model",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "Backbone.OnFire",
+            "file": "lib/model.js",
+            "line": 12,
+            "description": "Backbone.OnFire models always parse when instantiated\nto ensure relationships are instantiated.",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "attributes",
+                    "description": "\nWhen creating an instance of a model,\nyou can pass in the initial values of\nthe attributes, which will be set on\nthe model.",
+                    "type": "Object",
+                    "optional": true
+                },
+                {
+                    "name": "options",
+                    "description": "\nIf you pass a `{collection: ...}` as\nthe options, the model gains a collection\nproperty that will be used to indicate\nwhich collection the model belongs to,\nand is used to help compute the model's\nurl. The model.collection property is\nnormally created automatically when you\nfirst add a model to a collection. Note\nthat the reverse is not true, as passing\nthis option to the constructor will not\nautomatically add the model to the collection.\nUseful, sometimes.",
+                    "type": "Object",
+                    "optional": true
+                }
+            ]
         },
         "RouteCreator": {
             "name": "RouteCreator",
@@ -280,7 +318,7 @@
         },
         {
             "file": "lib/controller.js",
-            "line": 45,
+            "line": 44,
             "description": "Route definitions for the controller.",
             "itemtype": "property",
             "name": "routes",
@@ -290,7 +328,7 @@
         },
         {
             "file": "lib/controller.js",
-            "line": 55,
+            "line": 54,
             "description": "Creates a method on the controller\nwhich calls the given method on the dispatcher.",
             "access": "private",
             "tagname": "",
@@ -300,7 +338,7 @@
         },
         {
             "file": "lib/controller.js",
-            "line": 69,
+            "line": 68,
             "description": "Validate controller name is defined\nand is a `String`.",
             "access": "private",
             "tagname": "",
@@ -317,7 +355,7 @@
         },
         {
             "file": "lib/controller.js",
-            "line": 82,
+            "line": 81,
             "description": "Convenience method to create vanilla Controller constructors.",
             "access": "private",
             "tagname": "",
@@ -338,7 +376,7 @@
         },
         {
             "file": "lib/controller.js",
-            "line": 99,
+            "line": 98,
             "description": "Convenience method to extend a given Controller\nprototype with an options object.",
             "access": "private",
             "tagname": "",
@@ -361,7 +399,7 @@
         },
         {
             "file": "lib/controller.js",
-            "line": 115,
+            "line": 114,
             "itemtype": "method",
             "name": "extend",
             "static": 1,
@@ -382,6 +420,103 @@
                 "\n    Backbone.OnFire.Controller.extend({\n      route: ['show/:id', 'edit/:id'],\n\n      index: function() {\n        // do index stuff\n      },\n\n      show: function(id) {\n        // do show stuff\n      },\n\n      edit: function(id) {\n        // do edit stuff\n      },\n    });"
             ],
             "class": "Controller"
+        },
+        {
+            "file": "lib/model.js",
+            "line": 1,
+            "static": 1,
+            "itemtype": "method",
+            "name": "extend",
+            "params": [
+                {
+                    "name": "options",
+                    "description": "Object defining methods and\nproperties of the model",
+                    "type": "Object",
+                    "optional": true
+                }
+            ],
+            "example": [
+                "\n    var MyModel = Backbone.OnFire.Model.extend({\n      urlRoot: \"/mymodels\"\n    });"
+            ],
+            "class": "Model"
+        },
+        {
+            "file": "lib/model.js",
+            "line": 43,
+            "description": "Placeholder method to allow custom deserialization of\nserver side JSON payload.",
+            "itemtype": "method",
+            "name": "deserialize",
+            "params": [
+                {
+                    "name": "data",
+                    "description": "JSON to deserialize",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "Deserialized JSON.",
+                "type": "Object"
+            },
+            "class": "Model"
+        },
+        {
+            "file": "lib/model.js",
+            "line": 55,
+            "description": "Instantiate a relationship of a given type with the given attributes.",
+            "itemtype": "method",
+            "name": "instatiateRelationship",
+            "params": [
+                {
+                    "name": "attributes",
+                    "description": "Parent model attributes containing child attributes.",
+                    "type": "Object"
+                },
+                {
+                    "name": "key",
+                    "description": "Child attributes key.",
+                    "type": "String"
+                },
+                {
+                    "name": "Class",
+                    "description": "Constructor function to instantiate with child attributes.",
+                    "type": "Function"
+                }
+            ],
+            "example": [
+                "\n    modelInstance.instantiateRelationship({ user: { id: 1 }}, \"user\", App.Models.User);"
+            ],
+            "class": "Model"
+        },
+        {
+            "file": "lib/model.js",
+            "line": 72,
+            "description": "Automatically instantiate relationships when data\nis set/changed if relationships are defined.",
+            "itemtype": "method",
+            "name": "parse",
+            "params": [
+                {
+                    "name": "data",
+                    "description": "Model data that has been set/changed.",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "Parsed data.",
+                "type": "Object"
+            },
+            "class": "Model"
+        },
+        {
+            "file": "lib/model.js",
+            "line": 90,
+            "description": "Convenience method to determine if the model\nhas been persisted. This method is the inverse\nof `isNew`.",
+            "itemtype": "method",
+            "name": "isPersisted",
+            "return": {
+                "description": "Wheter or not the model has been persisted.",
+                "type": "Boolean"
+            },
+            "class": "Model"
         },
         {
             "file": "lib/route_creator.js",
@@ -553,5 +688,10 @@
             "module": "Backbone.OnFire"
         }
     ],
-    "warnings": []
+    "warnings": [
+        {
+            "message": "replacing incorrect tag: params with param",
+            "line": " lib/model.js:12"
+        }
+    ]
 }

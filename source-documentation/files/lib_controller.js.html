@@ -45,6 +45,8 @@
             
                 <li><a class="type" href="../classes/Controller.html">Controller</a></li>
             
+                <li><a class="type" href="../classes/Model.html">Model</a></li>
+            
                 <li><a class="type" href="../classes/RouteCreator.html">RouteCreator</a></li>
             
             </ul>
@@ -67,66 +69,65 @@
 <div class="file">
     <pre class="code prettyprint linenums">
 /**
- * A Controller manages routes and handles
- * the setup and coordination of views, models,
- * and collections within a given root segment.
- *
- * @class Controller
- **/
+  A Controller manages routes and handles
+  the setup and coordination of views, models,
+  and collections within a given root segment.
+
+  @class Controller
+**/
 (function() {
   var controllerDefaults = {
     /**
-     * Initialization function called when a
-     * controller is instantiated. By default
-     * &#x60;initialize&#x60; is a noop left to be implemented
-     * by the child class.
-     *
-     * @method initialize
-     */
+      Initialization function called when a
+      controller is instantiated. By default
+      &#x60;initialize&#x60; is a noop left to be implemented
+      by the child class.
+
+      @method initialize
+    */
     initialize: function() { return void(0); },
     /**
-     * Convenience method to call through to the
-     * dispatcher and register events.
-     *
-     * @method on
-     * @param event {String}
-     * Name of the event to register.
-     * @param handler {Function}
-     * Function to be called when the event
-     * is triggered.
-     */
+      Convenience method to call through to the
+      dispatcher and register events.
+
+      @method on
+      @param event {String}
+      Name of the event to register.
+      @param handler {Function}
+      Function to be called when the event
+      is triggered.
+    */
     on: dispatcherMethod(&#x27;on&#x27;),
     /**
-     * Convenience method to call through to the
-     * dispatcher and deregister events.
-     *
-     * @method off
-     * @param event {String} Name of the event to deregister.
-     * @param [handler] {Function}
-     * Handler function to remove a specific
-     * event handler. If handler is ommitted
-     * all events attached to the event will
-     * be removed.
-     *
-     */
+      Convenience method to call through to the
+      dispatcher and deregister events.
+
+      @method off
+      @param event {String} Name of the event to deregister.
+      @param [handler] {Function}
+      Handler function to remove a specific
+      event handler. If handler is ommitted
+      all events attached to the event will
+      be removed.
+    */
     off: dispatcherMethod(&#x27;off&#x27;),
     /**
-     * Route definitions for the controller.
-     *
-     * @property routes
-     * @type Array
-     * @default []
-     */
+      Route definitions for the controller.
+
+      @property routes
+      @type Array
+      @default []
+    */
     routes: []
   };
 
   /**
-   * Creates a method on the controller
-   * which calls the given method on the dispatcher.
-   *
-   * @private
-   * @method dispatcherMethod
-   */
+    Creates a method on the controller
+    which calls the given method on the dispatcher.
+
+    @private
+    @method dispatcherMethod
+  */
   function dispatcherMethod(method) {
     return function() {
       if (!this.dispatcher) throw new Error(this.name + &quot; has no dispatcher&quot;);
@@ -135,26 +136,26 @@
   }
 
   /**
-   * Validate controller name is defined
-   * and is a &#x60;String&#x60;.
-   *
-   * @private
-   * @method validateName
-   * @param name {String} Controller name.
-   */
+    Validate controller name is defined
+    and is a &#x60;String&#x60;.
+
+    @private
+    @method validateName
+    @param name {String} Controller name.
+  */
   function validateName(name) {
     if (!name) throw new Error(&quot;Backbone.OnFire.Controller.extend(name, options): name is undefined&quot;);
     if (!isString(name)) throw new Error(&quot;Backbone.OnFire.Controller.extend(name, options): name is expected to be a string got &quot; + name);
   }
 
   /**
-   * Convenience method to create vanilla Controller constructors.
-   *
-   * @private
-   * @method defaultController
-   * @param name {String} Controller name.
-   * @return {Controller} Vanilla Controller constructor function.
-   */
+    Convenience method to create vanilla Controller constructors.
+
+    @private
+    @method defaultController
+    @param name {String} Controller name.
+    @return {Controller} Vanilla Controller constructor function.
+  */
   function defaultController(name) {
     var controllerName = name.constantize() + &quot;Controller&quot;;
     return function Controller() {
@@ -165,14 +166,14 @@
   }
 
   /**
-   * Convenience method to extend a given Controller
-   * prototype with an options object.
-   *
-   * @private
-   * @method extendController
-   * @param Controller {Controller} A Controller constructor.
-   * @param [options] {Object} Options object.
-   */
+    Convenience method to extend a given Controller
+    prototype with an options object.
+
+    @private
+    @method extendController
+    @param Controller {Controller} A Controller constructor.
+    @param [options] {Object} Options object.
+  */
   function extendController(Controller, options) {
     var extensions = _.extend({}, controllerDefaults, options);
     _.extend(Controller.prototype, extensions);
@@ -181,30 +182,30 @@
 
   Backbone.OnFire.Controller = {
     /**
-     * @method extend
-     * @static
-     * @param name {String} Name of controller.
-     * The &quot;Controller&quot; suffix will be added if ommitted.
-     * @param [options] {Object} Optional methods and properties
-     * belonging to the Controller constrcutor&#x27;s prototype.
-     *
-     * @example
-     *     Backbone.OnFire.Controller.extend({
-     *       route: [&#x27;show/:id&#x27;, &#x27;edit/:id&#x27;],
-     *
-     *       index: function() {
-     *         // do index stuff
-     *       },
-     *
-     *       show: function(id) {
-     *         // do show stuff
-     *       },
-     *
-     *       edit: function(id) {
-     *         // do edit stuff
-     *       },
-     *     });
-     */
+      @method extend
+      @static
+      @param name {String} Name of controller.
+      The &quot;Controller&quot; suffix will be added if ommitted.
+      @param [options] {Object} Optional methods and properties
+      belonging to the Controller constrcutor&#x27;s prototype.
+
+      @example
+          Backbone.OnFire.Controller.extend({
+            route: [&#x27;show/:id&#x27;, &#x27;edit/:id&#x27;],
+
+            index: function() {
+              // do index stuff
+            },
+
+            show: function(id) {
+              // do show stuff
+            },
+
+            edit: function(id) {
+              // do edit stuff
+            },
+          });
+    */
     extend: function(name, options) {
       options = options || {};
       validateName(name);

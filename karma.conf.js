@@ -5,8 +5,10 @@ module.exports = function(config) {
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
     frameworks: ['mocha-debug', 'mocha', 'sinon-chai'],
     files: [
+      'node_modules/jquery/dist/jquery.js',
       'node_modules/underscore/underscore.js',
       'node_modules/backbone/backbone.js',
+      'node_modules/chai-fuzzy/index.js',
       'spec/support/chai-literals.js',
       'dist/backbone-on-fire.js',
       'spec/**/*_spec.js'

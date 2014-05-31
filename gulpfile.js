@@ -1,19 +1,20 @@
 var concat = require('gulp-concat');
-var docco = require('gulp-docco');
 var exec = require('child_process').exec;
 var gulp = require('gulp');
 var rename = require('gulp-rename');
 var uglify = require('gulp-uglify');
 var util = require('gulp-util');
-var yuidoc = require("gulp-yuidoc");
+// var yuidoc = require("gulp-yuidoc");
 
 gulp.task('compile-app', function() {
   return gulp.src([
+    'lib/sync.js',
     'node_modules/underwear/dist/string.js',
     'node_modules/underwear/dist/array.js',
     'node_modules/underwear/dist/utilities.js',
     'lib/namespace.js',
     'lib/route_creator.js',
+    'lib/model.js',
     'lib/controller.js',
     'lib/application.js'
   ])

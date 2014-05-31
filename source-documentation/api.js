@@ -3,6 +3,7 @@ YUI.add("yuidoc-meta", function(Y) {
     "classes": [
         "Application",
         "Controller",
+        "Model",
         "RouteCreator"
     ],
     "modules": [

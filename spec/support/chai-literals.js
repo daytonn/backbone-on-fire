@@ -23,6 +23,14 @@ chai.use(function(_chai, utils) {
     );
   });
 
+  utils.addProperty(_chai.Assertion.prototype, 'undefined', function () {
+    this.assert(
+      typeof this._obj === 'undefined',
+      'expected #{this} to be undefined',
+      'expected #{this} to be defined'
+    );
+  });
+
   utils.addProperty(_chai.Assertion.prototype, 'true', function () {
     this.assert(
       this._obj === true,
