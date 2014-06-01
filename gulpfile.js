@@ -13,6 +13,7 @@ gulp.task('compile-app', function() {
     'node_modules/underwear/dist/array.js',
     'node_modules/underwear/dist/utilities.js',
     'lib/namespace.js',
+    'lib/active_model_serializer.js',
     'lib/route_creator.js',
     'lib/model.js',
     'lib/controller.js',

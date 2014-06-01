@@ -1,6 +1,15 @@
 {
     "project": {},
     "files": {
+        "lib/active_model_serializer.js": {
+            "name": "lib/active_model_serializer.js",
+            "modules": {},
+            "classes": {
+                "ActiveModelSerializer": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
         "lib/application.js": {
             "name": "lib/application.js",
             "modules": {},
@@ -52,6 +61,7 @@
             "name": "Backbone.OnFire",
             "submodules": {},
             "classes": {
+                "ActiveModelSerializer": 1,
                 "Application": 1,
                 "Controller": 1,
                 "Model": 1,
@@ -66,6 +76,20 @@
         }
     },
     "classes": {
+        "ActiveModelSerializer": {
+            "name": "ActiveModelSerializer",
+            "shortname": "ActiveModelSerializer",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "Backbone.OnFire",
+            "file": "lib/active_model_serializer.js",
+            "line": 2,
+            "description": "Serializer that works seemlessly with Rails and\n[ActiveModel Serializers](https://github.com/rails-api/active_model_serializers).",
+            "is_constructor": 1
+        },
         "Application": {
             "name": "Application",
             "shortname": "Application",
@@ -102,7 +126,7 @@
             "extension_for": [],
             "module": "Backbone.OnFire",
             "file": "lib/model.js",
-            "line": 15,
+            "line": 21,
             "description": "Backbone.OnFire models always parse when instantiated\nto ensure relationships are instantiated.",
             "is_constructor": 1,
             "params": [
@@ -147,6 +171,72 @@
         }
     },
     "classitems": [
+        {
+            "file": "lib/active_model_serializer.js",
+            "line": 11,
+            "description": "Serializes the model and it's nested attributes for\npersisting to the server. Nested relationship keys\nwill be suffixed with `_attributes` for transparent\ncompatability with [nested attributes](http://api.rubyonrails.org/classes/ActiveRecord/NestedAttributes/ClassMethods.html)",
+            "itemtype": "method",
+            "name": "serialize",
+            "return": {
+                "description": "serialized model JSON.",
+                "type": "Object"
+            },
+            "class": "ActiveModelSerializer"
+        },
+        {
+            "file": "lib/active_model_serializer.js",
+            "line": 37,
+            "description": "Deserialize the model data from the server to be parsed\nby the model. Automatically instantiates related models\nstated in the `relationships` object.",
+            "itemtype": "method",
+            "name": "deserialize",
+            "return": {
+                "description": "JSON data with instantiated relationship attributes.",
+                "type": "Object"
+            },
+            "class": "ActiveModelSerializer"
+        },
+        {
+            "file": "lib/active_model_serializer.js",
+            "line": 54,
+            "description": "Converts nested relationship attributes to JSON.",
+            "itemtype": "method",
+            "name": "toJSON",
+            "return": {
+                "description": "Model JSON with relationship attributes as JSON as well.",
+                "type": "Object"
+            },
+            "class": "ActiveModelSerializer"
+        },
+        {
+            "file": "lib/active_model_serializer.js",
+            "line": 77,
+            "description": "Instantiate a relationship of a given type with the given attributes.",
+            "itemtype": "method",
+            "name": "instatiateRelationship",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "attributes",
+                    "description": "Parent model attributes containing child attributes.",
+                    "type": "Object"
+                },
+                {
+                    "name": "key",
+                    "description": "Child attributes key.",
+                    "type": "String"
+                },
+                {
+                    "name": "Class",
+                    "description": "Constructor function to instantiate with child attributes.",
+                    "type": "Function"
+                }
+            ],
+            "example": [
+                "\n    modelInstance.instantiateRelationship({ user: { id: 1 }}, \"user\", App.Models.User);"
+            ],
+            "class": "ActiveModelSerializer"
+        },
         {
             "file": "lib/application.js",
             "line": 11,
@@ -442,7 +532,17 @@
         },
         {
             "file": "lib/model.js",
-            "line": 46,
+            "line": 13,
+            "description": "Default relationships object.",
+            "itemtype": "property",
+            "name": "relationships",
+            "type": "Object",
+            "default": "{}",
+            "class": "Model"
+        },
+        {
+            "file": "lib/model.js",
+            "line": 54,
             "description": "Placeholder method to allow custom deserialization of\nserver side JSON payload after it is parsed.",
             "itemtype": "method",
             "name": "deserialize",
@@ -461,7 +561,7 @@
         },
         {
             "file": "lib/model.js",
-            "line": 58,
+            "line": 66,
             "description": "Placeholder method to allow custom serialization of\nclient side JSON payload.",
             "itemtype": "method",
             "name": "serialize",
@@ -480,35 +580,7 @@
         },
         {
             "file": "lib/model.js",
-            "line": 70,
-            "description": "Instantiate a relationship of a given type with the given attributes.",
-            "itemtype": "method",
-            "name": "instatiateRelationship",
-            "params": [
-                {
-                    "name": "attributes",
-                    "description": "Parent model attributes containing child attributes.",
-                    "type": "Object"
-                },
-                {
-                    "name": "key",
-                    "description": "Child attributes key.",
-                    "type": "String"
-                },
-                {
-                    "name": "Class",
-                    "description": "Constructor function to instantiate with child attributes.",
-                    "type": "Function"
-                }
-            ],
-            "example": [
-                "\n    modelInstance.instantiateRelationship({ user: { id: 1 }}, \"user\", App.Models.User);"
-            ],
-            "class": "Model"
-        },
-        {
-            "file": "lib/model.js",
-            "line": 87,
+            "line": 78,
             "description": "Placeholder method to allow manipulation of\nserver side JSON payload before it is parsed.",
             "itemtype": "method",
             "name": "serialize",
@@ -527,7 +599,7 @@
         },
         {
             "file": "lib/model.js",
-            "line": 99,
+            "line": 90,
             "description": "Automatically instantiate relationships when data\nis set/changed if relationships are defined.",
             "itemtype": "method",
             "name": "parse",
@@ -546,7 +618,7 @@
         },
         {
             "file": "lib/model.js",
-            "line": 118,
+            "line": 105,
             "description": "Convenience method to determine if the model\nhas been persisted. This method is the inverse\nof `isNew`.",
             "itemtype": "method",
             "name": "isPersisted",
@@ -729,7 +801,7 @@
     "warnings": [
         {
             "message": "replacing incorrect tag: params with param",
-            "line": " lib/model.js:15"
+            "line": " lib/model.js:21"
         }
     ]
 }

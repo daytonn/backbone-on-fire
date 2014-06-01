@@ -41,6 +41,8 @@
         <div id="api-tabview-panel">
             <ul id="api-classes" class="apis classes">
             
+                <li><a class="type" href="../classes/ActiveModelSerializer.html">ActiveModelSerializer</a></li>
+            
                 <li><a class="type" href="../classes/Application.html">Application</a></li>
             
                 <li><a class="type" href="../classes/Controller.html">Controller</a></li>
@@ -72,7 +74,7 @@
 
     
         <div class="foundat">
-            Defined in: <a href="../files/lib_model.js.html#l15"><code>lib&#x2F;model.js:15</code></a>
+            Defined in: <a href="../files/lib_model.js.html#l21"><code>lib&#x2F;model.js:21</code></a>
         </div>
     
 
@@ -125,6 +127,20 @@ to ensure relationships are instantiated.</p>
 
 
 
+    <div class="index-section properties">
+        <h3>Properties</h3>
+
+        <ul class="index-list properties">
+            
+                <li class="index-item property">
+                    <a href="#property_relationships">relationships</a>
+
+                    
+                </li>
+            
+        </ul>
+    </div>
+
 
 
 
@@ -159,13 +175,6 @@ to ensure relationships are instantiated.</p>
 
                     
                         <span class="flag static">static</span>
-                    
-                    
-                </li>
-            
-                <li class="index-item method">
-                    <a href="#method_instatiateRelationship">instatiateRelationship</a>
-
                     
                     
                 </li>
@@ -208,6 +217,69 @@ to ensure relationships are instantiated.</p>
 
 <div class="class-detail">
 
+
+    <div class="properties-detail">
+        <h2>Properties</h2>
+
+        
+            <a name="property_relationships" class="anchor-link"></a>
+<div class="property item">
+    <h3 class="name"><code>relationships</code>
+    <span class="type">Object</span>
+
+    
+
+    
+
+    
+
+    
+
+    </h3>
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/lib_model.js.html#l13"><code>lib&#x2F;model.js:13</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="extended-detail">
+        <div class="description">
+            <p>Default relationships object.</p>
+
+        </div>
+
+        
+            <p class="default"><strong>Default:</strong> <span class="default-value">{}</span></p>
+        
+
+        
+
+        
+    </div>
+</div>
+
+        
+
+        <div class="no-visible-items-message">
+            <p>There are no properties that match your current filter settings. You can change your filter settings in the index section on this page. <a href="#index" class="index-jump-link">index</a></p>
+        </div>
+
+    </div>
 
 
 
@@ -266,7 +338,7 @@ to ensure relationships are instantiated.</p>
             
         
         
-        <a href="../files/lib_model.js.html#l15"><code>lib&#x2F;model.js:15</code></a>
+        <a href="../files/lib_model.js.html#l21"><code>lib&#x2F;model.js:21</code></a>
         
         </p>
 
@@ -403,7 +475,7 @@ Useful, sometimes.</p>
             
         
         
-        <a href="../files/lib_model.js.html#l46"><code>lib&#x2F;model.js:46</code></a>
+        <a href="../files/lib_model.js.html#l54"><code>lib&#x2F;model.js:54</code></a>
         
         </p>
 
@@ -577,154 +649,6 @@ properties of the model</p>
 </div>
 
         
-            <a name="method_instatiateRelationship" class="anchor-link"></a>
-<div class="method item">
-    <h3 class="name"><code>instatiateRelationship</code>
-
-    
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-            
-                <li class="arg">
-                    
-                        <code>attributes</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>key</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>Class</code>
-                    
-                </li>
-            
-            </ul><span class="paren">)</span>
-        </div>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    </h3>
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/lib_model.js.html#l70"><code>lib&#x2F;model.js:70</code></a>
-        
-        </p>
-
-
-        
-
-        
-    </div>
-
-    <div class="extended-detail">
-
-        <div class="description">
-            <p>Instantiate a relationship of a given type with the given attributes.</p>
-
-        </div>
-
-        
-            <div class="params">
-                <h4>Parameters:</h4>
-
-                <ul class="params-list">
-                
-                    <li class="param">
-                        
-                            <code class="param-name">attributes</code>
-                            <span class="type">Object</span>
-                        
-
-                        
-
-                        <div class="param-description">
-                            <p>Parent model attributes containing child attributes.</p>
-
-                        </div>
-
-                        
-                    </li>
-                
-                    <li class="param">
-                        
-                            <code class="param-name">key</code>
-                            <span class="type">String</span>
-                        
-
-                        
-
-                        <div class="param-description">
-                            <p>Child attributes key.</p>
-
-                        </div>
-
-                        
-                    </li>
-                
-                    <li class="param">
-                        
-                            <code class="param-name">Class</code>
-                            <span class="type">Function</span>
-                        
-
-                        
-
-                        <div class="param-description">
-                            <p>Constructor function to instantiate with child attributes.</p>
-
-                        </div>
-
-                        
-                    </li>
-                
-                </ul>
-            </div>
-        
-
-        
-
-        
-            <div class="example">
-                <h4>Example:</h4>
-
-                <div class="example-content">
-                    <pre class="code prettyprint"><code>modelInstance.instantiateRelationship({ user: { id: 1 }}, &quot;user&quot;, App.Models.User);</code></pre>
-
-                </div>
-            </div>
-        
-    </div>
-</div>
-
-        
             <a name="method_isPersisted" class="anchor-link"></a>
 <div class="method item">
     <h3 class="name"><code>isPersisted</code>
@@ -764,7 +688,7 @@ properties of the model</p>
             
         
         
-        <a href="../files/lib_model.js.html#l118"><code>lib&#x2F;model.js:118</code></a>
+        <a href="../files/lib_model.js.html#l105"><code>lib&#x2F;model.js:105</code></a>
         
         </p>
 
@@ -855,7 +779,7 @@ of <code>isNew</code>.</p>
             
         
         
-        <a href="../files/lib_model.js.html#l99"><code>lib&#x2F;model.js:99</code></a>
+        <a href="../files/lib_model.js.html#l90"><code>lib&#x2F;model.js:90</code></a>
         
         </p>
 
@@ -969,7 +893,7 @@ is set/changed if relationships are defined.</p>
             
         
         
-        <a href="../files/lib_model.js.html#l58"><code>lib&#x2F;model.js:58</code></a>
+        <a href="../files/lib_model.js.html#l66"><code>lib&#x2F;model.js:66</code></a>
         
         </p>
 
@@ -1083,7 +1007,7 @@ client side JSON payload.</p>
             
         
         
-        <a href="../files/lib_model.js.html#l87"><code>lib&#x2F;model.js:87</code></a>
+        <a href="../files/lib_model.js.html#l78"><code>lib&#x2F;model.js:78</code></a>
         
         </p>
 

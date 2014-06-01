@@ -1,70 +1,60 @@
 describe("Model", function() {
   var TestModel;
-  var ChildModel;
-  var ChildCollection;
   var data;
   var subject;
-  var requests;
 
   beforeEach(function() {
-    var xhr = sinon.useFakeXMLHttpRequest();
-    requests = [];
-    xhr.onCreate = function(xhr) {
-      requests.push(xhr);
-    };
-    ChildModel = Backbone.OnFire.Model.extend();
-    ChildCollection = Backbone.Collection.extend();
-    TestModel = Backbone.OnFire.Model.extend({
-      urlRoot: "http://localhost:9876/debug.html#save",
-      relationships: {
-        first_child: ChildModel,
-        second_child: ChildModel,
-        child_collection: ChildCollection
-      }
-    });
-    data = { first_child: { id: 1 }};
-    subject = new TestModel();
+    TestModel = Backbone.OnFire.Model.extend();
+    data = { foo: "bar" };
+    subject = new TestModel;
   });
 
   it("has a default relationships object", function() {
-    TestModel = Backbone.OnFire.Model.extend();
-    subject = new TestModel;
     expect(subject.relationships).to.be.like({});
   });
 
-  describe("deserialize", function() {
-    it("has a default deserialize method", function() {
-      expect(subject.deserialize).to.be.function;
+  describe("constructor", function() {
+    var options;
+    beforeEach(function() {
+      options = {};
+      subject = new TestModel({}, options);
     });
 
-    it("returns the data passed to it", function() {
+    it("sets parse to true", function() {
+      expect(options.parse).to.be.true;
+    });
+  });
+
+  describe("deserialize", function() {
+    it("returns the data passed in", function() {
       expect(subject.deserialize(data)).to.equal(data);
     });
   });
 
-  describe("instantiateRelationship", function() {
-    it("wraps the given attribute", function() {
-      subject.instantiateRelationship(data, "first_child", ChildModel);
-      expect(data.first_child.constructor).to.equal(ChildModel);
+  describe("serialize", function() {
+    it("returns the model json", function() {
+      expect(subject.serialize()).to.be.like(subject.toJSON());
+    });
+  });
+
+  describe("preParse", function() {
+    it("returns the data passed in", function() {
+      expect(subject.preParse(data)).to.equal(data);
     });
   });
 
   describe("parse", function() {
     beforeEach(function() {
-      subject = new TestModel(data);
+      sinon.spy(subject, "preParse");
+      sinon.spy(subject, "deserialize");
+      subject.parse({});
     });
 
-    it("sets the default data to an empty object", function() {
-      expect(subject.parse()).to.be.like({});
-    });
-
-    it("instantiates the given relationship", function() {
-      expect(subject.get("first_child").constructor).to.equal(ChildModel);
+    it("pre-parses the data", function() {
+      expect(subject.preParse).to.have.been.called;
     });
 
     it("deserializes the data", function() {
-      sinon.spy(subject, "deserialize");
-      subject.parse(data);
       expect(subject.deserialize).to.have.been.called;
     });
   });
@@ -77,98 +67,98 @@ describe("Model", function() {
     });
   });
 
-  describe("toJSON", function() {
-    var firstChildAttributes;
-    var secondChildAttributes;
-    var childCollectionAttributes;
-    var attributes;
+  describe("extend", function() {
+    var options;
     beforeEach(function() {
-      firstChildAttributes = { id: 2, name: "my first child" };
-      secondChildAttributes = { id: 5, name: "my second child" };
-      childCollectionAttributes = [
-        { id: 6, name: "child collection 6" },
-        { id: 7, name: "child collection 7" }
-      ];
-      attributes = {
-        first_child: firstChildAttributes,
-        second_child: secondChildAttributes,
-        child_collection: childCollectionAttributes
-      };
-      subject = new TestModel(attributes);
+      options = {};
     });
 
-    it("serializes the relationships", function() {
-      var json = subject.toJSON();
-      expect(json.first_child).to.be.like(firstChildAttributes);
-      expect(json.second_child).to.be.like(secondChildAttributes);
-      expect(json.child_collection).to.be.like(childCollectionAttributes);
-    });
-
-    describe("with custom toJSON method", function() {
+    describe("with serializer", function() {
+      var serializer;
       beforeEach(function() {
-        TestModel = Backbone.OnFire.Model.extend({
-          urlRoot: "http://localhost:9876/debug.html#save",
-          relationships: {
-            first_child: ChildModel,
-            second_child: ChildModel,
-            child_collection: ChildCollection
-          },
-          toJSON: function() {
-            return { foo: "bar" };
-          }
+        serializer = {
+          serialize: sinon.spy(),
+          deserialize: sinon.spy(),
+          toJSON: sinon.spy()
+        };
+        options.serializer = serializer;
+        TestModel = Backbone.OnFire.Model.extend(options);
+        subject = new TestModel;
+      });
+
+      it("sets the serializer methods", function() {
+        expect(subject.serialize).to.equal(serializer.serialize);
+        expect(subject.deserialize).to.equal(serializer.deserialize);
+        expect(subject.toJSON).to.equal(serializer.toJSON);
+      });
+
+      describe("with serializer and specific serialize methods", function() {
+        var deserialize;
+        var serialize;
+        var toJSON;
+        beforeEach(function() {
+          serializer = {
+            serialize: function() {
+              var json = this.toJSON();
+              json.serializer_serialized = true;
+              return json;
+            },
+            deserialize: function(json) {
+              json.serializer = true;
+              return json;
+            },
+            toJSON: function() {
+              var json = _.clone(this.attributes);
+              json.serializer = true;
+              return json;
+            }
+          };
+          serialize = function() {
+            var json = this.toJSON();
+            json.custom_serialized = true;
+            return json;
+          };
+          deserialize = function(json) {
+            json.deserialize = true;
+            return json;
+          };
+          toJSON = function() {
+            var json = _.clone(this.attributes);
+            json.toJSON = true;
+            return json;
+          };
+          options.serializer = serializer;
+          options.serialize = serialize;
+          options.deserialize = deserialize;
+          options.toJSON = toJSON;
+          options.parse = sinon.spy();
+          TestModel = Backbone.OnFire.Model.extend(options);
+          subject = new TestModel;
         });
-        subject = new TestModel(attributes);
+
+        it("creates a compound toJSON method", function() {
+          expect(subject.toJSON()).to.be.like({
+            serializer: true,
+            toJSON: true
+          });
+        });
+
+        it("creates a compound deserialize method", function() {
+          expect(subject.deserialize({})).to.be.like({
+            serializer: true,
+            deserialize: true
+          });
+        });
+
+        it("creates a compound serialize method", function() {
+          expect(subject.serialize()).to.be.like({
+            serializer: true,
+            toJSON: true,
+            serializer_serialized:  true,
+            custom_serialized: true
+          });
+        });
       });
-
-      it("serializes the relationships", function() {
-        var json = subject.toJSON();
-        expect(json.foo).to.equal("bar");
-        expect(json.first_child).to.be.like(firstChildAttributes);
-        expect(json.second_child).to.be.like(secondChildAttributes);
-        expect(json.child_collection).to.be.like(childCollectionAttributes);
-      });
-    });
-  });
-
-  describe("save", function() {
-    var request;
-    var firstChildAttributes;
-    var secondChildAttributes;
-    var childCollectionAttributes;
-    beforeEach(function(done) {
-      firstChildAttributes = { id: 2, name: "my first child" };
-      secondChildAttributes = { id: 5, name: "my second child" };
-      childCollectionAttributes = [
-        { id: 6, name: "child collection 6" },
-        { id: 7, name: "child collection 7" }
-      ];
-      var attributes = {
-        first_child: firstChildAttributes,
-        second_child: secondChildAttributes,
-        child_collection: childCollectionAttributes
-      };
-      subject = new TestModel(attributes);
-      subject.save().done(function() {
-        done();
-      });
-      request = requests.last();
-      request.respond(200, { "Content-Type": "application/json" }, JSON.stringify({
-        first_child: firstChildAttributes,
-        second_child: secondChildAttributes,
-        child_collection: childCollectionAttributes
-      }));
-    });
-
-    it("creates nested attributes", function() {
-      var data = JSON.parse(request.requestBody);
-
-      expect(data.first_child_attributes).to.be.like(firstChildAttributes);
-      expect(data.second_child_attributes).to.be.like(secondChildAttributes);
-      expect(data.child_collection_attributes).to.be.like(childCollectionAttributes);
-
-      expect(subject.get("first_child_attributes")).to.equal(undefined);
-      expect(subject.get("second_child_attributes")).to.equal(undefined);
-      expect(subject.get("child_collection_attributes")).to.equal(undefined);
     });
   });
 });

@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>lib/active_model_serializer.js</title>
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+    <script src="../assets/vendor/yui-min.js"></script>
+</head>
+<body>
+
+<div id="doc">
+    <header class="main-header">
+        <div class="content">
+            <div class="project-title">
+                
+                
+                
+            </div>
+            <ul class="jump-links">
+                <li><a href="#index" class="index-jump-link">index</a></li>
+                <li><a href="#top" class="top-jump-link">top</a></li>
+            </ul>
+        </div>
+    </header>
+    <div id="bd" class="main-body">
+
+        <div id="docs-sidebar" class="sidebar apidocs">
+            <div id="api-list">
+    <div id="api-tabview" class="tabview">
+        <ul class="tabs">
+            <li><a href="#api-classes">Classes</a></li>
+            <li><a href="#api-modules">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul id="api-classes" class="apis classes">
+            
+                <li><a class="type" href="../classes/ActiveModelSerializer.html">ActiveModelSerializer</a></li>
+            
+                <li><a class="type" href="../classes/Application.html">Application</a></li>
+            
+                <li><a class="type" href="../classes/Controller.html">Controller</a></li>
+            
+                <li><a class="type" href="../classes/Model.html">Model</a></li>
+            
+                <li><a class="type" href="../classes/RouteCreator.html">RouteCreator</a></li>
+            
+            </ul>
+
+            <ul id="api-modules" class="apis modules">
+            
+                <li><a class="module" href="../modules/Backbone.OnFire.html">Backbone.OnFire</a></li>
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+        </div>
+
+        <div id="docs-main" class="apidocs">
+            <div class="content container">
+                <h1 class="file-heading">File: lib/active_model_serializer.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+Backbone.OnFire.ActiveModelSerializer = (function() {
+  /**
+    Serializer that works seemlessly with Rails and
+    [ActiveModel Serializers](https://github.com/rails-api/active_model_serializers).
+
+    @class ActiveModelSerializer
+    @constructor
+  */
+  function ActiveModelSerializer() {}
+
+  /**
+    Serializes the model and it&#x27;s nested attributes for
+    persisting to the server. Nested relationship keys
+    will be suffixed with &#x60;_attributes&#x60; for transparent
+    compatability with [nested attributes](http://api.rubyonrails.org/classes/ActiveRecord/NestedAttributes/ClassMethods.html)
+
+    @method serialize
+    @return {Object} serialized model JSON.
+  */
+  ActiveModelSerializer.prototype.serialize = function() {
+    var JSON = this.toJSON();
+    if (this.relationships) {
+      _(this.relationships).each(function(Class, attr) {
+        var relationship = this.get(attr);
+        if (relationship.models) {
+          JSON[attr + &quot;_attributes&quot;] = relationship.models.map(function(model) {
+            return model.toJSON();
+          });
+        } else {
+          JSON[attr + &quot;_attributes&quot;] = relationship.toJSON();
+        }
+      }, this);
+    }
+    return JSON;
+  };
+
+  /**
+    Deserialize the model data from the server to be parsed
+    by the model. Automatically instantiates related models
+    stated in the &#x60;relationships&#x60; object.
+
+    @method deserialize
+    @return {Object} JSON data with instantiated relationship attributes.
+  */
+  ActiveModelSerializer.prototype.deserialize = function(JSON) {
+    if (this.relationships) {
+      _(this.relationships).each(function(Class, attr) {
+        instantiateRelationship(JSON, attr, Class);
+      });
+    }
+    return JSON;
+  };
+
+  /**
+    Converts nested relationship attributes to JSON.
+
+    @method toJSON
+    @return {Object} Model JSON with relationship attributes as JSON as well.
+  */
+  ActiveModelSerializer.prototype.toJSON = function(options) {
+    var attributes = _.clone(this.attributes);
+    _(this.relationships).each(function(relationshipClass, relationship) {
+      delete attributes[relationship];
+      if (this.get(relationship).models) {
+        attributes[relationship] = this.get(relationship).models.map(function(model) {
+          return _.clone(model.toJSON());
+        });
+      } else {
+        attributes[relationship] = _.clone(this.get(relationship).toJSON());
+      }
+    }, this);
+    return attributes;
+  };
+
+  return ActiveModelSerializer;
+
+  /**
+    Instantiate a relationship of a given type with the given attributes.
+
+    @method instatiateRelationship
+    @private
+    @param attributes {Object} Parent model attributes containing child attributes.
+    @param key {String} Child attributes key.
+    @param Class {Function} Constructor function to instantiate with child attributes.
+    @example
+        modelInstance.instantiateRelationship({ user: { id: 1 }}, &quot;user&quot;, App.Models.User);
+  */
+  function instantiateRelationship(attributes, key, Class) {
+    var value = attributes[key];
+    if (attributes[key] &amp;&amp; !isTypeof(Class, value)) {
+      attributes[key] = new Class(value);
+    }
+  }
+})();
+
+    </pre>
+</div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/vendor/jquery.min.js"></script>
+<script src="../assets/js/jquery-offscreen-trigger.js"></script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>
