@@ -87,23 +87,24 @@ Backbone.OnFire.ActiveModelSerializer = (function() {
     compatability with [nested attributes](http://api.rubyonrails.org/classes/ActiveRecord/NestedAttributes/ClassMethods.html)
 
     @method serialize
-    @return {Object} serialized model JSON.
+    @return {Object} serialized model json.
   */
   ActiveModelSerializer.prototype.serialize = function() {
-    var JSON = this.toJSON();
+    var json = this.toJSON();
     if (this.relationships) {
       _(this.relationships).each(function(Class, attr) {
         var relationship = this.get(attr);
+        delete json[attr];
         if (relationship.models) {
-          JSON[attr + &quot;_attributes&quot;] = relationship.models.map(function(model) {
+          json[attr + &quot;_attributes&quot;] = relationship.models.map(function(model) {
             return model.toJSON();
           });
         } else {
-          JSON[attr + &quot;_attributes&quot;] = relationship.toJSON();
+          json[attr + &quot;_attributes&quot;] = relationship.toJSON();
         }
       }, this);
     }
-    return JSON;
+    return json;
   };
 
   /**
@@ -112,36 +113,36 @@ Backbone.OnFire.ActiveModelSerializer = (function() {
     stated in the &#x60;relationships&#x60; object.
 
     @method deserialize
-    @return {Object} JSON data with instantiated relationship attributes.
+    @return {Object} json data with instantiated relationship attributes.
   */
-  ActiveModelSerializer.prototype.deserialize = function(JSON) {
+  ActiveModelSerializer.prototype.deserialize = function(json) {
     if (this.relationships) {
       _(this.relationships).each(function(Class, attr) {
-        instantiateRelationship(JSON, attr, Class);
+        instantiateRelationship(json, attr, Class);
       });
     }
-    return JSON;
+    return json;
   };
 
   /**
-    Converts nested relationship attributes to JSON.
+    Converts nested relationship attributes to json.
 
     @method toJSON
-    @return {Object} Model JSON with relationship attributes as JSON as well.
+    @return {Object} Model json with relationship attributes as json as well.
   */
   ActiveModelSerializer.prototype.toJSON = function(options) {
-    var attributes = _.clone(this.attributes);
+    var json = _.clone(this.attributes);
     _(this.relationships).each(function(relationshipClass, relationship) {
-      delete attributes[relationship];
+      delete json[relationship];
       if (this.get(relationship).models) {
-        attributes[relationship] = this.get(relationship).models.map(function(model) {
+        json[relationship] = this.get(relationship).models.map(function(model) {
           return _.clone(model.toJSON());
         });
       } else {
-        attributes[relationship] = _.clone(this.get(relationship).toJSON());
+        json[relationship] = _.clone(this.get(relationship).toJSON());
       }
     }, this);
-    return attributes;
+    return json;
   };
 
   return ActiveModelSerializer;

@@ -178,38 +178,38 @@
             "itemtype": "method",
             "name": "serialize",
             "return": {
-                "description": "serialized model JSON.",
+                "description": "serialized model json.",
                 "type": "Object"
             },
             "class": "ActiveModelSerializer"
         },
         {
             "file": "lib/active_model_serializer.js",
-            "line": 37,
+            "line": 38,
             "description": "Deserialize the model data from the server to be parsed\nby the model. Automatically instantiates related models\nstated in the `relationships` object.",
             "itemtype": "method",
             "name": "deserialize",
             "return": {
-                "description": "JSON data with instantiated relationship attributes.",
+                "description": "json data with instantiated relationship attributes.",
                 "type": "Object"
             },
             "class": "ActiveModelSerializer"
         },
         {
             "file": "lib/active_model_serializer.js",
-            "line": 54,
-            "description": "Converts nested relationship attributes to JSON.",
+            "line": 55,
+            "description": "Converts nested relationship attributes to json.",
             "itemtype": "method",
             "name": "toJSON",
             "return": {
-                "description": "Model JSON with relationship attributes as JSON as well.",
+                "description": "Model json with relationship attributes as json as well.",
                 "type": "Object"
             },
             "class": "ActiveModelSerializer"
         },
         {
             "file": "lib/active_model_serializer.js",
-            "line": 77,
+            "line": 78,
             "description": "Instantiate a relationship of a given type with the given attributes.",
             "itemtype": "method",
             "name": "instatiateRelationship",

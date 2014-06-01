@@ -63,9 +63,13 @@ describe("ActiveModelSerializer", function() {
       expect(data.second_child_attributes).to.be.like(secondChildAttributes);
       expect(data.child_collection_attributes).to.be.like(childCollectionAttributes);
 
-      expect(subject.get("first_child_attributes")).to.equal(undefined);
-      expect(subject.get("second_child_attributes")).to.equal(undefined);
-      expect(subject.get("child_collection_attributes")).to.equal(undefined);
+      expect(data.first_child).to.be.undefined;
+      expect(data.second_child).to.be.undefined;
+      expect(data.child_collection).to.be.undefined;
+
+      expect(subject.get("first_child_attributes")).to.be.undefined;
+      expect(subject.get("second_child_attributes")).to.be.undefined;
+      expect(subject.get("child_collection_attributes")).to.be.undefined;
     });
   });
 });
