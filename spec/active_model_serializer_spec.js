@@ -36,9 +36,10 @@ describe("ActiveModelSerializer", function() {
 
   describe("deserialize", function() {
     it("instantiates the given relationships", function() {
-      expect(subject.get("first_child").constructor).to.equal(ChildModel);
-      expect(subject.get("second_child").constructor).to.equal(ChildModel);
-      expect(subject.get("child_collection").constructor).to.equal(ChildCollection);
+      expect(subject.get("first_child").get("name")).to.equal("my first child");
+      expect(subject.get("second_child").get("name")).to.equal("my second child");
+      expect(subject.get("child_collection").first().get("name")).to.equal("child collection 6");
+      expect(subject.get("child_collection").last().get("name")).to.equal("child collection 7");
     });
   });
 

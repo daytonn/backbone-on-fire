@@ -77,9 +77,15 @@ describe("Model", function() {
       var serializer;
       beforeEach(function() {
         serializer = {
-          serialize: sinon.spy(),
-          deserialize: sinon.spy(),
-          toJSON: sinon.spy()
+          serialize: function() {
+            return "serializer.serialize";
+          },
+          deserialize: function() {
+            return "serializer.deserialize";
+          },
+          toJSON: function() {
+            return "serializer.toJSON";
+          }
         };
         options.serializer = serializer;
         TestModel = Backbone.OnFire.Model.extend(options);
@@ -87,78 +93,37 @@ describe("Model", function() {
       });
 
       it("sets the serializer methods", function() {
-        expect(subject.serialize).to.equal(serializer.serialize);
-        expect(subject.deserialize).to.equal(serializer.deserialize);
-        expect(subject.toJSON).to.equal(serializer.toJSON);
+        expect(subject.serialize()).to.equal("serializer.serialize");
+        expect(subject.deserialize()).to.equal("serializer.deserialize");
+        expect(subject.toJSON()).to.equal("serializer.toJSON");
+      });
+    });
+  });
+
+  describe("bindings", function() {
+    var callFunction;
+    beforeEach(function() {
+      TestModel = Backbone.OnFire.Model.extend({
+        scope: "TestModel",
+        whichScope: function() {
+          return this.scope;
+        },
+        anotherScope: function() {
+          return this.scope;
+        }
       });
 
-      describe("with serializer and specific serialize methods", function() {
-        var deserialize;
-        var serialize;
-        var toJSON;
-        beforeEach(function() {
-          serializer = {
-            serialize: function() {
-              var json = this.toJSON();
-              json.serializer_serialized = true;
-              return json;
-            },
-            deserialize: function(json) {
-              json.serializer = true;
-              return json;
-            },
-            toJSON: function() {
-              var json = _.clone(this.attributes);
-              json.serializer = true;
-              return json;
-            }
-          };
-          serialize = function() {
-            var json = this.toJSON();
-            json.custom_serialized = true;
-            return json;
-          };
-          deserialize = function(json) {
-            json.deserialize = true;
-            return json;
-          };
-          toJSON = function() {
-            var json = _.clone(this.attributes);
-            json.toJSON = true;
-            return json;
-          };
-          options.serializer = serializer;
-          options.serialize = serialize;
-          options.deserialize = deserialize;
-          options.toJSON = toJSON;
-          options.parse = sinon.spy();
-          TestModel = Backbone.OnFire.Model.extend(options);
-          subject = new TestModel;
-        });
+      callFunction = function(callback) {
+        this.scope = "callFunction";
+        return callback();
+      };
 
-        it("creates a compound toJSON method", function() {
-          expect(subject.toJSON()).to.be.like({
-            serializer: true,
-            toJSON: true
-          });
-        });
+      subject = new TestModel;
+    });
 
-        it("creates a compound deserialize method", function() {
-          expect(subject.deserialize({})).to.be.like({
-            serializer: true,
-            deserialize: true
-          });
-        });
-
-        it("creates a compound serialize method", function() {
-          expect(subject.serialize()).to.be.like({
-            serializer: true,
-            toJSON: true,
-            serializer_serialized:  true,
-            custom_serialized: true
-          });
-        });
-      });
+    it("binds all methods to the controller", function() {
+      expect(callFunction(subject.whichScope)).to.equal("TestModel");
+      expect(callFunction(subject.anotherScope)).to.equal("TestModel");
     });
   });
 });

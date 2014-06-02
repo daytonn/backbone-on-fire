@@ -91,7 +91,8 @@
 
 <div class="box intro">
     <p>Backbone.OnFire models always parse when instantiated
-to ensure relationships are instantiated.</p>
+to ensure relationships are instantiated. All methods
+are bound to the instance of the model.</p>
 
 </div>
 
@@ -171,6 +172,15 @@ to ensure relationships are instantiated.</p>
                 </li>
             
                 <li class="index-item method">
+                    <a href="#method_extend">extend</a>
+
+                    
+                        <span class="flag static">static</span>
+                    
+                    
+                </li>
+            
+                <li class="index-item method private">
                     <a href="#method_extend">extend</a>
 
                     
@@ -475,7 +485,7 @@ Useful, sometimes.</p>
             
         
         
-        <a href="../files/lib_model.js.html#l54"><code>lib&#x2F;model.js:54</code></a>
+        <a href="../files/lib_model.js.html#l58"><code>lib&#x2F;model.js:58</code></a>
         
         </p>
 
@@ -649,6 +659,124 @@ properties of the model</p>
 </div>
 
         
+            <a name="method_extend" class="anchor-link"></a>
+<div class="method item private">
+    <h3 class="name"><code>extend</code>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code class="optional">[options]</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type"><a href="../classes/Model.html" class="crosslink">Model</a></span>
+        </span>
+    
+
+    
+
+    
+        <span class="flag private">private</span>
+    
+
+    
+
+    
+        <span class="flag static">static</span>
+    
+
+    
+
+    
+
+    </h3>
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/lib_model.js.html#l122"><code>lib&#x2F;model.js:122</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="extended-detail">
+
+        <div class="description">
+            <p>Patch the extend to mixin the serializer methods if one is defined.</p>
+
+        </div>
+
+        
+            <div class="params">
+                <h4>Parameters:</h4>
+
+                <ul class="params-list">
+                
+                    <li class="param">
+                        
+                            <code class="param-name optional">[options]</code>
+                            <span class="type">Object</span>
+                            <span class="flag optional" title="This parameter is optional.">optional</span>
+                        
+
+                        
+
+                        <div class="param-description">
+                            <p>Options object to define the model.</p>
+
+                        </div>
+
+                        
+                    </li>
+                
+                </ul>
+            </div>
+        
+
+        
+            <div class="returns">
+                <h4>Returns:</h4>
+
+                <div class="returns-description">
+                    
+                        
+                            <span class="type"><a href="../classes/Model.html" class="crosslink">Model</a></span>:
+                        
+                        <p>Model class constructor</p>
+
+                    
+                </div>
+            </div>
+        
+
+        
+    </div>
+</div>
+
+        
             <a name="method_isPersisted" class="anchor-link"></a>
 <div class="method item">
     <h3 class="name"><code>isPersisted</code>
@@ -688,7 +816,7 @@ properties of the model</p>
             
         
         
-        <a href="../files/lib_model.js.html#l105"><code>lib&#x2F;model.js:105</code></a>
+        <a href="../files/lib_model.js.html#l109"><code>lib&#x2F;model.js:109</code></a>
         
         </p>
 
@@ -779,7 +907,7 @@ of <code>isNew</code>.</p>
             
         
         
-        <a href="../files/lib_model.js.html#l90"><code>lib&#x2F;model.js:90</code></a>
+        <a href="../files/lib_model.js.html#l94"><code>lib&#x2F;model.js:94</code></a>
         
         </p>
 
@@ -893,7 +1021,7 @@ is set/changed if relationships are defined.</p>
             
         
         
-        <a href="../files/lib_model.js.html#l66"><code>lib&#x2F;model.js:66</code></a>
+        <a href="../files/lib_model.js.html#l70"><code>lib&#x2F;model.js:70</code></a>
         
         </p>
 
@@ -1007,7 +1135,7 @@ client side JSON payload.</p>
             
         
         
-        <a href="../files/lib_model.js.html#l78"><code>lib&#x2F;model.js:78</code></a>
+        <a href="../files/lib_model.js.html#l82"><code>lib&#x2F;model.js:82</code></a>
         
         </p>
 

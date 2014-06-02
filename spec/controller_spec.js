@@ -49,6 +49,33 @@ describe("Controller", function() {
     });
   });
 
+  describe("bindings", function() {
+    var callFunction;
+    beforeEach(function() {
+      var TestController = Backbone.OnFire.Controller.extend("Test", {
+        scope: "TestController",
+        whichScope: function() {
+          return this.scope;
+        },
+        anotherScope: function() {
+          return this.scope;
+        }
+      });
+
+      callFunction = function(callback) {
+        this.scope = "callFunction";
+        return callback();
+      };
+
+      subject = new TestController;
+    });
+
+    it("binds all methods to the controller", function() {
+      expect(callFunction(subject.whichScope)).to.equal("TestController");
+      expect(callFunction(subject.anotherScope)).to.equal("TestController");
+    });
+  });
+
   describe("event delegation", function() {
     var dispatcher;
     var handler;

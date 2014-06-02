@@ -92,7 +92,8 @@
     relationships: {},
     /**
       Backbone.OnFire models always parse when instantiated
-      to ensure relationships are instantiated.
+      to ensure relationships are instantiated. All methods
+      are bound to the instance of the model.
 
       @class Model
       @constructor
@@ -121,6 +122,9 @@
       options = options || {};
       options.parse = true;
       Backbone.Model.call(this, attributes, options);
+      _.functions(this).each(function(method) {
+        _.bindAll(this, method);
+      }, this);
     },
 
     /**
@@ -187,42 +191,19 @@
     }
   });
 
+  /**
+    Patch the extend to mixin the serializer methods if one is defined.
+
+    @static
+    @private
+    @method extend
+    @param [options] {Object} Options object to define the model.
+    @return {Model} Model class constructor
+  */
   var extend = Backbone.OnFire.Model.extend;
   Backbone.OnFire.Model.extend = function(options) {
     options = options || {};
-    if (options.serializer) {
-      if (options.serialize) {
-        var serialize = options.serialize;
-        options.serialize = function() {
-          var serializerJSON = options.serializer.serialize.call(this);
-          var customSerializeJSON = serialize.call(this);
-          return _.extend(serializerJSON, customSerializeJSON);
-        };
-      } else {
-        options.serialize = options.serializer.serialize;
-      }
-
-      if (options.deserialize) {
-        var deserialize = options.deserialize;
-        options.deserialize = function(json) {
-          var serializerJSON = options.serializer.deserialize.call(this, json);
-          return deserialize.call(this, serializerJSON);
-        };
-      } else {
-        options.deserialize = options.serializer.deserialize;
-      }
-
-      if (options.toJSON) {
-        var toJSON = options.toJSON;
-        options.toJSON = function() {
-          var serializerJSON = options.serializer.toJSON.apply(this);
-          var customJSON = toJSON.apply(this);
-          return _.extend(serializerJSON, customJSON);
-        }
-      } else {
-        options.toJSON = options.serializer.toJSON;
-      }
-    }
+    if (options.serializer) _.extend(options, options.serializer);
     return extend.apply(Backbone.OnFire.Model, arguments);
   };
 })();

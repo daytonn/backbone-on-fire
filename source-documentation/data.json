@@ -127,7 +127,7 @@
             "module": "Backbone.OnFire",
             "file": "lib/model.js",
             "line": 21,
-            "description": "Backbone.OnFire models always parse when instantiated\nto ensure relationships are instantiated.",
+            "description": "Backbone.OnFire models always parse when instantiated\nto ensure relationships are instantiated. All methods\nare bound to the instance of the model.",
             "is_constructor": 1,
             "params": [
                 {
@@ -318,7 +318,7 @@
         },
         {
             "file": "lib/application.js",
-            "line": 103,
+            "line": 107,
             "description": "Initialize the application and start the history.",
             "itemtype": "method",
             "name": "start",
@@ -335,7 +335,7 @@
         },
         {
             "file": "lib/application.js",
-            "line": 120,
+            "line": 124,
             "description": "Create a Backbone On Fire application.",
             "itemtype": "method",
             "name": "create",
@@ -446,9 +446,10 @@
         {
             "file": "lib/controller.js",
             "line": 81,
-            "description": "Convenience method to create vanilla Controller constructors.",
+            "description": "Convenience method to create vanilla Controller constructors.\nAll controller methods are bound when the controller is instantiated.",
             "access": "private",
             "tagname": "",
+            "is_constructor": 1,
             "itemtype": "method",
             "name": "defaultController",
             "params": [
@@ -466,7 +467,7 @@
         },
         {
             "file": "lib/controller.js",
-            "line": 98,
+            "line": 103,
             "description": "Convenience method to extend a given Controller\nprototype with an options object.",
             "access": "private",
             "tagname": "",
@@ -489,7 +490,7 @@
         },
         {
             "file": "lib/controller.js",
-            "line": 114,
+            "line": 119,
             "itemtype": "method",
             "name": "extend",
             "static": 1,
@@ -542,7 +543,7 @@
         },
         {
             "file": "lib/model.js",
-            "line": 54,
+            "line": 58,
             "description": "Placeholder method to allow custom deserialization of\nserver side JSON payload after it is parsed.",
             "itemtype": "method",
             "name": "deserialize",
@@ -561,7 +562,7 @@
         },
         {
             "file": "lib/model.js",
-            "line": 66,
+            "line": 70,
             "description": "Placeholder method to allow custom serialization of\nclient side JSON payload.",
             "itemtype": "method",
             "name": "serialize",
@@ -580,7 +581,7 @@
         },
         {
             "file": "lib/model.js",
-            "line": 78,
+            "line": 82,
             "description": "Placeholder method to allow manipulation of\nserver side JSON payload before it is parsed.",
             "itemtype": "method",
             "name": "serialize",
@@ -599,7 +600,7 @@
         },
         {
             "file": "lib/model.js",
-            "line": 90,
+            "line": 94,
             "description": "Automatically instantiate relationships when data\nis set/changed if relationships are defined.",
             "itemtype": "method",
             "name": "parse",
@@ -618,13 +619,36 @@
         },
         {
             "file": "lib/model.js",
-            "line": 105,
+            "line": 109,
             "description": "Convenience method to determine if the model\nhas been persisted. This method is the inverse\nof `isNew`.",
             "itemtype": "method",
             "name": "isPersisted",
             "return": {
                 "description": "Wheter or not the model has been persisted.",
                 "type": "Boolean"
+            },
+            "class": "Model"
+        },
+        {
+            "file": "lib/model.js",
+            "line": 122,
+            "description": "Patch the extend to mixin the serializer methods if one is defined.",
+            "static": 1,
+            "access": "private",
+            "tagname": "",
+            "itemtype": "method",
+            "name": "extend",
+            "params": [
+                {
+                    "name": "options",
+                    "description": "Options object to define the model.",
+                    "type": "Object",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "Model class constructor",
+                "type": "Model"
             },
             "class": "Model"
         },
