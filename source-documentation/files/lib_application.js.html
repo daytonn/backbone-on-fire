@@ -127,7 +127,9 @@
     initialize: function() { return void(0); },
     /**
       Create a Controller constructor and an
-      instance attached to the application object
+      instance attached to the application object.
+      All Controller methods will be bound to
+      it&#x27;s context when instantiated.
 
       @method createController
       @static
@@ -151,7 +153,7 @@
 
             edit: function(id) {
               // do edit stuff
-            },
+            }
           });
     */
     createController: function(name, options) {
@@ -172,8 +174,28 @@
       }
     },
 
-    createModel: function(name, options) {
+    /**
+      Create a Model constructor.
 
+      @method createModel
+      @static
+      @param name {String} Model name
+      @param [options] {Object} Options object which
+      defines methods and properties of the
+      Model constructor.
+      @return {Model} The Model constructor function
+
+      @example
+          App.createModel(&quot;Post&quot;, {
+            urlRoot: &quot;posts&quot;
+          });
+    */
+    createModel: function(name, options, classProperties) {
+      var baseName = name.replace(/(m|M)odel$/, &#x27;&#x27;);
+      classProperties = classProperties || {};
+      _.extend(classProperties, { root: baseName.toLowerCase() });
+      // TODO create Collection automatically
+      return this.Models[baseName.constantize()] = Backbone.OnFire.Model.extend(options, classProperties);
     },
 
     /**

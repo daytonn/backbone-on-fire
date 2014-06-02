@@ -77,7 +77,7 @@ describe("Application", function() {
       expect(controller.constructor.name).to.equal("Controller");
     });
 
-    it("assings the controller constructor to the Controllers namespace", function() {
+    it("assigns the controller constructor to the Controllers namespace", function() {
       expect(subject.Controllers.Test).to.be.defined;
     });
 
@@ -106,6 +106,23 @@ describe("Application", function() {
         subject.createController("ApplicationController");
         expect(subject.ApplicationController).to.be.undefined;
       });
+    });
+  });
+
+  describe("createModel", function() {
+    var model;
+    beforeEach(function() {
+      model = subject.createModel("TestModel", {
+        urlRoot: "tests"
+      });
+    });
+
+    it("assigns the model constructor to the Models namespace", function() {
+      expect(subject.Models.Test).to.equal(model);
+    });
+
+    it("sets the root on the class", function() {
+      expect(subject.Models.Test.root).to.equal("test");
     });
   });
 });

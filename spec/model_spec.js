@@ -121,7 +121,7 @@ describe("Model", function() {
       subject = new TestModel;
     });
 
-    it("binds all methods to the controller", function() {
+    it("binds all methods to the model", function() {
       expect(callFunction(subject.whichScope)).to.equal("TestModel");
       expect(callFunction(subject.anotherScope)).to.equal("TestModel");
     });

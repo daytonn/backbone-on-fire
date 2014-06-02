@@ -15,6 +15,7 @@ gulp.task('compile-app', function() {
     'lib/namespace.js',
     'lib/active_model_serializer.js',
     'lib/route_creator.js',
+    'lib/collection.js',
     'lib/model.js',
     'lib/controller.js',
     'lib/application.js'

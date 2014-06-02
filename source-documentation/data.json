@@ -290,7 +290,7 @@
         {
             "file": "lib/application.js",
             "line": 56,
-            "description": "Create a Controller constructor and an\ninstance attached to the application object",
+            "description": "Create a Controller constructor and an\ninstance attached to the application object.\nAll Controller methods will be bound to\nit's context when instantiated.",
             "itemtype": "method",
             "name": "createController",
             "static": 1,
@@ -312,13 +312,42 @@
                 "type": "Controller"
             },
             "example": [
-                "\n    App.createController(\"PostsController\", {\n      route: ['show/:id', 'edit/:id'],\n\n      index: function() {\n        // do index stuff\n      },\n\n      show: function(id) {\n        // do show stuff\n      },\n\n      edit: function(id) {\n        // do edit stuff\n      },\n    });"
+                "\n    App.createController(\"PostsController\", {\n      route: ['show/:id', 'edit/:id'],\n\n      index: function() {\n        // do index stuff\n      },\n\n      show: function(id) {\n        // do show stuff\n      },\n\n      edit: function(id) {\n        // do edit stuff\n      }\n    });"
             ],
             "class": "Application"
         },
         {
             "file": "lib/application.js",
-            "line": 107,
+            "line": 105,
+            "description": "Create a Model constructor.",
+            "itemtype": "method",
+            "name": "createModel",
+            "static": 1,
+            "params": [
+                {
+                    "name": "name",
+                    "description": "Model name",
+                    "type": "String"
+                },
+                {
+                    "name": "options",
+                    "description": "Options object which\ndefines methods and properties of the\nModel constructor.",
+                    "type": "Object",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "The Model constructor function",
+                "type": "Model"
+            },
+            "example": [
+                "\n    App.createModel(\"Post\", {\n      urlRoot: \"posts\"\n    });"
+            ],
+            "class": "Application"
+        },
+        {
+            "file": "lib/application.js",
+            "line": 129,
             "description": "Initialize the application and start the history.",
             "itemtype": "method",
             "name": "start",
@@ -335,7 +364,7 @@
         },
         {
             "file": "lib/application.js",
-            "line": 124,
+            "line": 146,
             "description": "Create a Backbone On Fire application.",
             "itemtype": "method",
             "name": "create",
