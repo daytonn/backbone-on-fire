@@ -86,7 +86,7 @@
             "extension_for": [],
             "module": "Backbone.OnFire",
             "file": "lib/active_model_serializer.js",
-            "line": 2,
+            "line": 3,
             "description": "Serializer that works seemlessly with Rails and\n[ActiveModel Serializers](https://github.com/rails-api/active_model_serializers).",
             "is_constructor": 1
         },
@@ -126,7 +126,7 @@
             "extension_for": [],
             "module": "Backbone.OnFire",
             "file": "lib/model.js",
-            "line": 21,
+            "line": 22,
             "description": "Backbone.OnFire models always parse when instantiated\nto ensure relationships are instantiated. All methods\nare bound to the instance of the model.",
             "is_constructor": 1,
             "params": [
@@ -173,7 +173,7 @@
     "classitems": [
         {
             "file": "lib/active_model_serializer.js",
-            "line": 11,
+            "line": 12,
             "description": "Serializes the model and it's nested attributes for\npersisting to the server. Nested relationship keys\nwill be suffixed with `_attributes` for transparent\ncompatability with [nested attributes](http://api.rubyonrails.org/classes/ActiveRecord/NestedAttributes/ClassMethods.html)",
             "itemtype": "method",
             "name": "serialize",
@@ -185,7 +185,7 @@
         },
         {
             "file": "lib/active_model_serializer.js",
-            "line": 38,
+            "line": 39,
             "description": "Deserialize the model data from the server to be parsed\nby the model. Automatically instantiates related models\nstated in the `relationships` object.",
             "itemtype": "method",
             "name": "deserialize",
@@ -197,7 +197,7 @@
         },
         {
             "file": "lib/active_model_serializer.js",
-            "line": 55,
+            "line": 56,
             "description": "Converts nested relationship attributes to json.",
             "itemtype": "method",
             "name": "toJSON",
@@ -209,7 +209,7 @@
         },
         {
             "file": "lib/active_model_serializer.js",
-            "line": 78,
+            "line": 79,
             "description": "Instantiate a relationship of a given type with the given attributes.",
             "itemtype": "method",
             "name": "instatiateRelationship",
@@ -514,7 +514,7 @@
         },
         {
             "file": "lib/model.js",
-            "line": 2,
+            "line": 3,
             "static": 1,
             "itemtype": "method",
             "name": "extend",
@@ -533,7 +533,7 @@
         },
         {
             "file": "lib/model.js",
-            "line": 13,
+            "line": 14,
             "description": "Default relationships object.",
             "itemtype": "property",
             "name": "relationships",
@@ -543,7 +543,7 @@
         },
         {
             "file": "lib/model.js",
-            "line": 58,
+            "line": 59,
             "description": "Placeholder method to allow custom deserialization of\nserver side JSON payload after it is parsed.",
             "itemtype": "method",
             "name": "deserialize",
@@ -562,7 +562,7 @@
         },
         {
             "file": "lib/model.js",
-            "line": 70,
+            "line": 71,
             "description": "Placeholder method to allow custom serialization of\nclient side JSON payload.",
             "itemtype": "method",
             "name": "serialize",
@@ -581,7 +581,7 @@
         },
         {
             "file": "lib/model.js",
-            "line": 82,
+            "line": 83,
             "description": "Placeholder method to allow manipulation of\nserver side JSON payload before it is parsed.",
             "itemtype": "method",
             "name": "serialize",
@@ -600,7 +600,7 @@
         },
         {
             "file": "lib/model.js",
-            "line": 94,
+            "line": 95,
             "description": "Automatically instantiate relationships when data\nis set/changed if relationships are defined.",
             "itemtype": "method",
             "name": "parse",
@@ -619,7 +619,7 @@
         },
         {
             "file": "lib/model.js",
-            "line": 109,
+            "line": 110,
             "description": "Convenience method to determine if the model\nhas been persisted. This method is the inverse\nof `isNew`.",
             "itemtype": "method",
             "name": "isPersisted",
@@ -631,7 +631,7 @@
         },
         {
             "file": "lib/model.js",
-            "line": 122,
+            "line": 123,
             "description": "Patch the extend to mixin the serializer methods if one is defined.",
             "static": 1,
             "access": "private",
@@ -825,7 +825,7 @@
     "warnings": [
         {
             "message": "replacing incorrect tag: params with param",
-            "line": " lib/model.js:21"
+            "line": " lib/model.js:22"
         }
     ]
 }
