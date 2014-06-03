@@ -2,6 +2,8 @@ describe("Model", function() {
   var TestModel;
   var data;
   var subject;
+  var serializer1;
+  var serializer2;
 
   beforeEach(function() {
     TestModel = Backbone.OnFire.Model.extend();
@@ -11,6 +13,10 @@ describe("Model", function() {
 
   it("has a default relationships object", function() {
     expect(subject.relationships).to.be.like({});
+  });
+
+  it("has a default serializers array", function() {
+    expect(subject.serializers).to.be.like([]);
   });
 
   describe("constructor", function() {
@@ -124,6 +130,95 @@ describe("Model", function() {
     it("binds all methods to the model", function() {
       expect(callFunction(subject.whichScope)).to.equal("TestModel");
       expect(callFunction(subject.anotherScope)).to.equal("TestModel");
+    });
+  });
+
+  describe("serializers", function() {
+    beforeEach(function() {
+      serializer1 = {
+        serialize: function(json) {
+          json.serializer1 = true;
+          return json;
+        },
+        deserialize: function(json) {
+          json.deserializer1 = true;
+          return json;
+        },
+        toJSON: function(json) {
+          json.toJSON1 = true;
+          return json;
+        }
+      };
+      serializer2 = {
+        serialize: function(json) {
+          json.serializer2 = true;
+          return json;
+        },
+        deserialize: function(json) {
+          json.deserializer2 = true;
+          return json;
+        },
+        toJSON: function(json) {
+          json.toJSON2 = true;
+          return json;
+        }
+      };
+      TestModel = Backbone.OnFire.Model.extend({
+        serializers: [serializer1, serializer2]
+      });
+      data = { foo: "bar" };
+      subject = new TestModel(data);
+    });
+
+    describe("serialize", function() {
+      var data;
+      beforeEach(function() {
+        data = subject.serialize();
+      });
+
+      it("calls each serializer", function() {
+        expect(data).to.be.like({
+          foo: "bar",
+          deserializer1: true,
+          deserializer2: true,
+          toJSON1: true,
+          toJSON2: true,
+          serializer1: true,
+          serializer2: true
+        });
+      });
+    });
+
+    describe("deserialize", function() {
+      var data;
+      beforeEach(function() {
+        data = subject.deserialize({ foo: "bar" });
+      });
+
+      it("calls each serializer", function() {
+        expect(data).to.be.like({
+          foo: "bar",
+          deserializer1: true,
+          deserializer2: true
+        });
+      });
+    });
+
+    describe("toJSON", function() {
+      var data;
+      beforeEach(function() {
+        data = subject.toJSON();
+      });
+
+      it("calls each serializer", function() {
+        expect(data).to.be.like({
+          foo: "bar",
+          deserializer1: true,
+          deserializer2: true,
+          toJSON1: true,
+          toJSON2: true
+        });
+      });
     });
   });
 });

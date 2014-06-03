@@ -300,7 +300,7 @@
             
         
         
-        <a href="../files/lib_active_model_serializer.js.html#l39"><code>lib&#x2F;active_model_serializer.js:39</code></a>
+        <a href="../files/lib_active_model_serializer.js.html#l47"><code>lib&#x2F;active_model_serializer.js:47</code></a>
         
         </p>
 
@@ -315,7 +315,8 @@
         <div class="description">
             <p>Deserialize the model data from the server to be parsed
 by the model. Automatically instantiates related models
-stated in the <code>relationships</code> object.</p>
+stated in the <code>relationships</code> object. Root keys will be
+removed if defined on the model and present in the data.</p>
 
         </div>
 
@@ -401,7 +402,7 @@ stated in the <code>relationships</code> object.</p>
             
         
         
-        <a href="../files/lib_active_model_serializer.js.html#l79"><code>lib&#x2F;active_model_serializer.js:79</code></a>
+        <a href="../files/lib_active_model_serializer.js.html#l89"><code>lib&#x2F;active_model_serializer.js:89</code></a>
         
         </p>
 
@@ -545,7 +546,8 @@ stated in the <code>relationships</code> object.</p>
 
         <div class="description">
             <p>Serializes the model and it&#39;s nested attributes for
-persisting to the server. Nested relationship keys
+persisting to the server.Root keys will be added if
+defined on the model. Nested relationship keys
 will be suffixed with <code>_attributes</code> for transparent
 compatability with <a href="http://api.rubyonrails.org/classes/ActiveRecord/NestedAttributes/ClassMethods.html">nested attributes</a></p>
 
@@ -613,7 +615,7 @@ compatability with <a href="http://api.rubyonrails.org/classes/ActiveRecord/Nest
             
         
         
-        <a href="../files/lib_active_model_serializer.js.html#l56"><code>lib&#x2F;active_model_serializer.js:56</code></a>
+        <a href="../files/lib_active_model_serializer.js.html#l66"><code>lib&#x2F;active_model_serializer.js:66</code></a>
         
         </p>
 

@@ -84,13 +84,21 @@
   */
   Backbone.OnFire.Model = Backbone.Model.extend({
     /**
-      Default relationships object.
+      Relationships object.
 
       @property relationships
       @type Object
       @default {}
     */
     relationships: {},
+    /**
+      Serializers array.
+
+      @property serializers
+      @type Array
+      @default []
+    */
+    serializers: [],
     /**
       Backbone.OnFire models always parse when instantiated
       to ensure relationships are instantiated. All methods
@@ -136,8 +144,8 @@
       @param data {Object} JSON to deserialize
       @return {Object} Deserialized JSON.
     */
-    deserialize: function(data) {
-      return data;
+    deserialize: function(json) {
+      return processSerializer.call(this, &quot;deserialize&quot;, json);
     },
 
     /**
@@ -149,7 +157,11 @@
       @return {Object} Serialized JSON.
     */
     serialize: function() {
-      return this.toJSON();
+      return processSerializer.call(this, &quot;serialize&quot;, this.toJSON());
+    },
+
+    toJSON: function() {
+      return processSerializer.call(this, &quot;toJSON&quot;, _.clone(this.attributes));
     },
 
     /**
@@ -191,6 +203,13 @@
       return !this.isNew();
     }
   });
+
+  function processSerializer(method, json) {
+    var _this = this;
+    return this.serializers.reduce(function(memo, serializer) {
+      return serializer[method].call(_this, memo);
+    }, json);
+  }
 
   /**
     Patch the extend to mixin the serializer methods if one is defined.
