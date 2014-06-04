@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>ActiveModelSerializer</title>
+    <title>NestedModelSerializer</title>
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
     <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
@@ -70,7 +70,7 @@
 
         <div id="docs-main" class="apidocs">
             <div class="content container">
-                <h1>ActiveModelSerializer Class</h1>
+                <h1>NestedModelSerializer Class</h1>
 <div class="box meta">
     
 
@@ -78,7 +78,7 @@
 
     
         <div class="foundat">
-            Defined in: <a href="../files/lib_active_model_serializer.js.html#l2"><code>lib&#x2F;active_model_serializer.js:2</code></a>
+            Defined in: <a href="../files/lib_nested_model_serializer.js.html#l2"><code>lib&#x2F;nested_model_serializer.js:2</code></a>
         </div>
     
 
@@ -94,8 +94,8 @@
 
 
 <div class="box intro">
-    <p>Serializer that works seemlessly with Rails and
-<a href="https://github.com/rails-api/active_model_serializers">ActiveModel Serializers</a>.</p>
+    <p>Serializer that works seemlessly with Rails
+<a href="http://api.rubyonrails.org/classes/ActiveRecord/NestedAttributes/ClassMethods.html">nested attributes</a></p>
 
 </div>
 
@@ -143,7 +143,7 @@
 
             
                 <li class="index-item method constructor">
-                    <a href="#method_ActiveModelSerializer">ActiveModelSerializer</a>
+                    <a href="#method_NestedModelSerializer">NestedModelSerializer</a>
 
                     <span class="flag constructor">constructor</span>
 
@@ -198,9 +198,9 @@
 
     <div class="constructor">
         <h2>Constructor</h2>
-        <a name="method_ActiveModelSerializer" class="anchor-link"></a>
+        <a name="method_NestedModelSerializer" class="anchor-link"></a>
 <div class="method item">
-    <h3 class="name"><code>ActiveModelSerializer</code>
+    <h3 class="name"><code>NestedModelSerializer</code>
 
     
         <span class="paren">()</span>
@@ -233,7 +233,7 @@
             
         
         
-        <a href="../files/lib_active_model_serializer.js.html#l2"><code>lib&#x2F;active_model_serializer.js:2</code></a>
+        <a href="../files/lib_nested_model_serializer.js.html#l2"><code>lib&#x2F;nested_model_serializer.js:2</code></a>
         
         </p>
 
@@ -304,7 +304,7 @@
             
         
         
-        <a href="../files/lib_active_model_serializer.js.html#l45"><code>lib&#x2F;active_model_serializer.js:45</code></a>
+        <a href="../files/lib_nested_model_serializer.js.html#l37"><code>lib&#x2F;nested_model_serializer.js:37</code></a>
         
         </p>
 
@@ -319,8 +319,7 @@
         <div class="description">
             <p>Deserialize the model data from the server to be parsed
 by the model. Automatically instantiates related models
-stated in the <code>relationships</code> object. Root keys will be
-removed if defined on the model and present in the data.</p>
+stated in the <code>relationships</code> object.</p>
 
         </div>
 
@@ -406,7 +405,7 @@ removed if defined on the model and present in the data.</p>
             
         
         
-        <a href="../files/lib_active_model_serializer.js.html#l87"><code>lib&#x2F;active_model_serializer.js:87</code></a>
+        <a href="../files/lib_nested_model_serializer.js.html#l76"><code>lib&#x2F;nested_model_serializer.js:76</code></a>
         
         </p>
 
@@ -536,7 +535,7 @@ removed if defined on the model and present in the data.</p>
             
         
         
-        <a href="../files/lib_active_model_serializer.js.html#l11"><code>lib&#x2F;active_model_serializer.js:11</code></a>
+        <a href="../files/lib_nested_model_serializer.js.html#l11"><code>lib&#x2F;nested_model_serializer.js:11</code></a>
         
         </p>
 
@@ -550,8 +549,7 @@ removed if defined on the model and present in the data.</p>
 
         <div class="description">
             <p>Serializes the model and it&#39;s nested attributes for
-persisting to the server.Root keys will be added if
-defined on the model. Nested relationship keys
+persisting to the server. Nested relationship keys
 will be suffixed with <code>_attributes</code> for transparent
 compatability with <a href="http://api.rubyonrails.org/classes/ActiveRecord/NestedAttributes/ClassMethods.html">nested attributes</a></p>
 
@@ -619,7 +617,7 @@ compatability with <a href="http://api.rubyonrails.org/classes/ActiveRecord/Nest
             
         
         
-        <a href="../files/lib_active_model_serializer.js.html#l64"><code>lib&#x2F;active_model_serializer.js:64</code></a>
+        <a href="../files/lib_nested_model_serializer.js.html#l54"><code>lib&#x2F;nested_model_serializer.js:54</code></a>
         
         </p>
 

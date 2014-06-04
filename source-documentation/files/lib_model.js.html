@@ -49,6 +49,10 @@
             
                 <li><a class="type" href="../classes/Model.html">Model</a></li>
             
+                <li><a class="type" href="../classes/NestedModelSerializer.html">NestedModelSerializer</a></li>
+            
+                <li><a class="type" href="../classes/RootPrefixSerializer.html">RootPrefixSerializer</a></li>
+            
                 <li><a class="type" href="../classes/RouteCreator.html">RouteCreator</a></li>
             
             </ul>
@@ -145,7 +149,7 @@
       @return {Object} Deserialized JSON.
     */
     deserialize: function(json) {
-      return processSerializer.call(this, &quot;deserialize&quot;, json);
+      return serializeWith(this, &quot;deserialize&quot;, json);
     },
 
     /**
@@ -157,11 +161,11 @@
       @return {Object} Serialized JSON.
     */
     serialize: function() {
-      return processSerializer.call(this, &quot;serialize&quot;, this.toJSON());
+      return serializeWith(this, &quot;serialize&quot;, this.toJSON());
     },
 
     toJSON: function() {
-      return processSerializer.call(this, &quot;toJSON&quot;, _.clone(this.attributes));
+      return serializeWith(this, &quot;toJSON&quot;, _.clone(this.attributes));
     },
 
     /**
@@ -204,28 +208,20 @@
     }
   });
 
-  function processSerializer(method, json) {
-    var _this = this;
-    return this.serializers.reduce(function(memo, serializer) {
-      return serializer[method].call(_this, memo);
+  /**
+    Method to process json with all serializers.
+
+    @method
+    @private
+    @param method {String} method to call on the serializer
+    @param json {Object} json payload to serialize
+  */
+  function serializeWith(context, method, json) {
+    var _this = context;
+    return _this.serializers.reduce(function(memo, serializer) {
+      return serializer[method] ? serializer[method].call(_this, memo) : memo;
     }, json);
   }
-
-  /**
-    Patch the extend to mixin the serializer methods if one is defined.
-
-    @static
-    @private
-    @method extend
-    @param [options] {Object} Options object to define the model.
-    @return {Model} Model class constructor
-  */
-  var extend = Backbone.OnFire.Model.extend;
-  Backbone.OnFire.Model.extend = function(options) {
-    options = options || {};
-    if (options.serializer) _.extend(options, options.serializer);
-    return extend.apply(Backbone.OnFire.Model, arguments);
-  };
 })();
 
     </pre>

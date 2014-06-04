@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>lib/active_model_serializer.js</title>
+    <title>lib/root_prefix_serializer.js</title>
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
     <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
@@ -70,46 +70,29 @@
 
         <div id="docs-main" class="apidocs">
             <div class="content container">
-                <h1 class="file-heading">File: lib/active_model_serializer.js</h1>
+                <h1 class="file-heading">File: lib/root_prefix_serializer.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
-Backbone.OnFire.ActiveModelSerializer = (function() {
+Backbone.OnFire.RootPrefixSerializer = (function() {
   /**
-    Serializer that works seemlessly with Rails and
-    [ActiveModel Serializers](https://github.com/rails-api/active_model_serializers).
+    Serializer that works seemlessly with Rails
+    [activemodel serializers](https://github.com/rails-api/active_model_serializers)
 
-    @class ActiveModelSerializer
+    @class RootPrefixSerializer
     @constructor
   */
-  function ActiveModelSerializer() {}
+  function RootPrefixSerializer() {}
 
   /**
-    Serializes the model and it&#x27;s nested attributes for
-    persisting to the server.Root keys will be added if
-    defined on the model. Nested relationship keys
-    will be suffixed with &#x60;_attributes&#x60; for transparent
-    compatability with [nested attributes](http://api.rubyonrails.org/classes/ActiveRecord/NestedAttributes/ClassMethods.html)
+    Prefixes the model with the root key for seemless
+    integration with [activemodel serializers](https://github.com/rails-api/active_model_serializers)
 
     @method serialize
     @return {Object} serialized model json.
   */
-  ActiveModelSerializer.prototype.serialize = function(json) {
+  RootPrefixSerializer.prototype.serialize = function(json) {
     var namespaced;
-    if (this.relationships) {
-      _(this.relationships).each(function(Class, attr) {
-        var relationship = this.get(attr);
-        delete json[attr];
-        if (relationship.models) {
-          json[attr + &quot;_attributes&quot;] = relationship.models.map(function(model) {
-            return model.toJSON.call(model);
-          });
-        } else {
-          json[attr + &quot;_attributes&quot;] = relationship.toJSON();
-        }
-      }, this);
-    }
-
     if (this.root) {
       namespaced = {};
       namespaced[this.root] = json;
@@ -121,19 +104,13 @@ Backbone.OnFire.ActiveModelSerializer = (function() {
   /**
     Deserialize the model data from the server to be parsed
     by the model. Automatically instantiates related models
-    stated in the &#x60;relationships&#x60; object. Root keys will be
-    removed if defined on the model and present in the data.
+    stated in the &#x60;relationships&#x60; object.
 
     @method deserialize
     @return {Object} json data with instantiated relationship attributes.
   */
-  ActiveModelSerializer.prototype.deserialize = function(json) {
+  RootPrefixSerializer.prototype.deserialize = function(json) {
     if (this.root &amp;&amp; json[this.root]) json = json[this.root];
-    if (this.relationships) {
-      _(this.relationships).each(function(Class, attr) {
-        instantiateRelationship(json, attr, Class);
-      });
-    }
     return json;
   };
 
@@ -143,40 +120,12 @@ Backbone.OnFire.ActiveModelSerializer = (function() {
     @method toJSON
     @return {Object} Model json with relationship attributes as json as well.
   */
-  ActiveModelSerializer.prototype.toJSON = function(options) {
+  RootPrefixSerializer.prototype.toJSON = function(options) {
     var json = _.clone(this.attributes);
-    _(this.relationships).each(function(relationshipClass, relationship) {
-      delete json[relationship];
-      if (this.get(relationship).models) {
-        json[relationship] = this.get(relationship).models.map(function(model) {
-          return _.clone(model.attributes);
-        });
-      } else {
-        json[relationship] = _.clone(this.get(relationship).attributes);
-      }
-    }, this);
     return json;
   };
 
-  return ActiveModelSerializer;
-
-  /**
-    Instantiate a relationship of a given type with the given attributes.
-
-    @method instatiateRelationship
-    @private
-    @param attributes {Object} Parent model attributes containing child attributes.
-    @param key {String} Child attributes key.
-    @param Class {Function} Constructor function to instantiate with child attributes.
-    @example
-        modelInstance.instantiateRelationship({ user: { id: 1 }}, &quot;user&quot;, App.Models.User);
-  */
-  function instantiateRelationship(attributes, key, Class) {
-    var value = attributes[key];
-    if (attributes[key] &amp;&amp; !isTypeof(Class, value)) {
-      attributes[key] = new Class(value);
-    }
-  }
+  return RootPrefixSerializer;
 })();
 
     </pre>

@@ -1,14 +1,18 @@
 describe("Model", function() {
   var TestModel;
-  var data;
+  var attributes;
   var subject;
   var serializer1;
   var serializer2;
 
   beforeEach(function() {
+    attributes = { foo: "bar" };
     TestModel = Backbone.OnFire.Model.extend();
-    data = { foo: "bar" };
-    subject = new TestModel;
+    subject = new TestModel(attributes);
+  });
+
+  afterEach(function() {
+    attributes = undefined;
   });
 
   it("has a default relationships object", function() {
@@ -23,7 +27,7 @@ describe("Model", function() {
     var options;
     beforeEach(function() {
       options = {};
-      subject = new TestModel({}, options);
+      subject = new TestModel(attributes, options);
     });
 
     it("sets parse to true", function() {
@@ -31,21 +35,9 @@ describe("Model", function() {
     });
   });
 
-  describe("deserialize", function() {
-    it("returns the data passed in", function() {
-      expect(subject.deserialize(data)).to.equal(data);
-    });
-  });
-
-  describe("serialize", function() {
-    it("returns the model json", function() {
-      expect(subject.serialize()).to.be.like(subject.toJSON());
-    });
-  });
-
   describe("preParse", function() {
-    it("returns the data passed in", function() {
-      expect(subject.preParse(data)).to.equal(data);
+    it("returns the attributes passed in", function() {
+      expect(subject.preParse(attributes)).to.equal(attributes);
     });
   });
 
@@ -56,11 +48,15 @@ describe("Model", function() {
       subject.parse({});
     });
 
-    it("pre-parses the data", function() {
+    afterEach(function() {
+      subject.deserialize.restore();
+    });
+
+    it("pre-parses the attributes", function() {
       expect(subject.preParse).to.have.been.called;
     });
 
-    it("deserializes the data", function() {
+    it("deserializes the attributes", function() {
       expect(subject.deserialize).to.have.been.called;
     });
   });
@@ -73,50 +69,13 @@ describe("Model", function() {
     });
   });
 
-  describe("extend", function() {
-    var options;
-    beforeEach(function() {
-      options = {};
-    });
-
-    describe("with serializer", function() {
-      var serializer;
-      beforeEach(function() {
-        serializer = {
-          serialize: function() {
-            return "serializer.serialize";
-          },
-          deserialize: function() {
-            return "serializer.deserialize";
-          },
-          toJSON: function() {
-            return "serializer.toJSON";
-          }
-        };
-        options.serializer = serializer;
-        TestModel = Backbone.OnFire.Model.extend(options);
-        subject = new TestModel;
-      });
-
-      it("sets the serializer methods", function() {
-        expect(subject.serialize()).to.equal("serializer.serialize");
-        expect(subject.deserialize()).to.equal("serializer.deserialize");
-        expect(subject.toJSON()).to.equal("serializer.toJSON");
-      });
-    });
-  });
-
   describe("bindings", function() {
     var callFunction;
     beforeEach(function() {
       TestModel = Backbone.OnFire.Model.extend({
         scope: "TestModel",
-        whichScope: function() {
-          return this.scope;
-        },
-        anotherScope: function() {
-          return this.scope;
-        }
+        whichScope: function() { return this.scope; },
+        anotherScope: function() { return this.scope; }
       });
 
       callFunction = function(callback) {
@@ -134,92 +93,83 @@ describe("Model", function() {
   });
 
   describe("serializers", function() {
+    var serializer1;
+    var serializer2;
+    var serializedData;
     beforeEach(function() {
       serializer1 = {
-        serialize: function(json) {
-          json.serializer1 = true;
-          return json;
-        },
-        deserialize: function(json) {
-          json.deserializer1 = true;
-          return json;
-        },
-        toJSON: function(json) {
-          json.toJSON1 = true;
-          return json;
-        }
+        serialize: sinon.stub().returns("serialize1"),
+        deserialize: sinon.stub().returns("deserialize1"),
+        toJSON: sinon.stub().returns("toJSON1")
       };
       serializer2 = {
-        serialize: function(json) {
-          json.serializer2 = true;
-          return json;
-        },
-        deserialize: function(json) {
-          json.deserializer2 = true;
-          return json;
-        },
-        toJSON: function(json) {
-          json.toJSON2 = true;
-          return json;
-        }
+        serialize: sinon.stub().returns("serialize2"),
+        deserialize: sinon.stub().returns("deserialize2"),
+        toJSON: sinon.stub().returns("toJSON2")
       };
       TestModel = Backbone.OnFire.Model.extend({
         serializers: [serializer1, serializer2]
       });
-      data = { foo: "bar" };
-      subject = new TestModel(data);
+      subject = new TestModel(attributes);
+    });
+
+    afterEach(function() {
+      serializer1 = undefined;
+      serializer2 = undefined;
+      serializedData = undefined;
     });
 
     describe("serialize", function() {
-      var data;
       beforeEach(function() {
-        data = subject.serialize();
+        serializedData = subject.serialize();
       });
 
       it("calls each serializer", function() {
-        expect(data).to.be.like({
-          foo: "bar",
-          deserializer1: true,
-          deserializer2: true,
-          toJSON1: true,
-          toJSON2: true,
-          serializer1: true,
-          serializer2: true
-        });
+        expect(serializer1.serialize).to.have.been.calledWith("toJSON2");
+        expect(serializer2.serialize).to.have.been.calledWith("serialize1");
+        expect(serializedData).to.equal("serialize2");
       });
     });
 
     describe("deserialize", function() {
-      var data;
       beforeEach(function() {
-        data = subject.deserialize({ foo: "bar" });
+        serializedData = subject.deserialize(attributes);
       });
 
       it("calls each serializer", function() {
-        expect(data).to.be.like({
-          foo: "bar",
-          deserializer1: true,
-          deserializer2: true
-        });
+        expect(serializer1.deserialize).to.be.calledWith(attributes);
+        expect(serializer2.deserialize).to.be.calledWith("deserialize1");
+        expect(serializedData).to.equal("deserialize2");
       });
     });
 
     describe("toJSON", function() {
-      var data;
       beforeEach(function() {
-        data = subject.toJSON();
+        subject.attributes = attributes;
+        serializedData = subject.toJSON();
       });
 
       it("calls each serializer", function() {
-        expect(data).to.be.like({
-          foo: "bar",
-          deserializer1: true,
-          deserializer2: true,
-          toJSON1: true,
-          toJSON2: true
+        expect(serializer1.toJSON).to.have.been.calledWith(attributes);
+        expect(serializer2.toJSON).to.have.been.calledWith("toJSON1");
+        expect(serializedData).to.equal("toJSON2");
+      });
+    });
+
+    describe("with missing methods", function() {
+      beforeEach(function() {
+        serializer1.serialize = undefined;
+        TestModel = Backbone.OnFire.Model.extend({
+          serializers: [serializer1, serializer2]
         });
+        subject = new TestModel(attributes);
+      });
+
+      it("does not try to execute missing methods", function() {
+        expect(function() {
+          subject.serialize();
+        }).not.to.throw();
       });
     });
   });
 });
-

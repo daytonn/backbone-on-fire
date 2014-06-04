@@ -1,4 +1,4 @@
-describe("ActiveModelSerializer", function() {
+describe("NestedModelSerializer", function() {
   var TestModel;
   var ChildModel;
   var ChildCollection;
@@ -14,7 +14,7 @@ describe("ActiveModelSerializer", function() {
     ChildCollection = Backbone.Collection.extend();
     TestModel = Backbone.OnFire.Model.extend({
       urlRoot: "tests",
-      serializer: new Backbone.OnFire.ActiveModelSerializer,
+      serializers: [new Backbone.OnFire.NestedModelSerializer],
       relationships: {
         first_child: ChildModel,
         second_child: ChildModel,
@@ -77,55 +77,6 @@ describe("ActiveModelSerializer", function() {
       expect(subject.get("first_child_attributes")).to.be.undefined;
       expect(subject.get("second_child_attributes")).to.be.undefined;
       expect(subject.get("child_collection_attributes")).to.be.undefined;
-    });
-  });
-
-  describe("with a root", function() {
-    beforeEach(function() {
-      TestModel = Backbone.OnFire.Model.extend({
-        root: "test",
-        urlRoot: "tests",
-        serializer: new Backbone.OnFire.ActiveModelSerializer,
-        relationships: {
-          first_child: ChildModel,
-          second_child: ChildModel,
-          child_collection: ChildCollection
-        }
-      });
-      subject = new TestModel(_.clone(attributes));
-    });
-
-    describe("deserialize", function() {
-      beforeEach(function() {
-        var attrs = { test: _.clone(attributes) };
-        data = subject.deserialize(attrs);
-      });
-
-      it("removes the root", function() {
-        expect(data.test).to.be.undefined;
-        expect(subject.get("test")).to.be.undefined;
-      });
-    });
-
-    describe("serialize", function() {
-      beforeEach(function() {
-        data = subject.serialize();
-      });
-
-      it("creates nested attributes under the root", function() {
-        expect(data.test.first_child_attributes).to.be.like(firstChildAttributes);
-        expect(data.test.second_child_attributes).to.be.like(secondChildAttributes);
-        expect(data.test.child_collection_attributes).to.be.like(childCollectionAttributes);
-
-        expect(data.test.first_child).to.be.undefined;
-        expect(data.test.second_child).to.be.undefined;
-        expect(data.test.child_collection).to.be.undefined;
-
-        expect(subject.get("test")).to.be.undefined;
-        expect(subject.get("first_child_attributes")).to.be.undefined;
-        expect(subject.get("second_child_attributes")).to.be.undefined;
-        expect(subject.get("child_collection_attributes")).to.be.undefined;
-      });
     });
   });
 });

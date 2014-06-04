@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>ActiveModelSerializer</title>
+    <title>RootPrefixSerializer</title>
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
     <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
@@ -70,7 +70,7 @@
 
         <div id="docs-main" class="apidocs">
             <div class="content container">
-                <h1>ActiveModelSerializer Class</h1>
+                <h1>RootPrefixSerializer Class</h1>
 <div class="box meta">
     
 
@@ -78,7 +78,7 @@
 
     
         <div class="foundat">
-            Defined in: <a href="../files/lib_active_model_serializer.js.html#l2"><code>lib&#x2F;active_model_serializer.js:2</code></a>
+            Defined in: <a href="../files/lib_root_prefix_serializer.js.html#l2"><code>lib&#x2F;root_prefix_serializer.js:2</code></a>
         </div>
     
 
@@ -94,8 +94,8 @@
 
 
 <div class="box intro">
-    <p>Serializer that works seemlessly with Rails and
-<a href="https://github.com/rails-api/active_model_serializers">ActiveModel Serializers</a>.</p>
+    <p>Serializer that works seemlessly with Rails
+<a href="https://github.com/rails-api/active_model_serializers">activemodel serializers</a></p>
 
 </div>
 
@@ -143,7 +143,7 @@
 
             
                 <li class="index-item method constructor">
-                    <a href="#method_ActiveModelSerializer">ActiveModelSerializer</a>
+                    <a href="#method_RootPrefixSerializer">RootPrefixSerializer</a>
 
                     <span class="flag constructor">constructor</span>
 
@@ -155,13 +155,6 @@
             
                 <li class="index-item method">
                     <a href="#method_deserialize">deserialize</a>
-
-                    
-                    
-                </li>
-            
-                <li class="index-item method private">
-                    <a href="#method_instatiateRelationship">instatiateRelationship</a>
 
                     
                     
@@ -198,9 +191,9 @@
 
     <div class="constructor">
         <h2>Constructor</h2>
-        <a name="method_ActiveModelSerializer" class="anchor-link"></a>
+        <a name="method_RootPrefixSerializer" class="anchor-link"></a>
 <div class="method item">
-    <h3 class="name"><code>ActiveModelSerializer</code>
+    <h3 class="name"><code>RootPrefixSerializer</code>
 
     
         <span class="paren">()</span>
@@ -233,7 +226,7 @@
             
         
         
-        <a href="../files/lib_active_model_serializer.js.html#l2"><code>lib&#x2F;active_model_serializer.js:2</code></a>
+        <a href="../files/lib_root_prefix_serializer.js.html#l2"><code>lib&#x2F;root_prefix_serializer.js:2</code></a>
         
         </p>
 
@@ -304,7 +297,7 @@
             
         
         
-        <a href="../files/lib_active_model_serializer.js.html#l45"><code>lib&#x2F;active_model_serializer.js:45</code></a>
+        <a href="../files/lib_root_prefix_serializer.js.html#l28"><code>lib&#x2F;root_prefix_serializer.js:28</code></a>
         
         </p>
 
@@ -319,8 +312,7 @@
         <div class="description">
             <p>Deserialize the model data from the server to be parsed
 by the model. Automatically instantiates related models
-stated in the <code>relationships</code> object. Root keys will be
-removed if defined on the model and present in the data.</p>
+stated in the <code>relationships</code> object.</p>
 
         </div>
 
@@ -342,156 +334,6 @@ removed if defined on the model and present in the data.</p>
             </div>
         
 
-        
-    </div>
-</div>
-
-        
-            <a name="method_instatiateRelationship" class="anchor-link"></a>
-<div class="method item private">
-    <h3 class="name"><code>instatiateRelationship</code>
-
-    
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-            
-                <li class="arg">
-                    
-                        <code>attributes</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>key</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>Class</code>
-                    
-                </li>
-            
-            </ul><span class="paren">)</span>
-        </div>
-    
-
-    
-
-    
-
-    
-        <span class="flag private">private</span>
-    
-
-    
-
-    
-
-    
-
-    
-
-    </h3>
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/lib_active_model_serializer.js.html#l87"><code>lib&#x2F;active_model_serializer.js:87</code></a>
-        
-        </p>
-
-
-        
-
-        
-    </div>
-
-    <div class="extended-detail">
-
-        <div class="description">
-            <p>Instantiate a relationship of a given type with the given attributes.</p>
-
-        </div>
-
-        
-            <div class="params">
-                <h4>Parameters:</h4>
-
-                <ul class="params-list">
-                
-                    <li class="param">
-                        
-                            <code class="param-name">attributes</code>
-                            <span class="type">Object</span>
-                        
-
-                        
-
-                        <div class="param-description">
-                            <p>Parent model attributes containing child attributes.</p>
-
-                        </div>
-
-                        
-                    </li>
-                
-                    <li class="param">
-                        
-                            <code class="param-name">key</code>
-                            <span class="type">String</span>
-                        
-
-                        
-
-                        <div class="param-description">
-                            <p>Child attributes key.</p>
-
-                        </div>
-
-                        
-                    </li>
-                
-                    <li class="param">
-                        
-                            <code class="param-name">Class</code>
-                            <span class="type">Function</span>
-                        
-
-                        
-
-                        <div class="param-description">
-                            <p>Constructor function to instantiate with child attributes.</p>
-
-                        </div>
-
-                        
-                    </li>
-                
-                </ul>
-            </div>
-        
-
-        
-
-        
-            <div class="example">
-                <h4>Example:</h4>
-
-                <div class="example-content">
-                    <pre class="code prettyprint"><code>modelInstance.instantiateRelationship({ user: { id: 1 }}, &quot;user&quot;, App.Models.User);</code></pre>
-
-                </div>
-            </div>
         
     </div>
 </div>
@@ -536,7 +378,7 @@ removed if defined on the model and present in the data.</p>
             
         
         
-        <a href="../files/lib_active_model_serializer.js.html#l11"><code>lib&#x2F;active_model_serializer.js:11</code></a>
+        <a href="../files/lib_root_prefix_serializer.js.html#l11"><code>lib&#x2F;root_prefix_serializer.js:11</code></a>
         
         </p>
 
@@ -549,11 +391,8 @@ removed if defined on the model and present in the data.</p>
     <div class="extended-detail">
 
         <div class="description">
-            <p>Serializes the model and it&#39;s nested attributes for
-persisting to the server.Root keys will be added if
-defined on the model. Nested relationship keys
-will be suffixed with <code>_attributes</code> for transparent
-compatability with <a href="http://api.rubyonrails.org/classes/ActiveRecord/NestedAttributes/ClassMethods.html">nested attributes</a></p>
+            <p>Prefixes the model with the root key for seemless
+integration with <a href="https://github.com/rails-api/active_model_serializers">activemodel serializers</a></p>
 
         </div>
 
@@ -619,7 +458,7 @@ compatability with <a href="http://api.rubyonrails.org/classes/ActiveRecord/Nest
             
         
         
-        <a href="../files/lib_active_model_serializer.js.html#l64"><code>lib&#x2F;active_model_serializer.js:64</code></a>
+        <a href="../files/lib_root_prefix_serializer.js.html#l41"><code>lib&#x2F;root_prefix_serializer.js:41</code></a>
         
         </p>
 

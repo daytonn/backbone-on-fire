@@ -5,6 +5,8 @@ YUI.add("yuidoc-meta", function(Y) {
         "Application",
         "Controller",
         "Model",
+        "NestedModelSerializer",
+        "RootPrefixSerializer",
         "RouteCreator"
     ],
     "modules": [
