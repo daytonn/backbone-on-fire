@@ -8,13 +8,12 @@ var util = require('gulp-util');
 
 gulp.task('compile-app', function() {
   return gulp.src([
-    'lib/sync.js',
     'node_modules/underwear/dist/string.js',
     'node_modules/underwear/dist/array.js',
     'node_modules/underwear/dist/utilities.js',
     'lib/namespace.js',
-    'lib/nested_model_serializer.js',
-    'lib/root_prefix_serializer.js',
+    'lib/sync.js',
+    'lib/serializers/**/*.js',
     'lib/route_creator.js',
     'lib/collection.js',
     'lib/model.js',

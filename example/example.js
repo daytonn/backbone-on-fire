@@ -1,6 +1,6 @@
 var App = Backbone.OnFire.Application.create();
 
-App.createController("ApplicationController", {
+App.createController("Application", {
   initialize: function() {
     $("body").append('<ul id="' + this.name.toLowerCase() + '-messages"/>');
   },
@@ -11,13 +11,13 @@ App.createController("ApplicationController", {
   }
 });
 
-App.createController("IndexController", {
+App.createController("Index", {
   index: function(id) {
     this.logAction("show action", id);
   }
 });
 
-App.createController("TestController", {
+App.createController("Test", {
   routes: ['edit/:id', 'show/:id'],
 
   index: function() {
