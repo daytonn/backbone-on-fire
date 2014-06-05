@@ -146,7 +146,7 @@
             "extension_for": [],
             "module": "Backbone.OnFire",
             "file": "lib/model.js",
-            "line": 30,
+            "line": 29,
             "description": "Backbone.OnFire models always parse when instantiated\nto ensure relationships are instantiated. All methods\nare bound to the instance of the model.",
             "is_constructor": 1,
             "params": [
@@ -368,7 +368,7 @@
         },
         {
             "file": "lib/application.js",
-            "line": 105,
+            "line": 104,
             "description": "Create a Model constructor.",
             "itemtype": "method",
             "name": "createModel",
@@ -397,7 +397,36 @@
         },
         {
             "file": "lib/application.js",
-            "line": 129,
+            "line": 131,
+            "description": "Create a Collection constructor.",
+            "itemtype": "method",
+            "name": "createCollection",
+            "static": 1,
+            "params": [
+                {
+                    "name": "name",
+                    "description": "Collection name",
+                    "type": "String"
+                },
+                {
+                    "name": "options",
+                    "description": "Options object which\ndefines methods and properties of the\nCollection constructor.",
+                    "type": "Object",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "The Collection constructor function",
+                "type": "Collection"
+            },
+            "example": [
+                "\n    App.createCollection(\"Posts\", {\n      url: \"posts\",\n      model: App.Models.Post\n    });"
+            ],
+            "class": "Application"
+        },
+        {
+            "file": "lib/application.js",
+            "line": 155,
             "description": "Initialize the application and start the history.",
             "itemtype": "method",
             "name": "start",
@@ -414,7 +443,7 @@
         },
         {
             "file": "lib/application.js",
-            "line": 146,
+            "line": 172,
             "description": "Create a Backbone On Fire application.",
             "itemtype": "method",
             "name": "create",
@@ -593,7 +622,7 @@
         },
         {
             "file": "lib/model.js",
-            "line": 3,
+            "line": 2,
             "static": 1,
             "itemtype": "method",
             "name": "extend",
@@ -612,7 +641,7 @@
         },
         {
             "file": "lib/model.js",
-            "line": 14,
+            "line": 13,
             "description": "Relationships object.",
             "itemtype": "property",
             "name": "relationships",
@@ -622,7 +651,7 @@
         },
         {
             "file": "lib/model.js",
-            "line": 22,
+            "line": 21,
             "description": "Serializers array.",
             "itemtype": "property",
             "name": "serializers",
@@ -632,7 +661,7 @@
         },
         {
             "file": "lib/model.js",
-            "line": 67,
+            "line": 66,
             "description": "Placeholder method to allow custom deserialization of\nserver side JSON payload after it is parsed.",
             "itemtype": "method",
             "name": "deserialize",
@@ -651,7 +680,7 @@
         },
         {
             "file": "lib/model.js",
-            "line": 79,
+            "line": 78,
             "description": "Placeholder method to allow custom serialization of\nclient side JSON payload.",
             "itemtype": "method",
             "name": "serialize",
@@ -670,7 +699,7 @@
         },
         {
             "file": "lib/model.js",
-            "line": 95,
+            "line": 94,
             "description": "Placeholder method to allow manipulation of\nserver side JSON payload before it is parsed.",
             "itemtype": "method",
             "name": "serialize",
@@ -689,7 +718,7 @@
         },
         {
             "file": "lib/model.js",
-            "line": 107,
+            "line": 106,
             "description": "Automatically instantiate relationships when data\nis set/changed if relationships are defined.",
             "itemtype": "method",
             "name": "parse",
@@ -708,7 +737,7 @@
         },
         {
             "file": "lib/model.js",
-            "line": 122,
+            "line": 121,
             "description": "Convenience method to determine if the model\nhas been persisted. This method is the inverse\nof `isNew`.",
             "itemtype": "method",
             "name": "isPersisted",
@@ -720,7 +749,7 @@
         },
         {
             "file": "lib/model.js",
-            "line": 135,
+            "line": 134,
             "description": "Method to process json with all serializers.",
             "itemtype": "method",
             "name": "",
@@ -1022,7 +1051,7 @@
     "warnings": [
         {
             "message": "replacing incorrect tag: params with param",
-            "line": " lib/model.js:30"
+            "line": " lib/model.js:29"
         }
     ]
 }
