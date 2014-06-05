@@ -110,19 +110,41 @@ describe("Application", function() {
   });
 
   describe("createModel", function() {
-    var model;
+    var Model;
+    var modelInstance;
     beforeEach(function() {
-      model = subject.createModel("TestModel", {
+      Model = subject.createModel("TestModel", {
         urlRoot: "tests"
       });
+      modelInstance = new Model;
     });
 
     it("assigns the model constructor to the Models namespace", function() {
-      expect(subject.Models.Test).to.equal(model);
+      expect(subject.Models.Test).to.equal(Model);
     });
 
-    it("sets the root on the class", function() {
-      expect(subject.Models.Test.root).to.equal("test");
+    it("sets the name as root on the model", function() {
+      expect(modelInstance.root).to.equal("test");
+    });
+  });
+
+  describe("createCollection", function() {
+    var Model;
+    var Collection;
+    var collectionInstance;
+    beforeEach(function() {
+      Model = subject.createModel("TestModel", {
+        urlRoot: "tests"
+      });
+      Collection = subject.createCollection("TestsCollection", {
+        url: "tests",
+        model: Model
+      });
+      collectionInstance = new Collection([{ id: 1 }]);
+    });
+
+    it("assigns the collection constructor to the Collections namespace", function() {
+      expect(subject.Collections.Tests).to.equal(Collection);
     });
   });
 });
