@@ -53,7 +53,7 @@ describe("View", function() {
       expect(subject.loadingMask).to.have.class("loading-mask");
     });
 
-    describe("with noLoadingMask set", function() {
+    describe("with renderLoadingMask set to false", function() {
       beforeEach(function() {
         $el.empty();
         subject = new TestView({
@@ -64,7 +64,7 @@ describe("View", function() {
       });
 
       it("does not render a loading mask", function() {
-        expect(subject.$el.find(".loading-mask").length).to.equal(0);
+        expect(subject.$(".loading-mask").length).to.equal(0);
         expect(subject.loadingMask).to.be.undefined;
       });
     });
