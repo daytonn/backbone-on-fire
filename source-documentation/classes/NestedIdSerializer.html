@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>RootPrefixSerializer</title>
+    <title>NestedIdSerializer</title>
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
     <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
@@ -70,7 +70,7 @@
 
         <div id="docs-main" class="apidocs">
             <div class="content container">
-                <h1>RootPrefixSerializer Class</h1>
+                <h1>NestedIdSerializer Class</h1>
 <div class="box meta">
     
 
@@ -78,7 +78,7 @@
 
     
         <div class="foundat">
-            Defined in: <a href="../files/lib_serializers_root_prefix_serializer.js.html#l2"><code>lib&#x2F;serializers&#x2F;root_prefix_serializer.js:2</code></a>
+            Defined in: <a href="../files/lib_serializers_nested_id_serializer.js.html#l2"><code>lib&#x2F;serializers&#x2F;nested_id_serializer.js:2</code></a>
         </div>
     
 
@@ -95,7 +95,7 @@
 
 <div class="box intro">
     <p>Serializer that works seemlessly with Rails
-<a href="https://github.com/rails-api/active_model_serializers">activemodel serializers</a></p>
+<a href="http://api.rubyonrails.org/classes/ActiveRecord/NestedAttributes/ClassMethods.html">nested attributes</a></p>
 
 </div>
 
@@ -143,7 +143,7 @@
 
             
                 <li class="index-item method constructor">
-                    <a href="#method_RootPrefixSerializer">RootPrefixSerializer</a>
+                    <a href="#method_NestedIdSerializer">NestedIdSerializer</a>
 
                     <span class="flag constructor">constructor</span>
 
@@ -155,20 +155,6 @@
             
                 <li class="index-item method">
                     <a href="#method_deserialize">deserialize</a>
-
-                    
-                    
-                </li>
-            
-                <li class="index-item method">
-                    <a href="#method_serialize">serialize</a>
-
-                    
-                    
-                </li>
-            
-                <li class="index-item method">
-                    <a href="#method_toJSON">toJSON</a>
 
                     
                     
@@ -191,9 +177,9 @@
 
     <div class="constructor">
         <h2>Constructor</h2>
-        <a name="method_RootPrefixSerializer" class="anchor-link"></a>
+        <a name="method_NestedIdSerializer" class="anchor-link"></a>
 <div class="method item">
-    <h3 class="name"><code>RootPrefixSerializer</code>
+    <h3 class="name"><code>NestedIdSerializer</code>
 
     
         <span class="paren">()</span>
@@ -226,7 +212,7 @@
             
         
         
-        <a href="../files/lib_serializers_root_prefix_serializer.js.html#l2"><code>lib&#x2F;serializers&#x2F;root_prefix_serializer.js:2</code></a>
+        <a href="../files/lib_serializers_nested_id_serializer.js.html#l2"><code>lib&#x2F;serializers&#x2F;nested_id_serializer.js:2</code></a>
         
         </p>
 
@@ -297,7 +283,7 @@
             
         
         
-        <a href="../files/lib_serializers_root_prefix_serializer.js.html#l28"><code>lib&#x2F;serializers&#x2F;root_prefix_serializer.js:28</code></a>
+        <a href="../files/lib_serializers_nested_id_serializer.js.html#l11"><code>lib&#x2F;serializers&#x2F;nested_id_serializer.js:11</code></a>
         
         </p>
 
@@ -312,7 +298,8 @@
         <div class="description">
             <p>Deserialize the model data from the server to be parsed
 by the model. Automatically instantiates related models
-stated in the <code>relationships</code> object.</p>
+stated in the <code>relationships</code> object with the ids given
+in the related ids array.</p>
 
         </div>
 
@@ -327,166 +314,7 @@ stated in the <code>relationships</code> object.</p>
                         
                             <span class="type">Object</span>:
                         
-                        <p>json data with instantiated relationship attributes.</p>
-
-                    
-                </div>
-            </div>
-        
-
-        
-    </div>
-</div>
-
-        
-            <a name="method_serialize" class="anchor-link"></a>
-<div class="method item">
-    <h3 class="name"><code>serialize</code>
-
-    
-        <span class="paren">()</span>
-    
-
-    
-        <span class="returns-inline">
-            <span class="type">Object</span>
-        </span>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    </h3>
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/lib_serializers_root_prefix_serializer.js.html#l11"><code>lib&#x2F;serializers&#x2F;root_prefix_serializer.js:11</code></a>
-        
-        </p>
-
-
-        
-
-        
-    </div>
-
-    <div class="extended-detail">
-
-        <div class="description">
-            <p>Prefixes the model with the root key for seemless
-integration with <a href="https://github.com/rails-api/active_model_serializers">activemodel serializers</a></p>
-
-        </div>
-
-        
-
-        
-            <div class="returns">
-                <h4>Returns:</h4>
-
-                <div class="returns-description">
-                    
-                        
-                            <span class="type">Object</span>:
-                        
-                        <p>serialized model json.</p>
-
-                    
-                </div>
-            </div>
-        
-
-        
-    </div>
-</div>
-
-        
-            <a name="method_toJSON" class="anchor-link"></a>
-<div class="method item">
-    <h3 class="name"><code>toJSON</code>
-
-    
-        <span class="paren">()</span>
-    
-
-    
-        <span class="returns-inline">
-            <span class="type">Object</span>
-        </span>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    </h3>
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/lib_serializers_root_prefix_serializer.js.html#l41"><code>lib&#x2F;serializers&#x2F;root_prefix_serializer.js:41</code></a>
-        
-        </p>
-
-
-        
-
-        
-    </div>
-
-    <div class="extended-detail">
-
-        <div class="description">
-            <p>Converts nested relationship attributes to json.</p>
-
-        </div>
-
-        
-
-        
-            <div class="returns">
-                <h4>Returns:</h4>
-
-                <div class="returns-description">
-                    
-                        
-                            <span class="type">Object</span>:
-                        
-                        <p>Model json with relationship attributes as json as well.</p>
+                        <p>json data with instantiated relationship attributes from ids.</p>
 
                     
                 </div>

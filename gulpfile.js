@@ -4,7 +4,27 @@ var gulp = require('gulp');
 var rename = require('gulp-rename');
 var uglify = require('gulp-uglify');
 var util = require('gulp-util');
-// var yuidoc = require("gulp-yuidoc");
+var karma = require('gulp-karma');
+
+var specFiles = [
+  'node_modules/jquery/dist/jquery.js',
+  'node_modules/underscore/underscore.js',
+  'node_modules/backbone/backbone.js',
+  'node_modules/chai-fuzzy/index.js',
+  'spec/support/chai-literals.js',
+  'spec/support/mocha-fixture.js',
+  'dist/backbone-on-fire.js',
+  'spec/**/*_spec.js'
+];
+
+gulp.task('spec', function() {
+  return gulp.src(specFiles)
+    .pipe(karma({
+      configFile: 'karma.conf.js',
+      action: 'run'
+    }))
+    .on('error', function(err) { throw err; });
+});
 
 gulp.task('compile-app', function() {
   return gulp.src([
@@ -17,6 +37,8 @@ gulp.task('compile-app', function() {
     'lib/route_creator.js',
     'lib/collection.js',
     'lib/model.js',
+    'lib/view.js',
+    'lib/collection_view.js',
     'lib/controller.js',
     'lib/application.js'
   ])

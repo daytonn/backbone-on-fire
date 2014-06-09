@@ -203,7 +203,7 @@ describe("RouteCreator", function() {
 
   describe("createRoutes", function() {
     beforeEach(function() {
-      _.bindAll = sinon.spy();
+      sinon.spy(_, "bindAll");
       controller = {
         name: "TestController",
         routes: ['edit/:id', '/beginning', 'ending/', '/both/'],
@@ -216,6 +216,10 @@ describe("RouteCreator", function() {
       };
       subject = new Backbone.OnFire.RouteCreator(controller);
       subject.createRoutes();
+    });
+
+    afterEach(function() {
+      _.bindAll.restore();
     });
 
     it("registers the routes", function() {
@@ -259,12 +263,17 @@ describe("RouteCreator", function() {
 
   describe("IndexController", function() {
     beforeEach(function() {
+      sinon.spy(_, "bindAll");
       controller = {
         name: "IndexController",
         router: router,
         index: sinon.spy()
       };
       subject = new Backbone.OnFire.RouteCreator(controller);
+    });
+
+    afterEach(function() {
+      _.bindAll.restore();
     });
 
     it("doesn't create a rootSegment", function() {
@@ -290,7 +299,6 @@ describe("RouteCreator", function() {
           router: router,
           index: sinon.spy()
         };
-        _.bindAll = sinon.spy();
         subject = new Backbone.OnFire.RouteCreator(controller);
         subject.createIndexRoutes();
       });

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>lib/active_model_serializer.js</title>
+    <title>lib/serializers/nested_model_serializer.js</title>
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
     <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
@@ -41,13 +41,13 @@
         <div id="api-tabview-panel">
             <ul id="api-classes" class="apis classes">
             
-                <li><a class="type" href="../classes/ActiveModelSerializer.html">ActiveModelSerializer</a></li>
-            
                 <li><a class="type" href="../classes/Application.html">Application</a></li>
             
                 <li><a class="type" href="../classes/Controller.html">Controller</a></li>
             
                 <li><a class="type" href="../classes/Model.html">Model</a></li>
+            
+                <li><a class="type" href="../classes/NestedIdSerializer.html">NestedIdSerializer</a></li>
             
                 <li><a class="type" href="../classes/NestedModelSerializer.html">NestedModelSerializer</a></li>
             
@@ -70,32 +70,30 @@
 
         <div id="docs-main" class="apidocs">
             <div class="content container">
-                <h1 class="file-heading">File: lib/active_model_serializer.js</h1>
+                <h1 class="file-heading">File: lib/serializers/nested_model_serializer.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
-Backbone.OnFire.ActiveModelSerializer = (function() {
+Backbone.OnFire.NestedModelSerializer = (function() {
   /**
-    Serializer that works seemlessly with Rails and
-    [ActiveModel Serializers](https://github.com/rails-api/active_model_serializers).
+    Serializer that works seemlessly with Rails
+    [nested attributes](http://api.rubyonrails.org/classes/ActiveRecord/NestedAttributes/ClassMethods.html)
 
-    @class ActiveModelSerializer
+    @class NestedModelSerializer
     @constructor
   */
-  function ActiveModelSerializer() {}
+  function NestedModelSerializer() {}
 
   /**
     Serializes the model and it&#x27;s nested attributes for
-    persisting to the server.Root keys will be added if
-    defined on the model. Nested relationship keys
+    persisting to the server. Nested relationship keys
     will be suffixed with &#x60;_attributes&#x60; for transparent
     compatability with [nested attributes](http://api.rubyonrails.org/classes/ActiveRecord/NestedAttributes/ClassMethods.html)
 
     @method serialize
     @return {Object} serialized model json.
   */
-  ActiveModelSerializer.prototype.serialize = function(json) {
-    var namespaced;
+  NestedModelSerializer.prototype.serialize = function(json) {
     if (this.relationships) {
       _(this.relationships).each(function(Class, attr) {
         var relationship = this.get(attr);
@@ -109,26 +107,18 @@ Backbone.OnFire.ActiveModelSerializer = (function() {
         }
       }, this);
     }
-
-    if (this.root) {
-      namespaced = {};
-      namespaced[this.root] = json;
-      json = namespaced;
-    }
     return json;
   };
 
   /**
     Deserialize the model data from the server to be parsed
     by the model. Automatically instantiates related models
-    stated in the &#x60;relationships&#x60; object. Root keys will be
-    removed if defined on the model and present in the data.
+    stated in the &#x60;relationships&#x60; object.
 
     @method deserialize
     @return {Object} json data with instantiated relationship attributes.
   */
-  ActiveModelSerializer.prototype.deserialize = function(json) {
-    if (this.root &amp;&amp; json[this.root]) json = json[this.root];
+  NestedModelSerializer.prototype.deserialize = function(json) {
     if (this.relationships) {
       _(this.relationships).each(function(Class, attr) {
         instantiateRelationship(json, attr, Class);
@@ -143,8 +133,7 @@ Backbone.OnFire.ActiveModelSerializer = (function() {
     @method toJSON
     @return {Object} Model json with relationship attributes as json as well.
   */
-  ActiveModelSerializer.prototype.toJSON = function(options) {
-    var json = _.clone(this.attributes);
+  NestedModelSerializer.prototype.toJSON = function(json) {
     _(this.relationships).each(function(relationshipClass, relationship) {
       delete json[relationship];
       if (this.get(relationship).models) {
@@ -158,7 +147,7 @@ Backbone.OnFire.ActiveModelSerializer = (function() {
     return json;
   };
 
-  return ActiveModelSerializer;
+  return NestedModelSerializer;
 
   /**
     Instantiate a relationship of a given type with the given attributes.

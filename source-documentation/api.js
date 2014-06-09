@@ -1,10 +1,10 @@
 YUI.add("yuidoc-meta", function(Y) {
    Y.YUIDoc = { meta: {
     "classes": [
-        "ActiveModelSerializer",
         "Application",
         "Controller",
         "Model",
+        "NestedIdSerializer",
         "NestedModelSerializer",
         "RootPrefixSerializer",
         "RouteCreator"

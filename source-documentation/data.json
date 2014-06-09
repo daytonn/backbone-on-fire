@@ -1,11 +1,29 @@
 {
     "project": {},
     "files": {
-        "lib/active_model_serializer.js": {
-            "name": "lib/active_model_serializer.js",
+        "lib/serializers/nested_id_serializer.js": {
+            "name": "lib/serializers/nested_id_serializer.js",
             "modules": {},
             "classes": {
-                "ActiveModelSerializer": 1
+                "NestedIdSerializer": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "lib/serializers/nested_model_serializer.js": {
+            "name": "lib/serializers/nested_model_serializer.js",
+            "modules": {},
+            "classes": {
+                "NestedModelSerializer": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "lib/serializers/root_prefix_serializer.js": {
+            "name": "lib/serializers/root_prefix_serializer.js",
+            "modules": {},
+            "classes": {
+                "RootPrefixSerializer": 1
             },
             "fors": {},
             "namespaces": {}
@@ -46,24 +64,6 @@
             "fors": {},
             "namespaces": {}
         },
-        "lib/nested_model_serializer.js": {
-            "name": "lib/nested_model_serializer.js",
-            "modules": {},
-            "classes": {
-                "NestedModelSerializer": 1
-            },
-            "fors": {},
-            "namespaces": {}
-        },
-        "lib/root_prefix_serializer.js": {
-            "name": "lib/root_prefix_serializer.js",
-            "modules": {},
-            "classes": {
-                "RootPrefixSerializer": 1
-            },
-            "fors": {},
-            "namespaces": {}
-        },
         "lib/route_creator.js": {
             "name": "lib/route_creator.js",
             "modules": {},
@@ -79,12 +79,12 @@
             "name": "Backbone.OnFire",
             "submodules": {},
             "classes": {
-                "ActiveModelSerializer": 1,
+                "NestedIdSerializer": 1,
+                "NestedModelSerializer": 1,
+                "RootPrefixSerializer": 1,
                 "Application": 1,
                 "Controller": 1,
                 "Model": 1,
-                "NestedModelSerializer": 1,
-                "RootPrefixSerializer": 1,
                 "RouteCreator": 1
             },
             "fors": {},
@@ -96,18 +96,46 @@
         }
     },
     "classes": {
-        "ActiveModelSerializer": {
-            "name": "ActiveModelSerializer",
-            "shortname": "ActiveModelSerializer",
+        "NestedIdSerializer": {
+            "name": "NestedIdSerializer",
+            "shortname": "NestedIdSerializer",
             "classitems": [],
             "plugins": [],
             "extensions": [],
             "plugin_for": [],
             "extension_for": [],
             "module": "Backbone.OnFire",
-            "file": "lib/active_model_serializer.js",
+            "file": "lib/serializers/nested_id_serializer.js",
             "line": 2,
-            "description": "Serializer that works seemlessly with Rails and\n[ActiveModel Serializers](https://github.com/rails-api/active_model_serializers).",
+            "description": "Serializer that works seemlessly with Rails\n[nested attributes](http://api.rubyonrails.org/classes/ActiveRecord/NestedAttributes/ClassMethods.html)",
+            "is_constructor": 1
+        },
+        "NestedModelSerializer": {
+            "name": "NestedModelSerializer",
+            "shortname": "NestedModelSerializer",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "Backbone.OnFire",
+            "file": "lib/serializers/nested_model_serializer.js",
+            "line": 2,
+            "description": "Serializer that works seemlessly with Rails\n[nested attributes](http://api.rubyonrails.org/classes/ActiveRecord/NestedAttributes/ClassMethods.html)",
+            "is_constructor": 1
+        },
+        "RootPrefixSerializer": {
+            "name": "RootPrefixSerializer",
+            "shortname": "RootPrefixSerializer",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "Backbone.OnFire",
+            "file": "lib/serializers/root_prefix_serializer.js",
+            "line": 2,
+            "description": "Serializer that works seemlessly with Rails\n[activemodel serializers](https://github.com/rails-api/active_model_serializers)",
             "is_constructor": 1
         },
         "Application": {
@@ -146,7 +174,7 @@
             "extension_for": [],
             "module": "Backbone.OnFire",
             "file": "lib/model.js",
-            "line": 29,
+            "line": 31,
             "description": "Backbone.OnFire models always parse when instantiated\nto ensure relationships are instantiated. All methods\nare bound to the instance of the model.",
             "is_constructor": 1,
             "params": [
@@ -163,36 +191,6 @@
                     "optional": true
                 }
             ]
-        },
-        "NestedModelSerializer": {
-            "name": "NestedModelSerializer",
-            "shortname": "NestedModelSerializer",
-            "classitems": [],
-            "plugins": [],
-            "extensions": [],
-            "plugin_for": [],
-            "extension_for": [],
-            "module": "Backbone.OnFire",
-            "namespace": "",
-            "file": "lib/nested_model_serializer.js",
-            "line": 2,
-            "description": "Serializer that works seemlessly with Rails\n[nested attributes](http://api.rubyonrails.org/classes/ActiveRecord/NestedAttributes/ClassMethods.html)",
-            "is_constructor": 1
-        },
-        "RootPrefixSerializer": {
-            "name": "RootPrefixSerializer",
-            "shortname": "RootPrefixSerializer",
-            "classitems": [],
-            "plugins": [],
-            "extensions": [],
-            "plugin_for": [],
-            "extension_for": [],
-            "module": "Backbone.OnFire",
-            "namespace": "",
-            "file": "lib/root_prefix_serializer.js",
-            "line": 2,
-            "description": "Serializer that works seemlessly with Rails\n[activemodel serializers](https://github.com/rails-api/active_model_serializers)",
-            "is_constructor": 1
         },
         "RouteCreator": {
             "name": "RouteCreator",
@@ -222,32 +220,44 @@
     },
     "classitems": [
         {
-            "file": "lib/active_model_serializer.js",
+            "file": "lib/serializers/nested_id_serializer.js",
             "line": 11,
-            "description": "Serializes the model and it's nested attributes for\npersisting to the server.Root keys will be added if\ndefined on the model. Nested relationship keys\nwill be suffixed with `_attributes` for transparent\ncompatability with [nested attributes](http://api.rubyonrails.org/classes/ActiveRecord/NestedAttributes/ClassMethods.html)",
+            "description": "Deserialize the model data from the server to be parsed\nby the model. Automatically instantiates related models\nstated in the `relationships` object with the ids given\nin the related ids array.",
+            "itemtype": "method",
+            "name": "deserialize",
+            "return": {
+                "description": "json data with instantiated relationship attributes from ids.",
+                "type": "Object"
+            },
+            "class": "NestedIdSerializer"
+        },
+        {
+            "file": "lib/serializers/nested_model_serializer.js",
+            "line": 11,
+            "description": "Serializes the model and it's nested attributes for\npersisting to the server. Nested relationship keys\nwill be suffixed with `_attributes` for transparent\ncompatability with [nested attributes](http://api.rubyonrails.org/classes/ActiveRecord/NestedAttributes/ClassMethods.html)",
             "itemtype": "method",
             "name": "serialize",
             "return": {
                 "description": "serialized model json.",
                 "type": "Object"
             },
-            "class": "ActiveModelSerializer"
+            "class": "NestedModelSerializer"
         },
         {
-            "file": "lib/active_model_serializer.js",
-            "line": 45,
-            "description": "Deserialize the model data from the server to be parsed\nby the model. Automatically instantiates related models\nstated in the `relationships` object. Root keys will be\nremoved if defined on the model and present in the data.",
+            "file": "lib/serializers/nested_model_serializer.js",
+            "line": 37,
+            "description": "Deserialize the model data from the server to be parsed\nby the model. Automatically instantiates related models\nstated in the `relationships` object.",
             "itemtype": "method",
             "name": "deserialize",
             "return": {
                 "description": "json data with instantiated relationship attributes.",
                 "type": "Object"
             },
-            "class": "ActiveModelSerializer"
+            "class": "NestedModelSerializer"
         },
         {
-            "file": "lib/active_model_serializer.js",
-            "line": 64,
+            "file": "lib/serializers/nested_model_serializer.js",
+            "line": 54,
             "description": "Converts nested relationship attributes to json.",
             "itemtype": "method",
             "name": "toJSON",
@@ -255,11 +265,11 @@
                 "description": "Model json with relationship attributes as json as well.",
                 "type": "Object"
             },
-            "class": "ActiveModelSerializer"
+            "class": "NestedModelSerializer"
         },
         {
-            "file": "lib/active_model_serializer.js",
-            "line": 87,
+            "file": "lib/serializers/nested_model_serializer.js",
+            "line": 76,
             "description": "Instantiate a relationship of a given type with the given attributes.",
             "itemtype": "method",
             "name": "instatiateRelationship",
@@ -285,11 +295,47 @@
             "example": [
                 "\n    modelInstance.instantiateRelationship({ user: { id: 1 }}, \"user\", App.Models.User);"
             ],
-            "class": "ActiveModelSerializer"
+            "class": "NestedModelSerializer"
+        },
+        {
+            "file": "lib/serializers/root_prefix_serializer.js",
+            "line": 11,
+            "description": "Prefixes the model with the root key for seemless\nintegration with [activemodel serializers](https://github.com/rails-api/active_model_serializers)",
+            "itemtype": "method",
+            "name": "serialize",
+            "return": {
+                "description": "serialized model json.",
+                "type": "Object"
+            },
+            "class": "RootPrefixSerializer"
+        },
+        {
+            "file": "lib/serializers/root_prefix_serializer.js",
+            "line": 28,
+            "description": "Deserialize the model data from the server to be parsed\nby the model. Automatically instantiates related models\nstated in the `relationships` object.",
+            "itemtype": "method",
+            "name": "deserialize",
+            "return": {
+                "description": "json data with instantiated relationship attributes.",
+                "type": "Object"
+            },
+            "class": "RootPrefixSerializer"
+        },
+        {
+            "file": "lib/serializers/root_prefix_serializer.js",
+            "line": 41,
+            "description": "Converts nested relationship attributes to json.",
+            "itemtype": "method",
+            "name": "toJSON",
+            "return": {
+                "description": "Model json with relationship attributes as json as well.",
+                "type": "Object"
+            },
+            "class": "RootPrefixSerializer"
         },
         {
             "file": "lib/application.js",
-            "line": 11,
+            "line": 13,
             "description": "Namespace to contain Model constructors.",
             "itemtype": "property",
             "name": "Models",
@@ -299,7 +345,7 @@
         },
         {
             "file": "lib/application.js",
-            "line": 19,
+            "line": 21,
             "description": "Namespace to contain Collection constructors.",
             "itemtype": "property",
             "name": "Collections",
@@ -309,7 +355,7 @@
         },
         {
             "file": "lib/application.js",
-            "line": 27,
+            "line": 29,
             "description": "Namespace to contain View constructors.",
             "itemtype": "property",
             "name": "Views",
@@ -319,7 +365,7 @@
         },
         {
             "file": "lib/application.js",
-            "line": 35,
+            "line": 37,
             "description": "Namespace to contain Controller constructors.",
             "itemtype": "property",
             "name": "Controllers",
@@ -329,7 +375,7 @@
         },
         {
             "file": "lib/application.js",
-            "line": 45,
+            "line": 47,
             "description": "Global event dispatcher to coordinate events.",
             "itemtype": "property",
             "name": "Dispatcher",
@@ -339,7 +385,7 @@
         },
         {
             "file": "lib/application.js",
-            "line": 56,
+            "line": 58,
             "description": "Create a Controller constructor and an\ninstance attached to the application object.\nAll Controller methods will be bound to\nit's context when instantiated.",
             "itemtype": "method",
             "name": "createController",
@@ -368,7 +414,7 @@
         },
         {
             "file": "lib/application.js",
-            "line": 104,
+            "line": 106,
             "description": "Create a Model constructor.",
             "itemtype": "method",
             "name": "createModel",
@@ -397,7 +443,7 @@
         },
         {
             "file": "lib/application.js",
-            "line": 131,
+            "line": 133,
             "description": "Create a Collection constructor.",
             "itemtype": "method",
             "name": "createCollection",
@@ -426,7 +472,7 @@
         },
         {
             "file": "lib/application.js",
-            "line": 155,
+            "line": 157,
             "description": "Initialize the application and start the history.",
             "itemtype": "method",
             "name": "start",
@@ -443,7 +489,7 @@
         },
         {
             "file": "lib/application.js",
-            "line": 172,
+            "line": 174,
             "description": "Create a Backbone On Fire application.",
             "itemtype": "method",
             "name": "create",
@@ -467,7 +513,7 @@
         },
         {
             "file": "lib/controller.js",
-            "line": 10,
+            "line": 12,
             "description": "Initialization function called when a\ncontroller is instantiated. By default\n`initialize` is a noop left to be implemented\nby the child class.",
             "itemtype": "method",
             "name": "initialize",
@@ -475,7 +521,7 @@
         },
         {
             "file": "lib/controller.js",
-            "line": 19,
+            "line": 21,
             "description": "Convenience method to call through to the\ndispatcher and register events.",
             "itemtype": "method",
             "name": "on",
@@ -495,7 +541,7 @@
         },
         {
             "file": "lib/controller.js",
-            "line": 31,
+            "line": 33,
             "description": "Convenience method to call through to the\ndispatcher and deregister events.",
             "itemtype": "method",
             "name": "off",
@@ -516,7 +562,7 @@
         },
         {
             "file": "lib/controller.js",
-            "line": 44,
+            "line": 46,
             "description": "Route definitions for the controller.",
             "itemtype": "property",
             "name": "routes",
@@ -526,7 +572,7 @@
         },
         {
             "file": "lib/controller.js",
-            "line": 54,
+            "line": 56,
             "description": "Creates a method on the controller\nwhich calls the given method on the dispatcher.",
             "access": "private",
             "tagname": "",
@@ -536,7 +582,7 @@
         },
         {
             "file": "lib/controller.js",
-            "line": 68,
+            "line": 70,
             "description": "Validate controller name is defined\nand is a `String`.",
             "access": "private",
             "tagname": "",
@@ -553,7 +599,7 @@
         },
         {
             "file": "lib/controller.js",
-            "line": 81,
+            "line": 83,
             "description": "Convenience method to create vanilla Controller constructors.\nAll controller methods are bound when the controller is instantiated.",
             "access": "private",
             "tagname": "",
@@ -622,7 +668,7 @@
         },
         {
             "file": "lib/model.js",
-            "line": 2,
+            "line": 4,
             "static": 1,
             "itemtype": "method",
             "name": "extend",
@@ -641,7 +687,7 @@
         },
         {
             "file": "lib/model.js",
-            "line": 13,
+            "line": 15,
             "description": "Relationships object.",
             "itemtype": "property",
             "name": "relationships",
@@ -651,7 +697,7 @@
         },
         {
             "file": "lib/model.js",
-            "line": 21,
+            "line": 23,
             "description": "Serializers array.",
             "itemtype": "property",
             "name": "serializers",
@@ -770,117 +816,8 @@
             "class": "Model"
         },
         {
-            "file": "lib/nested_model_serializer.js",
-            "line": 11,
-            "description": "Serializes the model and it's nested attributes for\npersisting to the server. Nested relationship keys\nwill be suffixed with `_attributes` for transparent\ncompatability with [nested attributes](http://api.rubyonrails.org/classes/ActiveRecord/NestedAttributes/ClassMethods.html)",
-            "itemtype": "method",
-            "name": "serialize",
-            "return": {
-                "description": "serialized model json.",
-                "type": "Object"
-            },
-            "class": "NestedModelSerializer",
-            "module": "Backbone.OnFire"
-        },
-        {
-            "file": "lib/nested_model_serializer.js",
-            "line": 37,
-            "description": "Deserialize the model data from the server to be parsed\nby the model. Automatically instantiates related models\nstated in the `relationships` object.",
-            "itemtype": "method",
-            "name": "deserialize",
-            "return": {
-                "description": "json data with instantiated relationship attributes.",
-                "type": "Object"
-            },
-            "class": "NestedModelSerializer",
-            "module": "Backbone.OnFire"
-        },
-        {
-            "file": "lib/nested_model_serializer.js",
-            "line": 54,
-            "description": "Converts nested relationship attributes to json.",
-            "itemtype": "method",
-            "name": "toJSON",
-            "return": {
-                "description": "Model json with relationship attributes as json as well.",
-                "type": "Object"
-            },
-            "class": "NestedModelSerializer",
-            "module": "Backbone.OnFire"
-        },
-        {
-            "file": "lib/nested_model_serializer.js",
-            "line": 76,
-            "description": "Instantiate a relationship of a given type with the given attributes.",
-            "itemtype": "method",
-            "name": "instatiateRelationship",
-            "access": "private",
-            "tagname": "",
-            "params": [
-                {
-                    "name": "attributes",
-                    "description": "Parent model attributes containing child attributes.",
-                    "type": "Object"
-                },
-                {
-                    "name": "key",
-                    "description": "Child attributes key.",
-                    "type": "String"
-                },
-                {
-                    "name": "Class",
-                    "description": "Constructor function to instantiate with child attributes.",
-                    "type": "Function"
-                }
-            ],
-            "example": [
-                "\n    modelInstance.instantiateRelationship({ user: { id: 1 }}, \"user\", App.Models.User);"
-            ],
-            "class": "NestedModelSerializer",
-            "module": "Backbone.OnFire"
-        },
-        {
-            "file": "lib/root_prefix_serializer.js",
-            "line": 11,
-            "description": "Prefixes the model with the root key for seemless\nintegration with [activemodel serializers](https://github.com/rails-api/active_model_serializers)",
-            "itemtype": "method",
-            "name": "serialize",
-            "return": {
-                "description": "serialized model json.",
-                "type": "Object"
-            },
-            "class": "RootPrefixSerializer",
-            "module": "Backbone.OnFire"
-        },
-        {
-            "file": "lib/root_prefix_serializer.js",
-            "line": 28,
-            "description": "Deserialize the model data from the server to be parsed\nby the model. Automatically instantiates related models\nstated in the `relationships` object.",
-            "itemtype": "method",
-            "name": "deserialize",
-            "return": {
-                "description": "json data with instantiated relationship attributes.",
-                "type": "Object"
-            },
-            "class": "RootPrefixSerializer",
-            "module": "Backbone.OnFire"
-        },
-        {
-            "file": "lib/root_prefix_serializer.js",
-            "line": 41,
-            "description": "Converts nested relationship attributes to json.",
-            "itemtype": "method",
-            "name": "toJSON",
-            "return": {
-                "description": "Model json with relationship attributes as json as well.",
-                "type": "Object"
-            },
-            "class": "RootPrefixSerializer",
-            "module": "Backbone.OnFire"
-        },
-        {
             "file": "lib/route_creator.js",
-            "line": 24,
+            "line": 26,
             "description": "Trim slashes from the beginning and ending of a string.",
             "itemtype": "method",
             "name": "trimSlashes",
@@ -900,7 +837,7 @@
         },
         {
             "file": "lib/route_creator.js",
-            "line": 35,
+            "line": 37,
             "description": "Get the first segment of a given path.",
             "itemtype": "method",
             "name": "firstSegment",
@@ -920,7 +857,7 @@
         },
         {
             "file": "lib/route_creator.js",
-            "line": 46,
+            "line": 48,
             "description": "Create an action/route mapping for the index action.",
             "itemtype": "method",
             "name": "createIndexRouteAction",
@@ -1051,7 +988,7 @@
     "warnings": [
         {
             "message": "replacing incorrect tag: params with param",
-            "line": " lib/model.js:29"
+            "line": " lib/model.js:31"
         }
     ]
 }

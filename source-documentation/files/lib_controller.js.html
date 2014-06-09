@@ -41,13 +41,13 @@
         <div id="api-tabview-panel">
             <ul id="api-classes" class="apis classes">
             
-                <li><a class="type" href="../classes/ActiveModelSerializer.html">ActiveModelSerializer</a></li>
-            
                 <li><a class="type" href="../classes/Application.html">Application</a></li>
             
                 <li><a class="type" href="../classes/Controller.html">Controller</a></li>
             
                 <li><a class="type" href="../classes/Model.html">Model</a></li>
+            
+                <li><a class="type" href="../classes/NestedIdSerializer.html">NestedIdSerializer</a></li>
             
                 <li><a class="type" href="../classes/NestedModelSerializer.html">NestedModelSerializer</a></li>
             
@@ -82,6 +82,8 @@
   @class Controller
 **/
 (function() {
+  &quot;use strict&quot;;
+
   var controllerDefaults = {
     /**
       Initialization function called when a
@@ -169,9 +171,7 @@
     return function Controller() {
       this.name = controllerName;
       new Backbone.OnFire.RouteCreator(this);
-      _.functions(this).each(function(method) {
-        _.bindAll(this, method);
-      }, this);
+      _.bindAll.apply(this, [this].concat(_.functions(this)));
       this.initialize.apply(this, arguments);
     };
   }

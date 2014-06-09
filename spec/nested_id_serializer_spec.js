@@ -7,7 +7,6 @@ describe("NestedIdSerializer", function() {
   var data;
 
   beforeEach(function() {
-    ChildModel = Backbone.OnFire.Model.extend();
     ChildCollection = Backbone.Collection.extend();
     TestModel = Backbone.OnFire.Model.extend({
       urlRoot: "tests",
