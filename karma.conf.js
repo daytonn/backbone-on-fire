@@ -3,7 +3,7 @@ module.exports = function(config) {
     // base path that will be used to resolve all patterns (eg. files, exclude)
     basePath: '',
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['chai-jquery', 'mocha-debug', 'mocha', 'sinon-chai', 'jquery-1.9.1'],
+    frameworks: ['chai-jquery', 'mocha-debug', 'sinon-chai', 'mocha', 'jquery-1.9.1'],
     files: [
       'node_modules/jquery/dist/jquery.js',
       'node_modules/underscore/underscore.js',
@@ -26,8 +26,8 @@ module.exports = function(config) {
     // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
     logLevel: config.LOG_INFO,
     autoWatch: true,
-    browsers: ['Chrome', 'Firefox', 'Safari', 'ChromeCanary', 'PhantomJS'],
-    // browsers: ['Chrome', 'PhantomJS'],
+    // browsers: ['Chrome', 'Firefox', 'Safari', 'ChromeCanary', 'PhantomJS'],
+    browsers: ['Chrome'],
     singleRun: false
   });
 };
