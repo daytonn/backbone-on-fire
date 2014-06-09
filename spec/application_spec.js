@@ -113,18 +113,38 @@ describe("Application", function() {
     var Model;
     var modelInstance;
     beforeEach(function() {
-      Model = subject.createModel("TestModel", {
-        urlRoot: "tests"
-      });
+      Model = subject.createModel("TestModel");
       modelInstance = new Model;
+    });
+
+    it("sets the urlRoot", function() {
+      expect(modelInstance.urlRoot).to.equal("/tests");
+    });
+
+    it("sets the name as root on the model", function() {
+      expect(modelInstance.root).to.equal("test");
     });
 
     it("assigns the model constructor to the Models namespace", function() {
       expect(subject.Models.Test).to.equal(Model);
     });
 
-    it("sets the name as root on the model", function() {
-      expect(modelInstance.root).to.equal("test");
+    describe("with options", function() {
+      beforeEach(function() {
+        Model = subject.createModel("TestModel", {
+          urlRoot: "/foos",
+          root: "foo"
+        });
+        modelInstance = new Model;
+      });
+
+      it("defers to the optional root", function() {
+        expect(modelInstance.root).to.equal("foo");
+      });
+
+      it("defers to the optional urlRoot", function() {
+        expect(modelInstance.urlRoot).to.equal("/foos");
+      });
     });
   });
 
@@ -132,19 +152,35 @@ describe("Application", function() {
     var Model;
     var Collection;
     var collectionInstance;
+
     beforeEach(function() {
-      Model = subject.createModel("TestModel", {
-        urlRoot: "tests"
-      });
-      Collection = subject.createCollection("TestsCollection", {
-        url: "tests",
-        model: Model
-      });
+      Model = subject.createModel("Test");
+      Collection = subject.createCollection("Tests");
+
       collectionInstance = new Collection([{ id: 1 }]);
     });
 
     it("assigns the collection constructor to the Collections namespace", function() {
       expect(subject.Collections.Tests).to.equal(Collection);
+    });
+
+    it("sets the url", function() {
+      expect(collectionInstance.url).to.equal("/tests");
+    });
+
+    it("sets the model", function() {
+      expect(collectionInstance.model.urlRoot).to.be.like(subject.Models.Test.urlRoot);
+    });
+
+    describe("with options", function() {
+      beforeEach(function() {
+        Model = subject.createModel("TestModel");
+        Collection = subject.createCollection("TestsCollection", {
+          url: "tests",
+          model: Model
+        });
+        collectionInstance = new Collection([{ id: 1 }]);
+      });
     });
   });
 });

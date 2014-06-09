@@ -35,25 +35,14 @@ describe("Model", function() {
     });
   });
 
-  describe("preParse", function() {
-    it("returns the attributes passed in", function() {
-      expect(subject.preParse(attributes)).to.equal(attributes);
-    });
-  });
-
   describe("parse", function() {
     beforeEach(function() {
-      sinon.spy(subject, "preParse");
       sinon.spy(subject, "deserialize");
       subject.parse({});
     });
 
     afterEach(function() {
       subject.deserialize.restore();
-    });
-
-    it("pre-parses the attributes", function() {
-      expect(subject.preParse).to.have.been.called;
     });
 
     it("deserializes the attributes", function() {

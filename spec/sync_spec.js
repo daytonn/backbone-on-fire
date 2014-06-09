@@ -19,7 +19,11 @@ describe("Backbone.Sync", function() {
     ChildCollection = Backbone.Collection.extend();
     TestModel = Backbone.OnFire.Model.extend({
       urlRoot: "tests",
-      serializers: [new Backbone.OnFire.NestedModelSerializer, new Backbone.OnFire.RootPrefixSerializer],
+      serializers: [
+        new Backbone.OnFire.NestedModelSerializer,
+        new Backbone.OnFire.RootPrefixSerializer,
+        new Backbone.OnFire.NestedIdSerializer
+      ],
       relationships: {
         first_child: ChildModel,
         second_child: ChildModel,
