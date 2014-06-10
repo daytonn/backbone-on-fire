@@ -1,4 +1,28 @@
 describe("Collection", function() {
+  var subject;
+  var TestCollection;
+  var TestModel;
+  beforeEach(function() {
+    TestModel = Backbone.OnFire.Model.extend();
+    TestCollection = Backbone.OnFire.Collection.extend({
+      model: TestModel
+    });
+    subject = new TestCollection([{ id: 1 }]);
+  });
+
+  it("allows passing raw attributes", function() {
+    subject.add({ id: 2 });
+    expect(subject.size()).to.equal(2);
+  });
+
+  describe("isNotEmpty", function() {
+    it("inverts the isEmpty logic for convenience", function() {
+      expect(subject.isNotEmpty()).to.be.true;
+      subject.reset();
+      expect(subject.isNotEmpty()).to.be.false;
+    });
+  });
+
   describe("bindings", function() {
     var callFunction;
     beforeEach(function() {

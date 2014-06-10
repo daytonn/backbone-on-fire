@@ -32,4 +32,5 @@ App.createController("Test", {
     this.logAction("show action", id);
   }
 });
+
 App.start();
