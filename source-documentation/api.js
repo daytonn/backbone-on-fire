@@ -2,12 +2,15 @@ YUI.add("yuidoc-meta", function(Y) {
    Y.YUIDoc = { meta: {
     "classes": [
         "Application",
+        "Collection",
+        "CollectionView",
         "Controller",
         "Model",
         "NestedIdSerializer",
         "NestedModelSerializer",
         "RootPrefixSerializer",
-        "RouteCreator"
+        "RouteCreator",
+        "View"
     ],
     "modules": [
         "Backbone.OnFire"

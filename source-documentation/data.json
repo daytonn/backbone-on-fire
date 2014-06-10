@@ -37,6 +37,24 @@
             "fors": {},
             "namespaces": {}
         },
+        "lib/collection.js": {
+            "name": "lib/collection.js",
+            "modules": {},
+            "classes": {
+                "Collection": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "lib/collection_view.js": {
+            "name": "lib/collection_view.js",
+            "modules": {},
+            "classes": {
+                "CollectionView": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
         "lib/controller.js": {
             "name": "lib/controller.js",
             "modules": {},
@@ -72,6 +90,15 @@
             },
             "fors": {},
             "namespaces": {}
+        },
+        "lib/view.js": {
+            "name": "lib/view.js",
+            "modules": {},
+            "classes": {
+                "View": 1
+            },
+            "fors": {},
+            "namespaces": {}
         }
     },
     "modules": {
@@ -83,15 +110,18 @@
                 "NestedModelSerializer": 1,
                 "RootPrefixSerializer": 1,
                 "Application": 1,
+                "Collection": 1,
+                "CollectionView": 1,
                 "Controller": 1,
                 "Model": 1,
-                "RouteCreator": 1
+                "RouteCreator": 1,
+                "View": 1
             },
             "fors": {},
             "namespaces": {},
             "tag": "module",
-            "file": "lib/route_creator.js",
-            "line": 1,
+            "file": "lib/view.js",
+            "line": 16,
             "description": "Public interface to Backbone On Fire global methods."
         }
     },
@@ -151,6 +181,57 @@
             "line": 1,
             "description": "The Application serves as a namespace as\nwell as providing the interface to define\nand interact with the Backbone On Fire application."
         },
+        "Collection": {
+            "name": "Collection",
+            "shortname": "Collection",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "Backbone.OnFire",
+            "file": "lib/collection.js",
+            "line": 28,
+            "description": "Collection class defines a `isNotEmpty` convenience\nmethod and binds all method to the collection context.",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "models",
+                    "description": "Array of models or attribute objects",
+                    "type": "Array",
+                    "optional": true
+                },
+                {
+                    "name": "options",
+                    "description": "Options object",
+                    "type": "Object",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "Collection constructor function.",
+                "type": "Collection"
+            },
+            "example": [
+                "\n    var myCollectionInstance = new Posts([\n      {\n        id: 1,\n        title: \"Collections In Backbone\"\n      },\n      {\n        id: 2,\n        title: \"Hello World!\"\n      }\n    ]);"
+            ]
+        },
+        "CollectionView": {
+            "name": "CollectionView",
+            "shortname": "CollectionView",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "Backbone.OnFire",
+            "file": "lib/collection_view.js",
+            "line": 3,
+            "description": "CollectionView is a view specific to rendering\ncollections. A CollectionView contains\nthe boilerplate necessary to render each model in\na collection via a specified view, preventing the need\nfor eaching over a collection in a template.",
+            "is_constructor": 1,
+            "access": "private",
+            "tagname": ""
+        },
         "Controller": {
             "name": "Controller",
             "shortname": "Controller",
@@ -174,8 +255,8 @@
             "extension_for": [],
             "module": "Backbone.OnFire",
             "file": "lib/model.js",
-            "line": 31,
-            "description": "Backbone.OnFire models always parse when instantiated\nto ensure relationships are instantiated. All methods\nare bound to the instance of the model.",
+            "line": 46,
+            "description": "Backbone.OnFire models always parse when instantiated\nto ensure relationships are instantiated. All methods\nare also bound to the instance of the model.",
             "is_constructor": 1,
             "params": [
                 {
@@ -190,7 +271,11 @@
                     "type": "Object",
                     "optional": true
                 }
-            ]
+            ],
+            "return": {
+                "description": "model instance.",
+                "type": "Model"
+            }
         },
         "RouteCreator": {
             "name": "RouteCreator",
@@ -216,6 +301,32 @@
             "example": [
                 "\n    new Backbone.OnFire.RouteCreator(controller);"
             ]
+        },
+        "View": {
+            "name": "View",
+            "shortname": "View",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "Backbone.OnFire",
+            "namespace": "",
+            "file": "lib/view.js",
+            "line": 16,
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "options",
+                    "description": "\nThere are several special options that, if passed,\nwill be attached directly to the view: `model`,\n`collection`, `el`, `id`, `className`, `tagName`,\n`attributes`, `renderLoadingMask` and `events`.\nIf the view defines an *initialize* function, it\nwill be called when the view is first created. If\nyou'd like to create a view that references an\nelement already in the DOM, pass in the element as\nan option: `new View({el: existingElement})`",
+                    "type": "Object",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "view instance.",
+                "type": "View"
+            }
         }
     },
     "classitems": [
@@ -443,7 +554,7 @@
         },
         {
             "file": "lib/application.js",
-            "line": 133,
+            "line": 135,
             "description": "Create a Collection constructor.",
             "itemtype": "method",
             "name": "createCollection",
@@ -472,7 +583,7 @@
         },
         {
             "file": "lib/application.js",
-            "line": 157,
+            "line": 164,
             "description": "Initialize the application and start the history.",
             "itemtype": "method",
             "name": "start",
@@ -489,7 +600,7 @@
         },
         {
             "file": "lib/application.js",
-            "line": 174,
+            "line": 181,
             "description": "Create a Backbone On Fire application.",
             "itemtype": "method",
             "name": "create",
@@ -510,6 +621,53 @@
                 "\n    var App = Backbone.OnFire.Application.create();"
             ],
             "class": "Application"
+        },
+        {
+            "file": "lib/collection.js",
+            "line": 3,
+            "description": "Default Backbone.Collection methods to ignore\nwhen binding functions to the instance context.",
+            "access": "private",
+            "tagname": "",
+            "type": "Array",
+            "itemtype": "property",
+            "name": "collectionMethods",
+            "class": "Collection"
+        },
+        {
+            "file": "lib/collection.js",
+            "line": 14,
+            "static": 1,
+            "itemtype": "method",
+            "name": "extend",
+            "params": [
+                {
+                    "name": "properties",
+                    "description": "Object defining methods and\nproperties of the collection",
+                    "type": "Object"
+                },
+                {
+                    "name": "classProperties",
+                    "description": "Object defining class-level\nproperties of the collection.",
+                    "type": "Object",
+                    "optional": true
+                }
+            ],
+            "example": [
+                "\n    var Posts = Backbone.OnFire.Collection.extend({\n      url: \"/posts\",\n      model: Post\n    });"
+            ],
+            "class": "Collection"
+        },
+        {
+            "file": "lib/collection.js",
+            "line": 57,
+            "description": "Convenience method to check if the colleciton\nhas items.",
+            "itemtype": "method",
+            "name": "isNotEmpty",
+            "return": {
+                "description": "Whether or not the collection contains models.",
+                "type": "Boolean"
+            },
+            "class": "Collection"
         },
         {
             "file": "lib/controller.js",
@@ -674,31 +832,39 @@
             "name": "extend",
             "params": [
                 {
-                    "name": "options",
-                    "description": "Object defining methods and\nproperties of the model",
+                    "name": "properties",
+                    "description": "Object defining methods and\nproperties of the model.",
+                    "type": "Object"
+                },
+                {
+                    "name": "classProperties",
+                    "description": "Object defining class-level\nproperties and methods of the model.",
                     "type": "Object",
                     "optional": true
                 }
             ],
             "example": [
-                "\n    var MyModel = Backbone.OnFire.Model.extend({\n      urlRoot: \"/mymodels\"\n    });"
+                "\n    var Post = Backbone.OnFire.Model.extend({\n      urlRoot: \"/posts\"\n    });"
             ],
             "class": "Model"
         },
         {
             "file": "lib/model.js",
-            "line": 15,
-            "description": "Relationships object.",
+            "line": 17,
+            "description": "Relationships object defining key/constructor\npairs to enable creation of nested model instances\nwhen the given keys are present in the JSON payload.",
             "itemtype": "property",
             "name": "relationships",
             "type": "Object",
             "default": "{}",
+            "example": [
+                "\n    var Post = Backbone.OnFire.Model.extend({\n      relationships: {\n        author: User, // User model.\n        relatedPosts: Posts // Posts collection.\n      }\n    });"
+            ],
             "class": "Model"
         },
         {
             "file": "lib/model.js",
-            "line": 23,
-            "description": "Serializers array.",
+            "line": 35,
+            "description": "Array of serializers that will be used\nwhen processing JSON payloads. Serializers\ncan define the behavior of `serialize`,\n`deserialize`, and `toJSON`.",
             "itemtype": "property",
             "name": "serializers",
             "type": "Array",
@@ -707,8 +873,8 @@
         },
         {
             "file": "lib/model.js",
-            "line": 66,
-            "description": "Placeholder method to allow custom deserialization of\nserver side JSON payload after it is parsed.",
+            "line": 83,
+            "description": "`deserialize` passes received JSON payload\nfrom the server through each serializer's\n`deserialize` method.",
             "itemtype": "method",
             "name": "deserialize",
             "params": [
@@ -726,8 +892,8 @@
         },
         {
             "file": "lib/model.js",
-            "line": 78,
-            "description": "Placeholder method to allow custom serialization of\nclient side JSON payload.",
+            "line": 96,
+            "description": "`serialize` passes the initial result of the\nmodel's `toJSON` method to be processed by\neach serializer's `serialize` method to send\na modified JSON payload to the server.",
             "itemtype": "method",
             "name": "serialize",
             "params": [
@@ -745,27 +911,20 @@
         },
         {
             "file": "lib/model.js",
-            "line": 94,
-            "description": "Placeholder method to allow manipulation of\nserver side JSON payload before it is parsed.",
+            "line": 110,
+            "description": "`toJSON` passes an initial copy of the model's\n`_attributes` object to be parsed by each\nserializer's `toJSON` method for use as a plain\nJavaScript object.",
             "itemtype": "method",
-            "name": "serialize",
-            "params": [
-                {
-                    "name": "data",
-                    "description": "JSON to serialize",
-                    "type": "Object"
-                }
-            ],
+            "name": "toJSON",
             "return": {
-                "description": "Serialized JSON.",
+                "description": "JSON object representing the model data.",
                 "type": "Object"
             },
             "class": "Model"
         },
         {
             "file": "lib/model.js",
-            "line": 106,
-            "description": "Automatically instantiate relationships when data\nis set/changed if relationships are defined.",
+            "line": 123,
+            "description": "`parse` converts the data received from\nthe server using the `deserialize` method.",
             "itemtype": "method",
             "name": "parse",
             "params": [
@@ -783,7 +942,7 @@
         },
         {
             "file": "lib/model.js",
-            "line": 121,
+            "line": 137,
             "description": "Convenience method to determine if the model\nhas been persisted. This method is the inverse\nof `isNew`.",
             "itemtype": "method",
             "name": "isPersisted",
@@ -795,7 +954,7 @@
         },
         {
             "file": "lib/model.js",
-            "line": 134,
+            "line": 150,
             "description": "Method to process json with all serializers.",
             "itemtype": "method",
             "name": "",
@@ -983,12 +1142,55 @@
             "name": "createIndexRoutes",
             "class": "RouteCreator",
             "module": "Backbone.OnFire"
+        },
+        {
+            "file": "lib/view.js",
+            "line": 3,
+            "static": 1,
+            "itemtype": "method",
+            "name": "extend",
+            "params": [
+                {
+                    "name": "properties",
+                    "description": "Object defining methods and\nproperties of the view.",
+                    "type": "Object"
+                },
+                {
+                    "name": "classProperties",
+                    "description": "Object defining class-level\nproperties and methods of the view.",
+                    "type": "Object",
+                    "optional": true
+                }
+            ],
+            "example": [
+                "\n    var PostView = Backbone.OnFire.View.extend({\n      el: \"#my-post\"\n    });"
+            ],
+            "class": "View",
+            "module": "Backbone.OnFire"
+        },
+        {
+            "file": "lib/view.js",
+            "line": 41,
+            "description": "`toggleLoading` handles toggling a `.loading`\nclass to the model and prepending a loading mask\nto the view if `renderLoadingMask` is set to `true`.",
+            "itemtype": "method",
+            "name": "toggleLoading",
+            "class": "View",
+            "module": "Backbone.OnFire"
+        },
+        {
+            "file": "lib/view.js",
+            "line": 54,
+            "description": "`toggleLoadingMask` handles the addition/removal\nof the loading mask element when `toggleLoading`\nis called.",
+            "itemtype": "method",
+            "name": "toggleLoadingMask",
+            "class": "View",
+            "module": "Backbone.OnFire"
         }
     ],
     "warnings": [
         {
             "message": "replacing incorrect tag: params with param",
-            "line": " lib/model.js:31"
+            "line": " lib/model.js:46"
         }
     ]
 }

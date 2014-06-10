@@ -43,6 +43,10 @@
             
                 <li><a class="type" href="../classes/Application.html">Application</a></li>
             
+                <li><a class="type" href="../classes/Collection.html">Collection</a></li>
+            
+                <li><a class="type" href="../classes/CollectionView.html">CollectionView</a></li>
+            
                 <li><a class="type" href="../classes/Controller.html">Controller</a></li>
             
                 <li><a class="type" href="../classes/Model.html">Model</a></li>
@@ -54,6 +58,8 @@
                 <li><a class="type" href="../classes/RootPrefixSerializer.html">RootPrefixSerializer</a></li>
             
                 <li><a class="type" href="../classes/RouteCreator.html">RouteCreator</a></li>
+            
+                <li><a class="type" href="../classes/View.html">View</a></li>
             
             </ul>
 
@@ -78,7 +84,7 @@
 
     
         <div class="foundat">
-            Defined in: <a href="../files/lib_model.js.html#l31"><code>lib&#x2F;model.js:31</code></a>
+            Defined in: <a href="../files/lib_model.js.html#l46"><code>lib&#x2F;model.js:46</code></a>
         </div>
     
 
@@ -96,7 +102,7 @@
 <div class="box intro">
     <p>Backbone.OnFire models always parse when instantiated
 to ensure relationships are instantiated. All methods
-are bound to the instance of the model.</p>
+are also bound to the instance of the model.</p>
 
 </div>
 
@@ -212,7 +218,7 @@ are bound to the instance of the model.</p>
                 </li>
             
                 <li class="index-item method">
-                    <a href="#method_serialize">serialize</a>
+                    <a href="#method_toJSON">toJSON</a>
 
                     
                     
@@ -266,7 +272,7 @@ are bound to the instance of the model.</p>
             
         
         
-        <a href="../files/lib_model.js.html#l15"><code>lib&#x2F;model.js:15</code></a>
+        <a href="../files/lib_model.js.html#l17"><code>lib&#x2F;model.js:17</code></a>
         
         </p>
 
@@ -277,7 +283,9 @@ are bound to the instance of the model.</p>
 
     <div class="extended-detail">
         <div class="description">
-            <p>Relationships object.</p>
+            <p>Relationships object defining key/constructor
+pairs to enable creation of nested model instances
+when the given keys are present in the JSON payload.</p>
 
         </div>
 
@@ -285,6 +293,20 @@ are bound to the instance of the model.</p>
             <p class="default"><strong>Default:</strong> <span class="default-value">{}</span></p>
         
 
+        
+            <div class="example">
+                <h4>Example:</h4>
+
+                <div class="example-content">
+                    <pre class="code prettyprint"><code>var Post = Backbone.OnFire.Model.extend({
+  relationships: {
+    author: User, // User model.
+    relatedPosts: Posts // Posts collection.
+  }
+});</code></pre>
+
+                </div>
+            </div>
         
 
         
@@ -318,7 +340,7 @@ are bound to the instance of the model.</p>
             
         
         
-        <a href="../files/lib_model.js.html#l23"><code>lib&#x2F;model.js:23</code></a>
+        <a href="../files/lib_model.js.html#l35"><code>lib&#x2F;model.js:35</code></a>
         
         </p>
 
@@ -329,7 +351,10 @@ are bound to the instance of the model.</p>
 
     <div class="extended-detail">
         <div class="description">
-            <p>Serializers array.</p>
+            <p>Array of serializers that will be used
+when processing JSON payloads. Serializers
+can define the behavior of <code>serialize</code>,
+<code>deserialize</code>, and <code>toJSON</code>.</p>
 
         </div>
 
@@ -382,6 +407,10 @@ are bound to the instance of the model.</p>
     
 
     
+        <span class="returns-inline">
+            <span class="type"><a href="../classes/Model.html" class="crosslink">Model</a></span>
+        </span>
+    
 
     
 
@@ -408,7 +437,7 @@ are bound to the instance of the model.</p>
             
         
         
-        <a href="../files/lib_model.js.html#l31"><code>lib&#x2F;model.js:31</code></a>
+        <a href="../files/lib_model.js.html#l46"><code>lib&#x2F;model.js:46</code></a>
         
         </p>
 
@@ -483,6 +512,20 @@ Useful, sometimes.</p>
         
 
         
+            <div class="returns">
+                <h4>Returns:</h4>
+
+                <div class="returns-description">
+                    
+                        
+                            <span class="type"><a href="../classes/Model.html" class="crosslink">Model</a></span>:
+                        
+                        <p>model instance.</p>
+
+                    
+                </div>
+            </div>
+        
 
         
     </div>
@@ -545,7 +588,7 @@ Useful, sometimes.</p>
             
         
         
-        <a href="../files/lib_model.js.html#l66"><code>lib&#x2F;model.js:66</code></a>
+        <a href="../files/lib_model.js.html#l83"><code>lib&#x2F;model.js:83</code></a>
         
         </p>
 
@@ -558,8 +601,9 @@ Useful, sometimes.</p>
     <div class="extended-detail">
 
         <div class="description">
-            <p>Placeholder method to allow custom deserialization of
-server side JSON payload after it is parsed.</p>
+            <p><code>deserialize</code> passes received JSON payload
+from the server through each serializer&#39;s
+<code>deserialize</code> method.</p>
 
         </div>
 
@@ -620,7 +664,13 @@ server side JSON payload after it is parsed.</p>
             
                 <li class="arg">
                     
-                        <code class="optional">[options]</code>
+                        <code>properties</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code class="optional">[classProperties]</code>
                     
                 </li>
             
@@ -681,7 +731,24 @@ server side JSON payload after it is parsed.</p>
                 
                     <li class="param">
                         
-                            <code class="param-name optional">[options]</code>
+                            <code class="param-name">properties</code>
+                            <span class="type">Object</span>
+                        
+
+                        
+
+                        <div class="param-description">
+                            <p>Object defining methods and
+properties of the model.</p>
+
+                        </div>
+
+                        
+                    </li>
+                
+                    <li class="param">
+                        
+                            <code class="param-name optional">[classProperties]</code>
                             <span class="type">Object</span>
                             <span class="flag optional" title="This parameter is optional.">optional</span>
                         
@@ -689,8 +756,8 @@ server side JSON payload after it is parsed.</p>
                         
 
                         <div class="param-description">
-                            <p>Object defining methods and
-properties of the model</p>
+                            <p>Object defining class-level
+properties and methods of the model.</p>
 
                         </div>
 
@@ -708,8 +775,8 @@ properties of the model</p>
                 <h4>Example:</h4>
 
                 <div class="example-content">
-                    <pre class="code prettyprint"><code>var MyModel = Backbone.OnFire.Model.extend({
-  urlRoot: &quot;/mymodels&quot;
+                    <pre class="code prettyprint"><code>var Post = Backbone.OnFire.Model.extend({
+  urlRoot: &quot;/posts&quot;
 });</code></pre>
 
                 </div>
@@ -758,7 +825,7 @@ properties of the model</p>
             
         
         
-        <a href="../files/lib_model.js.html#l121"><code>lib&#x2F;model.js:121</code></a>
+        <a href="../files/lib_model.js.html#l137"><code>lib&#x2F;model.js:137</code></a>
         
         </p>
 
@@ -849,7 +916,7 @@ of <code>isNew</code>.</p>
             
         
         
-        <a href="../files/lib_model.js.html#l106"><code>lib&#x2F;model.js:106</code></a>
+        <a href="../files/lib_model.js.html#l123"><code>lib&#x2F;model.js:123</code></a>
         
         </p>
 
@@ -862,8 +929,8 @@ of <code>isNew</code>.</p>
     <div class="extended-detail">
 
         <div class="description">
-            <p>Automatically instantiate relationships when data
-is set/changed if relationships are defined.</p>
+            <p><code>parse</code> converts the data received from
+the server using the <code>deserialize</code> method.</p>
 
         </div>
 
@@ -963,7 +1030,7 @@ is set/changed if relationships are defined.</p>
             
         
         
-        <a href="../files/lib_model.js.html#l78"><code>lib&#x2F;model.js:78</code></a>
+        <a href="../files/lib_model.js.html#l96"><code>lib&#x2F;model.js:96</code></a>
         
         </p>
 
@@ -976,8 +1043,10 @@ is set/changed if relationships are defined.</p>
     <div class="extended-detail">
 
         <div class="description">
-            <p>Placeholder method to allow custom serialization of
-client side JSON payload.</p>
+            <p><code>serialize</code> passes the initial result of the
+model&#39;s <code>toJSON</code> method to be processed by
+each serializer&#39;s <code>serialize</code> method to send
+a modified JSON payload to the server.</p>
 
         </div>
 
@@ -1028,22 +1097,12 @@ client side JSON payload.</p>
 </div>
 
         
-            <a name="method_serialize" class="anchor-link"></a>
+            <a name="method_toJSON" class="anchor-link"></a>
 <div class="method item">
-    <h3 class="name"><code>serialize</code>
+    <h3 class="name"><code>toJSON</code>
 
     
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-            
-                <li class="arg">
-                    
-                        <code>data</code>
-                    
-                </li>
-            
-            </ul><span class="paren">)</span>
-        </div>
+        <span class="paren">()</span>
     
 
     
@@ -1077,7 +1136,7 @@ client side JSON payload.</p>
             
         
         
-        <a href="../files/lib_model.js.html#l94"><code>lib&#x2F;model.js:94</code></a>
+        <a href="../files/lib_model.js.html#l110"><code>lib&#x2F;model.js:110</code></a>
         
         </p>
 
@@ -1090,35 +1149,13 @@ client side JSON payload.</p>
     <div class="extended-detail">
 
         <div class="description">
-            <p>Placeholder method to allow manipulation of
-server side JSON payload before it is parsed.</p>
+            <p><code>toJSON</code> passes an initial copy of the model&#39;s
+<code>_attributes</code> object to be parsed by each
+serializer&#39;s <code>toJSON</code> method for use as a plain
+JavaScript object.</p>
 
         </div>
 
-        
-            <div class="params">
-                <h4>Parameters:</h4>
-
-                <ul class="params-list">
-                
-                    <li class="param">
-                        
-                            <code class="param-name">data</code>
-                            <span class="type">Object</span>
-                        
-
-                        
-
-                        <div class="param-description">
-                            <p>JSON to serialize</p>
-
-                        </div>
-
-                        
-                    </li>
-                
-                </ul>
-            </div>
         
 
         
@@ -1130,7 +1167,7 @@ server side JSON payload before it is parsed.</p>
                         
                             <span class="type">Object</span>:
                         
-                        <p>Serialized JSON.</p>
+                        <p>JSON object representing the model data.</p>
 
                     
                 </div>
@@ -1195,7 +1232,7 @@ server side JSON payload before it is parsed.</p>
             
         
         
-        <a href="../files/lib_model.js.html#l134"><code>lib&#x2F;model.js:134</code></a>
+        <a href="../files/lib_model.js.html#l150"><code>lib&#x2F;model.js:150</code></a>
         
         </p>
 

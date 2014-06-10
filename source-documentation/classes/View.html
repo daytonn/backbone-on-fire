@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>NestedModelSerializer</title>
+    <title>View</title>
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
     <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
@@ -76,7 +76,7 @@
 
         <div id="docs-main" class="apidocs">
             <div class="content container">
-                <h1>NestedModelSerializer Class</h1>
+                <h1>View Class</h1>
 <div class="box meta">
     
 
@@ -84,7 +84,7 @@
 
     
         <div class="foundat">
-            Defined in: <a href="../files/lib_serializers_nested_model_serializer.js.html#l2"><code>lib&#x2F;serializers&#x2F;nested_model_serializer.js:2</code></a>
+            Defined in: <a href="../files/lib_view.js.html#l16"><code>lib&#x2F;view.js:16</code></a>
         </div>
     
 
@@ -100,9 +100,7 @@
 
 
 <div class="box intro">
-    <p>Serializer that works seemlessly with Rails
-<a href="http://api.rubyonrails.org/classes/ActiveRecord/NestedAttributes/ClassMethods.html">nested attributes</a></p>
-
+    
 </div>
 
 <!-- Class member index -->
@@ -149,7 +147,7 @@
 
             
                 <li class="index-item method constructor">
-                    <a href="#method_NestedModelSerializer">NestedModelSerializer</a>
+                    <a href="#method_View">View</a>
 
                     <span class="flag constructor">constructor</span>
 
@@ -160,28 +158,23 @@
 
             
                 <li class="index-item method">
-                    <a href="#method_deserialize">deserialize</a>
+                    <a href="#method_extend">extend</a>
 
+                    
+                        <span class="flag static">static</span>
                     
                     
                 </li>
             
-                <li class="index-item method private">
-                    <a href="#method_instatiateRelationship">instatiateRelationship</a>
+                <li class="index-item method">
+                    <a href="#method_toggleLoading">toggleLoading</a>
 
                     
                     
                 </li>
             
                 <li class="index-item method">
-                    <a href="#method_serialize">serialize</a>
-
-                    
-                    
-                </li>
-            
-                <li class="index-item method">
-                    <a href="#method_toJSON">toJSON</a>
+                    <a href="#method_toggleLoadingMask">toggleLoadingMask</a>
 
                     
                     
@@ -204,84 +197,27 @@
 
     <div class="constructor">
         <h2>Constructor</h2>
-        <a name="method_NestedModelSerializer" class="anchor-link"></a>
+        <a name="method_View" class="anchor-link"></a>
 <div class="method item">
-    <h3 class="name"><code>NestedModelSerializer</code>
+    <h3 class="name"><code>View</code>
 
     
-        <span class="paren">()</span>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    </h3>
-
-    <div class="meta">
-        
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
             
-                
-                <p>
-                
-                Defined in
-                
+                <li class="arg">
+                    
+                        <code class="optional">[options]</code>
+                    
+                </li>
             
-        
-        
-        <a href="../files/lib_serializers_nested_model_serializer.js.html#l2"><code>lib&#x2F;serializers&#x2F;nested_model_serializer.js:2</code></a>
-        
-        </p>
-
-
-        
-
-        
-    </div>
-
-    <div class="extended-detail">
-
-        <div class="description">
-            
+            </ul><span class="paren">)</span>
         </div>
-
-        
-
-        
-
-        
-    </div>
-</div>
-
-    </div>
-
-
-
-    <div class="methods-detail">
-        <h2>Methods</h2>
-
-        
-            <a name="method_deserialize" class="anchor-link"></a>
-<div class="method item">
-    <h3 class="name"><code>deserialize</code>
-
-    
-        <span class="paren">()</span>
     
 
     
         <span class="returns-inline">
-            <span class="type">Object</span>
+            <span class="type"><a href="../classes/View.html" class="crosslink">View</a></span>
         </span>
     
 
@@ -310,7 +246,7 @@
             
         
         
-        <a href="../files/lib_serializers_nested_model_serializer.js.html#l37"><code>lib&#x2F;serializers&#x2F;nested_model_serializer.js:37</code></a>
+        <a href="../files/lib_view.js.html#l16"><code>lib&#x2F;view.js:16</code></a>
         
         </p>
 
@@ -323,12 +259,42 @@
     <div class="extended-detail">
 
         <div class="description">
-            <p>Deserialize the model data from the server to be parsed
-by the model. Automatically instantiates related models
-stated in the <code>relationships</code> object.</p>
-
+            
         </div>
 
+        
+            <div class="params">
+                <h4>Parameters:</h4>
+
+                <ul class="params-list">
+                
+                    <li class="param">
+                        
+                            <code class="param-name optional">[options]</code>
+                            <span class="type">Object</span>
+                            <span class="flag optional" title="This parameter is optional.">optional</span>
+                        
+
+                        
+
+                        <div class="param-description">
+                            <p>There are several special options that, if passed,
+will be attached directly to the view: <code>model</code>,
+<code>collection</code>, <code>el</code>, <code>id</code>, <code>className</code>, <code>tagName</code>,
+<code>attributes</code>, <code>renderLoadingMask</code> and <code>events</code>.
+If the view defines an <em>initialize</em> function, it
+will be called when the view is first created. If
+you&#39;d like to create a view that references an
+element already in the DOM, pass in the element as
+an option: <code>new View({el: existingElement})</code></p>
+
+                        </div>
+
+                        
+                    </li>
+                
+                </ul>
+            </div>
         
 
         
@@ -338,9 +304,9 @@ stated in the <code>relationships</code> object.</p>
                 <div class="returns-description">
                     
                         
-                            <span class="type">Object</span>:
+                            <span class="type"><a href="../classes/View.html" class="crosslink">View</a></span>:
                         
-                        <p>json data with instantiated relationship attributes.</p>
+                        <p>view instance.</p>
 
                     
                 </div>
@@ -351,10 +317,17 @@ stated in the <code>relationships</code> object.</p>
     </div>
 </div>
 
+    </div>
+
+
+
+    <div class="methods-detail">
+        <h2>Methods</h2>
+
         
-            <a name="method_instatiateRelationship" class="anchor-link"></a>
-<div class="method item private">
-    <h3 class="name"><code>instatiateRelationship</code>
+            <a name="method_extend" class="anchor-link"></a>
+<div class="method item">
+    <h3 class="name"><code>extend</code>
 
     
         <div class="args">
@@ -362,19 +335,13 @@ stated in the <code>relationships</code> object.</p>
             
                 <li class="arg">
                     
-                        <code>attributes</code>
+                        <code>properties</code>
                     
                 </li>
             
                 <li class="arg">
                     
-                        <code>key</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>Class</code>
+                        <code class="optional">[classProperties]</code>
                     
                 </li>
             
@@ -387,11 +354,11 @@ stated in the <code>relationships</code> object.</p>
     
 
     
-        <span class="flag private">private</span>
-    
 
     
 
+    
+        <span class="flag static">static</span>
     
 
     
@@ -411,7 +378,7 @@ stated in the <code>relationships</code> object.</p>
             
         
         
-        <a href="../files/lib_serializers_nested_model_serializer.js.html#l76"><code>lib&#x2F;serializers&#x2F;nested_model_serializer.js:76</code></a>
+        <a href="../files/lib_view.js.html#l3"><code>lib&#x2F;view.js:3</code></a>
         
         </p>
 
@@ -424,8 +391,7 @@ stated in the <code>relationships</code> object.</p>
     <div class="extended-detail">
 
         <div class="description">
-            <p>Instantiate a relationship of a given type with the given attributes.</p>
-
+            
         </div>
 
         
@@ -436,14 +402,15 @@ stated in the <code>relationships</code> object.</p>
                 
                     <li class="param">
                         
-                            <code class="param-name">attributes</code>
+                            <code class="param-name">properties</code>
                             <span class="type">Object</span>
                         
 
                         
 
                         <div class="param-description">
-                            <p>Parent model attributes containing child attributes.</p>
+                            <p>Object defining methods and
+properties of the view.</p>
 
                         </div>
 
@@ -452,30 +419,16 @@ stated in the <code>relationships</code> object.</p>
                 
                     <li class="param">
                         
-                            <code class="param-name">key</code>
-                            <span class="type">String</span>
+                            <code class="param-name optional">[classProperties]</code>
+                            <span class="type">Object</span>
+                            <span class="flag optional" title="This parameter is optional.">optional</span>
                         
 
                         
 
                         <div class="param-description">
-                            <p>Child attributes key.</p>
-
-                        </div>
-
-                        
-                    </li>
-                
-                    <li class="param">
-                        
-                            <code class="param-name">Class</code>
-                            <span class="type">Function</span>
-                        
-
-                        
-
-                        <div class="param-description">
-                            <p>Constructor function to instantiate with child attributes.</p>
+                            <p>Object defining class-level
+properties and methods of the view.</p>
 
                         </div>
 
@@ -493,7 +446,9 @@ stated in the <code>relationships</code> object.</p>
                 <h4>Example:</h4>
 
                 <div class="example-content">
-                    <pre class="code prettyprint"><code>modelInstance.instantiateRelationship({ user: { id: 1 }}, &quot;user&quot;, App.Models.User);</code></pre>
+                    <pre class="code prettyprint"><code>var PostView = Backbone.OnFire.View.extend({
+  el: &quot;#my-post&quot;
+});</code></pre>
 
                 </div>
             </div>
@@ -502,18 +457,14 @@ stated in the <code>relationships</code> object.</p>
 </div>
 
         
-            <a name="method_serialize" class="anchor-link"></a>
+            <a name="method_toggleLoading" class="anchor-link"></a>
 <div class="method item">
-    <h3 class="name"><code>serialize</code>
+    <h3 class="name"><code>toggleLoading</code>
 
     
         <span class="paren">()</span>
     
 
-    
-        <span class="returns-inline">
-            <span class="type">Object</span>
-        </span>
     
 
     
@@ -541,7 +492,7 @@ stated in the <code>relationships</code> object.</p>
             
         
         
-        <a href="../files/lib_serializers_nested_model_serializer.js.html#l11"><code>lib&#x2F;serializers&#x2F;nested_model_serializer.js:11</code></a>
+        <a href="../files/lib_view.js.html#l41"><code>lib&#x2F;view.js:41</code></a>
         
         </p>
 
@@ -554,29 +505,14 @@ stated in the <code>relationships</code> object.</p>
     <div class="extended-detail">
 
         <div class="description">
-            <p>Serializes the model and it&#39;s nested attributes for
-persisting to the server. Nested relationship keys
-will be suffixed with <code>_attributes</code> for transparent
-compatability with <a href="http://api.rubyonrails.org/classes/ActiveRecord/NestedAttributes/ClassMethods.html">nested attributes</a></p>
+            <p><code>toggleLoading</code> handles toggling a <code>.loading</code>
+class to the model and prepending a loading mask
+to the view if <code>renderLoadingMask</code> is set to <code>true</code>.</p>
 
         </div>
 
         
 
-        
-            <div class="returns">
-                <h4>Returns:</h4>
-
-                <div class="returns-description">
-                    
-                        
-                            <span class="type">Object</span>:
-                        
-                        <p>serialized model json.</p>
-
-                    
-                </div>
-            </div>
         
 
         
@@ -584,18 +520,14 @@ compatability with <a href="http://api.rubyonrails.org/classes/ActiveRecord/Nest
 </div>
 
         
-            <a name="method_toJSON" class="anchor-link"></a>
+            <a name="method_toggleLoadingMask" class="anchor-link"></a>
 <div class="method item">
-    <h3 class="name"><code>toJSON</code>
+    <h3 class="name"><code>toggleLoadingMask</code>
 
     
         <span class="paren">()</span>
     
 
-    
-        <span class="returns-inline">
-            <span class="type">Object</span>
-        </span>
     
 
     
@@ -623,7 +555,7 @@ compatability with <a href="http://api.rubyonrails.org/classes/ActiveRecord/Nest
             
         
         
-        <a href="../files/lib_serializers_nested_model_serializer.js.html#l54"><code>lib&#x2F;serializers&#x2F;nested_model_serializer.js:54</code></a>
+        <a href="../files/lib_view.js.html#l54"><code>lib&#x2F;view.js:54</code></a>
         
         </p>
 
@@ -636,26 +568,14 @@ compatability with <a href="http://api.rubyonrails.org/classes/ActiveRecord/Nest
     <div class="extended-detail">
 
         <div class="description">
-            <p>Converts nested relationship attributes to json.</p>
+            <p><code>toggleLoadingMask</code> handles the addition/removal
+of the loading mask element when <code>toggleLoading</code>
+is called.</p>
 
         </div>
 
         
 
-        
-            <div class="returns">
-                <h4>Returns:</h4>
-
-                <div class="returns-description">
-                    
-                        
-                            <span class="type">Object</span>:
-                        
-                        <p>Model json with relationship attributes as json as well.</p>
-
-                    
-                </div>
-            </div>
         
 
         

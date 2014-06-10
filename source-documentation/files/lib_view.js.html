@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>lib/namespace.js</title>
+    <title>lib/view.js</title>
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
     <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
@@ -76,15 +76,81 @@
 
         <div id="docs-main" class="apidocs">
             <div class="content container">
-                <h1 class="file-heading">File: lib/namespace.js</h1>
+                <h1 class="file-heading">File: lib/view.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
-/**
-  Public interface to Backbone On Fire global methods.
-  @module Backbone.OnFire
-*/
-Backbone.OnFire = {};
+(function() {
+  &quot;use strict&quot;;
+  /**
+    @static
+    @method extend
+    @param properties {Object} Object defining methods and
+    properties of the view.
+    @param [classProperties] {Object} Object defining class-level
+    properties and methods of the view.
+    @example
+        var PostView = Backbone.OnFire.View.extend({
+          el: &quot;#my-post&quot;
+        });
+  */
+  Backbone.OnFire.View = Backbone.View.extend({
+    /**
+      @class View
+      @constructor
+
+      @param [options] {Object}
+      There are several special options that, if passed,
+      will be attached directly to the view: &#x60;model&#x60;,
+      &#x60;collection&#x60;, &#x60;el&#x60;, &#x60;id&#x60;, &#x60;className&#x60;, &#x60;tagName&#x60;,
+      &#x60;attributes&#x60;, &#x60;renderLoadingMask&#x60; and &#x60;events&#x60;.
+      If the view defines an *initialize* function, it
+      will be called when the view is first created. If
+      you&#x27;d like to create a view that references an
+      element already in the DOM, pass in the element as
+      an option: &#x60;new View({el: existingElement})&#x60;
+
+      @return {View} view instance.
+    */
+    constructor: function(options) {
+      options = options || {};
+      _(options).defaults({ renderLoadingMask: true });
+      this.renderLoadingMask = !!options.renderLoadingMask;
+      Backbone.View.call(this, options);
+      _.bindAll.apply(this, [this].concat(_.functions(this)));
+    },
+
+    /**
+      &#x60;toggleLoading&#x60; handles toggling a &#x60;.loading&#x60;
+      class to the model and prepending a loading mask
+      to the view if &#x60;renderLoadingMask&#x60; is set to &#x60;true&#x60;.
+
+      @method toggleLoading
+    */
+    toggleLoading: function() {
+      if (this.renderLoadingMask) this.toggleLoadingMask();
+      this.$el.toggleClass(&quot;loading&quot;);
+      this.isLoading = !this.isLoading;
+    },
+
+    /**
+      &#x60;toggleLoadingMask&#x60; handles the addition/removal
+      of the loading mask element when &#x60;toggleLoading&#x60;
+      is called.
+
+      @method toggleLoadingMask
+    */
+    toggleLoadingMask: function() {
+      if (this.isLoading) {
+        this.loadingMask.remove();
+        this.loadingMask = undefined;
+      } else {
+        this.$el.prepend(&#x27;&lt;div class=&quot;loading-mask&quot; /&gt;&#x27;);
+        this.loadingMask = this.$(&quot;.loading-mask&quot;);
+      }
+    }
+  });
+})();
 
     </pre>
 </div>
