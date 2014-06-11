@@ -99,12 +99,13 @@
       if (!this.collection) throw new Error(&quot;CollectionView: collection is undefined.&quot;);
       this.modelViews = [];
       this.tagName = &quot;ul&quot;;
+      this.listenTo(this.collection, &quot;add&quot;, this.addItemView);
+      this.createItemViews();
     },
 
     render: function() {
-      this.$el.empty();
+      if (this.modelViews.length) return this.$el;
       if (this.collection.isNotEmpty()) {
-        this.createItemViews();
         this.renderItemViews();
       } else if (this.emptyTemplate) {
         this.$el.html(this.emptyTemplate());
@@ -134,6 +135,19 @@
     addItemView: function(model) {
       var modelView = this.createItemView(model);
       this.renderItemView(modelView);
+    },
+
+    removeItemViews: function() {
+      this.modelViews.each(function(modelView) {
+        modelView.remove();
+        modelView = undefined;
+      });
+      this.modelViews = [];
+    },
+
+    remove: function() {
+      this.removeItemViews();
+      Backbone.View.prototype.remove.apply(this, arguments);
     }
   });
 

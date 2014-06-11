@@ -30,7 +30,7 @@ describe("CollectionView", function() {
   });
 
   it("has modelViews", function() {
-    expect(subject.modelViews).to.be.like([]);
+    expect(subject.modelViews).to.be.instanceof(Array);
   });
 
   it("has a modelConstructor", function() {
@@ -90,16 +90,27 @@ describe("CollectionView", function() {
 
   describe("render", function() {
     beforeEach(function() {
-      sinon.spy(subject.$el, "empty");
       subject.render();
-    });
-
-    it("empties the element", function() {
-      expect(subject.$el.empty).to.have.been.called;
     });
 
     it("returns the element", function() {
       expect(subject.render()).to.equal(subject.$el);
+    });
+
+    describe("when item views already exist", function() {
+      beforeEach(function() {
+        subject.modelViews.length = 20;
+        sinon.spy(subject, "renderItemViews");
+        subject.render();
+      });
+
+      afterEach(function() {
+        subject.renderItemViews.restore();
+      });
+
+      it("does not render the item views", function() {
+        expect(subject.renderItemViews).not.to.have.been.called;
+      });
     });
 
     describe("when collection is empty", function() {
@@ -150,10 +161,10 @@ describe("CollectionView", function() {
     });
 
     it("adds a view to the modelViews", function() {
-      expect(subject.modelViews.length).to.equal(1);
-      expect(subject.modelViews.first()).to.be.an.instanceof(TestModelView);
-      expect(subject.modelViews.first().model).to.equal(subject.collection.first());
-      expect(subject.modelViews.first().index).to.equal(0);
+      expect(subject.modelViews.length).to.equal(3);
+      expect(subject.modelViews.last()).to.be.an.instanceof(TestModelView);
+      expect(subject.modelViews.last().model).to.equal(subject.collection.first());
+      expect(subject.modelViews.last().index).to.equal(0);
     });
 
     it("returns the item view it created", function() {
@@ -223,6 +234,44 @@ describe("CollectionView", function() {
 
     it("appends the new item view $el", function() {
       expect(subject.$el.append).to.have.been.called;
+    });
+  });
+
+  describe("removeItemViews", function() {
+    it("removes all the item views", function() {
+      subject.removeItemViews();
+      expect(subject.modelViews).to.be.like([]);
+    });
+  });
+
+  describe("remove", function() {
+    beforeEach(function() {
+      sinon.spy(Backbone.View.prototype, "remove");
+      sinon.spy(subject, "removeItemViews");
+      subject.remove();
+    });
+
+    afterEach(function() {
+      Backbone.View.prototype.remove.restore();
+      subject.removeItemViews.restore();
+    });
+
+    it("removes the item views", function() {
+      expect(subject.removeItemViews).to.have.been.called;
+    });
+
+    it("removes itself", function() {
+      expect(Backbone.View.prototype.remove).to.have.been.called;
+    });
+  });
+
+  describe("events", function() {
+    it("listens to the collection's add event", function() {
+      var model = new TestModel({ id: 3 });
+      expect(subject.modelViews.length).to.equal(2);
+      subject.collection.add(model);
+      expect(subject.modelViews.length).to.equal(3);
+      expect(_(subject.modelViews).last().model).to.equal(model);
     });
   });
 });
