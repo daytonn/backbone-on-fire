@@ -16,11 +16,11 @@ describe("Model", function() {
   });
 
   it("has a default relationships object", function() {
-    expect(subject.relationships).to.be.like({});
+    expect(subject.relationships).to.eql({});
   });
 
   it("has a default serializers array", function() {
-    expect(subject.serializers).to.be.like([]);
+    expect(subject.serializers).to.eql([]);
   });
 
   describe("constructor", function() {
@@ -31,7 +31,7 @@ describe("Model", function() {
     });
 
     it("sets parse to true", function() {
-      expect(options.parse).to.be.true;
+      expect(options.parse).to.equal(true);
     });
   });
 
@@ -46,15 +46,15 @@ describe("Model", function() {
     });
 
     it("deserializes the attributes", function() {
-      expect(subject.deserialize).to.have.been.called;
+      expect(subject.deserialize.called).to.equal(true);
     });
   });
 
   describe("isPersisted", function() {
     it("returns the opposite of isNew", function() {
-      expect(subject.isPersisted()).to.be.false;
+      expect(subject.isPersisted()).to.equal(false);
       sinon.stub(subject, "isNew").returns(false);
-      expect(subject.isPersisted()).to.be.true;
+      expect(subject.isPersisted()).to.equal(true);
     });
   });
 
@@ -114,8 +114,8 @@ describe("Model", function() {
       });
 
       it("calls each serializer", function() {
-        expect(serializer1.serialize).to.have.been.calledWith("toJSON2");
-        expect(serializer2.serialize).to.have.been.calledWith("serialize1");
+        expect(serializer1.serialize.calledWith("toJSON2")).to.equal(true);
+        expect(serializer2.serialize.calledWith("serialize1")).to.equal(true);
         expect(serializedData).to.equal("serialize2");
       });
     });
@@ -126,8 +126,8 @@ describe("Model", function() {
       });
 
       it("calls each serializer", function() {
-        expect(serializer1.deserialize).to.be.calledWith(attributes);
-        expect(serializer2.deserialize).to.be.calledWith("deserialize1");
+        expect(serializer1.deserialize.calledWith(attributes)).to.equal(true);
+        expect(serializer2.deserialize.calledWith("deserialize1")).to.equal(true);
         expect(serializedData).to.equal("deserialize2");
       });
     });
@@ -139,8 +139,8 @@ describe("Model", function() {
       });
 
       it("calls each serializer", function() {
-        expect(serializer1.toJSON).to.have.been.calledWith(attributes);
-        expect(serializer2.toJSON).to.have.been.calledWith("toJSON1");
+        expect(serializer1.toJSON.calledWith(attributes)).to.equal(true);
+        expect(serializer2.toJSON.calledWith("toJSON1")).to.equal(true);
         expect(serializedData).to.equal("toJSON2");
       });
     });
@@ -157,7 +157,7 @@ describe("Model", function() {
       it("does not try to execute missing methods", function() {
         expect(function() {
           subject.serialize();
-        }).not.to.throw();
+        }).not.to.throwError();
       });
     });
   });

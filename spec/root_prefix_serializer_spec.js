@@ -26,12 +26,12 @@ describe("RootPrefixSerializer", function() {
     });
 
     it("removes the root if it exists", function() {
-      expect(data.test).to.be.undefined;
-      expect(subject.get("test")).to.be.undefined;
+      expect(_.isUndefined(data.test)).to.equal(true);
+      expect(_.isUndefined(subject.get("test"))).to.equal(true);
     });
 
     it("does not try to remove the root if it is absent", function() {
-      expect(subject.deserialize(attributes)).to.be.like(attributes);
+      expect(subject.deserialize(attributes)).to.eql(attributes);
     });
   });
 
@@ -43,8 +43,8 @@ describe("RootPrefixSerializer", function() {
 
     it("creates nested attributes under the root", function() {
       expect(data.test.foo).to.equal("bar");
-      expect(data.foo).to.be.undefined;
-      expect(subject.get("test")).to.be.undefined;
+      expect(_.isUndefined(data.foo)).to.equal(true);
+      expect(_.isUndefined(subject.get("test"))).to.equal(true);
     });
   });
 });

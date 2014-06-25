@@ -6,11 +6,13 @@ describe("Controller", function() {
   });
 
   it("requires a name", function() {
-    expect(Backbone.OnFire.Controller.extend).to.throw("Backbone.OnFire.Controller.extend(name, options): name is undefined");
+    expect(function() {
+      Backbone.OnFire.Controller.extend()
+    }).to.throwError("Backbone.OnFire.Controller.extend(name, options): name is undefined");
   });
 
   it("expects name to be a string", function() {
-    expect(function() { Backbone.OnFire.Controller.extend({}); }).to.throw("Backbone.OnFire.Controller.extend(name, options): name is expected to be a string got [object Object]");
+    expect(function() { Backbone.OnFire.Controller.extend({}); }).to.throwError("Backbone.OnFire.Controller.extend(name, options): name is expected to be a string got [object Object]");
   });
 
   it("sets the name on the instance", function() {
@@ -18,7 +20,7 @@ describe("Controller", function() {
   });
 
   it("has a default initialize method", function() {
-    expect(subject.initialize).to.be.function;
+    expect(_.isFunction(subject.initialize)).to.equal(true);
   });
 
   describe("with options", function() {
@@ -45,7 +47,7 @@ describe("Controller", function() {
         }
       });
       subject = new TestController;
-      expect(subject.initialized).to.be.true;
+      expect(subject.initialized).to.equal(true);
     });
   });
 
@@ -91,12 +93,12 @@ describe("Controller", function() {
     });
 
     it("has on/off convenience methods which delegates to the dispatcher", function() {
-      expect(subject.on).to.be.function;
-      expect(subject.off).to.be.function;
+      expect(_.isFunction(subject.on)).to.equal(true);
+      expect(_.isFunction(subject.off)).to.equal(true);
       subject.on("test", handler, subject);
-      expect(dispatcher.on).to.have.been.calledWith("test", handler, subject);
+      expect(dispatcher.on.calledWith("test", handler, subject)).to.equal(true);
       subject.off("test", handler, subject);
-      expect(dispatcher.off).to.have.been.calledWith("test", handler, subject);
+      expect(dispatcher.off.calledWith("test", handler, subject)).to.equal(true);
     });
 
     it("it throws an error if there is no dispatcher", function() {
@@ -104,10 +106,10 @@ describe("Controller", function() {
       subject = new TestController;
       expect(function() {
         subject.on("test", handler, subject);
-      }).to.throw("TestController has no dispatcher");
+      }).to.throwError("TestController has no dispatcher");
       expect(function() {
         subject.off("test", handler, subject);
-      }).to.throw("TestController has no dispatcher");
+      }).to.throwError("TestController has no dispatcher");
     });
   });
 });

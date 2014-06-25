@@ -6,7 +6,7 @@ describe("ActiveModelSerializers", function() {
 
   describe("all", function() {
     it("returns all the serializers", function() {
-      expect(subject.all).to.be.like([
+      expect(subject.all).to.eql([
         new Backbone.OnFire.NestedIdSerializer,
         new Backbone.OnFire.NestedModelSerializer,
         new Backbone.OnFire.RootPrefixSerializer
@@ -15,7 +15,7 @@ describe("ActiveModelSerializers", function() {
   });
 
   it("returns specific serializers", function() {
-    expect(subject("NestedIdSerializer", "RootPrefixSerializer")).to.be.like([
+    expect(subject("NestedIdSerializer", "RootPrefixSerializer")).to.eql([
       new Backbone.OnFire.NestedIdSerializer,
       new Backbone.OnFire.RootPrefixSerializer
     ]);
@@ -23,7 +23,7 @@ describe("ActiveModelSerializers", function() {
 
   describe("without Serializer suffix", function() {
     it("returns specific serializers", function() {
-      expect(subject("NestedId", "RootPrefix")).to.be.like([
+      expect(subject("NestedId", "RootPrefix")).to.eql([
         new Backbone.OnFire.NestedIdSerializer,
         new Backbone.OnFire.RootPrefixSerializer
       ]);

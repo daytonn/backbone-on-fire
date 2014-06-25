@@ -5,35 +5,35 @@ describe("Application", function() {
   });
 
   it("has an initialize method", function() {
-    expect(subject.initialize).to.be.function;
+    expect(_.isFunction(subject.initialize)).to.equal(true);
   });
 
   it("has a Models object", function() {
-    expect(subject.Models).to.be.object;
+    expect(_.isObject(subject.Models)).to.equal(true);
   });
 
   it("has a Collections object", function() {
-    expect(subject.Collections).to.be.object;
+    expect(_.isObject(subject.Collections)).to.equal(true);
   });
 
   it("has a Views object", function() {
-    expect(subject.Views).to.be.object;
+    expect(_.isObject(subject.Views)).to.equal(true);
   });
 
   it("has a Controllers object", function() {
-    expect(subject.Controllers).to.be.object;
+    expect(_.isObject(subject.Controllers)).to.equal(true);
   });
 
   it("has a Dispatcher", function() {
-    expect(subject.Dispatcher).to.be.defined;
+    expect(_.isUndefined(subject.Dispatcher)).to.equal(false);
   });
 
   it("has a Router", function() {
-    expect(subject.Router).to.be.defined;
+    expect(_.isUndefined(subject.Router)).to.equal(false);
   });
 
   it("has an 'abstract' ApplicationController", function() {
-    expect(subject.Controllers.Application).to.be.defined;
+    expect(_.isUndefined(subject.Controllers.Application)).to.equal(false);
   });
 
   describe("with options", function() {
@@ -54,8 +54,8 @@ describe("Application", function() {
     });
 
     it("overrides the default objects", function() {
-      ['Models', 'Collections', 'Views', 'Controllers'].forEach(function(obj) {
-        expect(subject[obj]).to.equal(obj);
+      _(['Models', 'Collections', 'Views', 'Controllers']).each(function(obj) {
+        expect(subject[obj]).to.eql(obj);
       });
     });
   });
@@ -74,11 +74,11 @@ describe("Application", function() {
     });
 
     it("creates a controller", function() {
-      expect(controller.constructor.name).to.equal("Controller");
+      expect(controller).to.be.a(subject.Controllers.Test);
     });
 
     it("assigns the controller constructor to the Controllers namespace", function() {
-      expect(subject.Controllers.Test).to.be.defined;
+      expect(_.isUndefined(subject.Controllers.Test)).to.equal(false);
     });
 
     it("assigns a controller instance to the application namespace", function() {
@@ -94,17 +94,17 @@ describe("Application", function() {
     });
 
     it("extends the application controller", function() {
-      expect(controller.extendsApplicationController).to.be.true;
+      expect(controller.extendsApplicationController).to.equal(true);
     });
 
     it("doesn't pollute the ApplicationController", function() {
-      expect(subject.Controllers.Application.prototype.foo).to.be.undefined;
+      expect(_.isUndefined(subject.Controllers.Application.prototype.foo)).to.equal(true);
     });
 
     describe("ApplicationController", function() {
       it("does not instantiate the application controller", function() {
         subject.createController("ApplicationController");
-        expect(subject.ApplicationController).to.be.undefined;
+        expect(_.isUndefined(subject.ApplicationController)).to.equal(true);
       });
     });
   });
@@ -169,7 +169,7 @@ describe("Application", function() {
     });
 
     it("sets the model", function() {
-      expect(collectionInstance.model.urlRoot).to.be.like(subject.Models.Test.urlRoot);
+      expect(collectionInstance.model.urlRoot).to.eql(subject.Models.Test.urlRoot);
     });
 
     describe("with options", function() {

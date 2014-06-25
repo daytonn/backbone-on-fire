@@ -96,16 +96,16 @@ describe("RouteCreator", function() {
     it("removes beginning and trailing slashes from routes", function() {
       controller.routes.push("/foo/:bar/:baz/");
       subject.normalizeRoutes();
-      expect(controller.routes.contains('edit/:id')).to.be.true;
-      expect(controller.routes.contains('beginning')).to.be.true;
-      expect(controller.routes.contains('ending')).to.be.true;
-      expect(controller.routes.contains('both')).to.be.true;
-      expect(controller.routes.contains('foo/:bar/:baz')).to.be.true;
+      expect(controller.routes.contains('edit/:id')).to.equal(true);
+      expect(controller.routes.contains('beginning')).to.equal(true);
+      expect(controller.routes.contains('ending')).to.equal(true);
+      expect(controller.routes.contains('both')).to.equal(true);
+      expect(controller.routes.contains('foo/:bar/:baz')).to.equal(true);
 
-      expect(controller.routes.contains('/beginning')).to.be.false;
-      expect(controller.routes.contains('ending/')).to.be.false;
-      expect(controller.routes.contains('/both/')).to.be.false;
-      expect(controller.routes.contains('/foo/:bar/:baz/')).to.be.false;
+      expect(controller.routes.contains('/beginning')).to.equal(false);
+      expect(controller.routes.contains('ending/')).to.equal(false);
+      expect(controller.routes.contains('/both/')).to.equal(false);
+      expect(controller.routes.contains('/foo/:bar/:baz/')).to.equal(false);
     });
   });
 
@@ -128,11 +128,11 @@ describe("RouteCreator", function() {
   describe("hasIndexRoute", function() {
     it("returns true when an index route exists", function() {
       controller.routes.push("/index/:id");
-      expect(subject.hasIndexRoute()).to.be.true;
+      expect(subject.hasIndexRoute()).to.equal(true);
     });
 
     it("returns false when an index route does not exist", function() {
-      expect(subject.hasIndexRoute()).to.be.false;
+      expect(subject.hasIndexRoute()).to.equal(false);
     });
   });
 
@@ -151,7 +151,7 @@ describe("RouteCreator", function() {
     });
 
     it("adds index to the routes", function() {
-      expect(subject.hasIndexRoute()).to.be.true;
+      expect(subject.hasIndexRoute()).to.equal(true);
     });
 
     it("creates an index route action", function() {
@@ -181,14 +181,14 @@ describe("RouteCreator", function() {
     it("throws an error on invalid routes", function() {
       expect(function() {
         subject.validateRoutes();
-      }).to.throw("TestController: has no action matching route 'nonexistent'");
+      }).to.throwError("TestController: has no action matching route 'nonexistent'");
     });
 
     it("does not throw an error if all routes are valid", function() {
       controller.routes.pop();
       expect(function() {
         subject.validateRoutes();
-      }).not.to.throw(new Error);
+      }).not.to.throwError(new Error);
     });
 
     describe("without a router", function() {
@@ -196,7 +196,7 @@ describe("RouteCreator", function() {
         controller.router = undefined;
         expect(function() {
           subject.validateRoutes();
-        }).to.throw("TestController: router is undefined");
+        }).to.throwError("TestController: router is undefined");
       });
     });
   });
@@ -223,41 +223,41 @@ describe("RouteCreator", function() {
     });
 
     it("registers the routes", function() {
-      expect(router.route).to.have.been.calledWith("test", controller.index);
-      expect(router.route).to.have.been.calledWith("test/edit/:id", controller.edit);
-      expect(router.route).to.have.been.calledWith("test/beginning", controller.beginning);
-      expect(router.route).to.have.been.calledWith("test/ending", controller.ending);
-      expect(router.route).to.have.been.calledWith("test/both", controller.both);
+      expect(router.route.calledWith("test", controller.index)).to.equal(true);
+      expect(router.route.calledWith("test/edit/:id", controller.edit)).to.equal(true);
+      expect(router.route.calledWith("test/beginning", controller.beginning)).to.equal(true);
+      expect(router.route.calledWith("test/ending", controller.ending)).to.equal(true);
+      expect(router.route.calledWith("test/both", controller.both)).to.equal(true);
     });
 
     it("binds the route actions to the controller", function() {
-      expect(_.bindAll).to.have.been.calledWith(controller, "index");
-      expect(_.bindAll).to.have.been.calledWith(controller, "edit");
-      expect(_.bindAll).to.have.been.calledWith(controller, "beginning");
-      expect(_.bindAll).to.have.been.calledWith(controller, "ending");
-      expect(_.bindAll).to.have.been.calledWith(controller, "both");
+      expect(_.bindAll.calledWith(controller, "index")).to.equal(true);
+      expect(_.bindAll.calledWith(controller, "edit")).to.equal(true);
+      expect(_.bindAll.calledWith(controller, "beginning")).to.equal(true);
+      expect(_.bindAll.calledWith(controller, "ending")).to.equal(true);
+      expect(_.bindAll.calledWith(controller, "both")).to.equal(true);
     });
   });
 
   describe("isIndexController", function() {
     it("determines if the controller is the index controller", function() {
       controller.name = "IndexController";
-      expect(subject.isIndexController()).to.be.true;
+      expect(subject.isIndexController()).to.equal(true);
       controller.name = "Indexcontroller";
-      expect(subject.isIndexController()).to.be.true;
+      expect(subject.isIndexController()).to.equal(true);
       controller.name = "indexController";
-      expect(subject.isIndexController()).to.be.true;
+      expect(subject.isIndexController()).to.equal(true);
       controller.name = "indexcontroller";
-      expect(subject.isIndexController()).to.be.true;
+      expect(subject.isIndexController()).to.equal(true);
       controller.name = "Index";
-      expect(subject.isIndexController()).to.be.true;
+      expect(subject.isIndexController()).to.equal(true);
       controller.name = "index";
-      expect(subject.isIndexController()).to.be.true;
+      expect(subject.isIndexController()).to.equal(true);
 
       controller.name = "ControllerIndex";
-      expect(subject.isIndexController()).to.be.false;
+      expect(subject.isIndexController()).to.equal(false);
       controller.name = "IndexFoo";
-      expect(subject.isIndexController()).to.be.false;
+      expect(subject.isIndexController()).to.equal(false);
     });
   });
 
@@ -277,19 +277,19 @@ describe("RouteCreator", function() {
     });
 
     it("doesn't create a rootSegment", function() {
-      expect(subject.rootSegment).to.be.undefined;
+      expect(_.isUndefined(subject.rootSegment)).to.equal(true);
     });
 
     it("doesn't create a routeActions map", function() {
-      expect(subject.routeActions).to.be.undefined;
+      expect(_.isUndefined(subject.routeActions)).to.equal(true);
     });
 
     it("creates a root route with the index action", function() {
-      expect(router.route).to.have.been.calledWith("", controller.index);
+      expect(router.route.calledWith("", controller.index)).to.equal(true);
     });
 
     it("binds index to the controller", function() {
-      expect(_.bindAll).to.have.been.calledWith(controller, "index");
+      expect(_.bindAll.calledWith(controller, "index")).to.equal(true);
     });
 
     describe("createIndexRoutes", function() {
@@ -307,15 +307,15 @@ describe("RouteCreator", function() {
         controller.index = undefined;
         expect(function() {
           subject.createIndexRoutes();
-        }).to.throw(controller.name + ": index action is undefined");
+        }).to.throwError(controller.name + ": index action is undefined");
       });
 
       it("creates a root route with the index action", function() {
-        expect(router.route).to.have.been.calledWith("", controller.index);
+        expect(router.route.calledWith("", controller.index)).to.equal(true);
       });
 
       it("binds index to the controller", function() {
-        expect(_.bindAll).to.have.been.calledWith(controller, "index");
+        expect(_.bindAll.calledWith(controller, "index")).to.equal(true);
       });
     });
   });

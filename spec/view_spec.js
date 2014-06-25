@@ -39,9 +39,9 @@ describe("View", function() {
     });
 
     it("toggles the loading class on the $el", function() {
-      expect(subject.$el).to.have.class("loading");
+      expect(subject.$el.hasClass("loading")).to.equal(true);
       subject.toggleLoading();
-      expect(subject.$el).not.to.have.class("loading");
+      expect(subject.$el.hasClass("loading")).to.equal(false);
     });
 
     it("prepends a loading mask div to the view", function() {
@@ -49,8 +49,8 @@ describe("View", function() {
     });
 
     it("saves a reference to the loading mask", function() {
-      expect(subject.loadingMask).to.be.defined;
-      expect(subject.loadingMask).to.have.class("loading-mask");
+      expect(_.isUndefined(subject.loadingMask)).to.equal(false);
+      expect(subject.loadingMask.hasClass("loading-mask")).to.equal(true);
     });
 
     describe("with renderLoadingMask set to false", function() {
@@ -65,7 +65,7 @@ describe("View", function() {
 
       it("does not render a loading mask", function() {
         expect(subject.$(".loading-mask").length).to.equal(0);
-        expect(subject.loadingMask).to.be.undefined;
+        expect(_.isUndefined(subject.loadingMask)).to.equal(true);
       });
     });
   });

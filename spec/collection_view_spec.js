@@ -30,15 +30,15 @@ describe("CollectionView", function() {
   });
 
   it("has modelViews", function() {
-    expect(subject.modelViews).to.be.instanceof(Array);
+    expect(subject.modelViews).to.be.an(Array);
   });
 
   it("has a modelConstructor", function() {
-    expect(subject.modelConstructor).to.be.defined;
+    expect(_.isUndefined(subject.modelConstructor)).to.equal(false);
   });
 
   it("has a modelView", function() {
-    expect(subject.modelView).to.be.defined;
+    expect(_.isUndefined(subject.modelView)).to.equal(false);
   });
 
   it("is a unordered list by default", function() {
@@ -49,13 +49,13 @@ describe("CollectionView", function() {
     it("throws an error if there is no model constructor", function() {
       expect(function() {
         new Backbone.OnFire.CollectionView.extend({ modelView: TestModelView });
-      }).to.throw("CollectionView: modelConstructor is undefined.");
+      }).to.throwError("CollectionView: modelConstructor is undefined.");
     });
 
     it("throws an error if there is no model view", function() {
       expect(function() {
         new Backbone.OnFire.CollectionView.extend({ modelConstructor: TestModel });
-      }).to.throw("CollectionView: modelView is undefined.");
+      }).to.throwError("CollectionView: modelView is undefined.");
     });
 
     it("throws an error if there is no collection", function() {
@@ -63,7 +63,7 @@ describe("CollectionView", function() {
         subject = new TestView({
           el: "#view-root"
         });
-      }).to.throw("CollectionView: collection is undefined.");
+      }).to.throwError("CollectionView: collection is undefined.");
     });
   });
 
@@ -109,7 +109,7 @@ describe("CollectionView", function() {
       });
 
       it("does not render the item views", function() {
-        expect(subject.renderItemViews).not.to.have.been.called;
+        expect(subject.renderItemViews.called).to.equal(false);
       });
     });
 
@@ -139,16 +139,16 @@ describe("CollectionView", function() {
       });
 
       it("it does not create list item views", function() {
-        expect(subject.createItemViews).not.to.have.been.called;
+        expect(subject.createItemViews.called).to.equal(false);
       });
 
       it("it does not render list item views", function() {
-        expect(subject.renderItemViews).not.to.have.been.called;
+        expect(subject.renderItemViews.called).to.equal(false);
       });
 
       describe("when an emptyTemplate is defined", function() {
         it("renders the empty template", function() {
-          expect(subject.$el).to.have.text("empty");
+          expect(subject.$el.text()).to.match(/empty/);
         });
       });
     });
@@ -162,7 +162,7 @@ describe("CollectionView", function() {
 
     it("adds a view to the modelViews", function() {
       expect(subject.modelViews.length).to.equal(3);
-      expect(subject.modelViews.last()).to.be.an.instanceof(TestModelView);
+      expect(subject.modelViews.last()).to.be.a(TestModelView);
       expect(subject.modelViews.last().model).to.equal(subject.collection.first());
       expect(subject.modelViews.last().index).to.equal(0);
     });
@@ -184,7 +184,7 @@ describe("CollectionView", function() {
     });
 
     it("appends the rendered list item view to the element", function() {
-      expect(subject.$el.append).to.have.been.calledWith(subject.modelViews.first().render());
+      expect(subject.$el.append.calledWith(subject.modelViews.first().render())).to.equal(true);
     });
   });
 
@@ -215,7 +215,7 @@ describe("CollectionView", function() {
     });
 
     it("renders each list item view", function() {
-      expect(subject.renderItemView).to.have.callCount(2);
+      expect(subject.renderItemView.callCount).to.equal(2);
     });
   });
 
@@ -233,14 +233,14 @@ describe("CollectionView", function() {
     });
 
     it("appends the new item view $el", function() {
-      expect(subject.$el.append).to.have.been.called;
+      expect(subject.$el.append.called).to.equal(true);
     });
   });
 
   describe("removeItemViews", function() {
     it("removes all the item views", function() {
       subject.removeItemViews();
-      expect(subject.modelViews).to.be.like([]);
+      expect(subject.modelViews).to.eql([]);
     });
   });
 
@@ -257,11 +257,11 @@ describe("CollectionView", function() {
     });
 
     it("removes the item views", function() {
-      expect(subject.removeItemViews).to.have.been.called;
+      expect(subject.removeItemViews.called).to.equal(true);
     });
 
     it("removes itself", function() {
-      expect(Backbone.View.prototype.remove).to.have.been.called;
+      expect(Backbone.View.prototype.remove.called).to.equal(true);
     });
   });
 

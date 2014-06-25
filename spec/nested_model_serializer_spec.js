@@ -52,9 +52,9 @@ describe("NestedModelSerializer", function() {
   describe("toJSON", function() {
     it("serializes the relationships", function() {
       var json = subject.toJSON();
-      expect(json.first_child).to.be.like(subject.get("first_child").toJSON());
-      expect(json.second_child).to.be.like(subject.get("second_child").toJSON());
-      expect(json.child_collection).to.be.like(subject.get("child_collection").models.map(function(model) { return model.toJSON(); }));
+      expect(json.first_child).to.eql(subject.get("first_child").toJSON());
+      expect(json.second_child).to.eql(subject.get("second_child").toJSON());
+      expect(json.child_collection).to.eql(subject.get("child_collection").models.map(function(model) { return model.toJSON(); }));
     });
 
   });
@@ -66,17 +66,17 @@ describe("NestedModelSerializer", function() {
     });
 
     it("creates nested attributes", function() {
-      expect(data.first_child_attributes).to.be.like(firstChildAttributes);
-      expect(data.second_child_attributes).to.be.like(secondChildAttributes);
-      expect(data.child_collection_attributes).to.be.like(childCollectionAttributes);
+      expect(data.first_child_attributes).to.eql(firstChildAttributes);
+      expect(data.second_child_attributes).to.eql(secondChildAttributes);
+      expect(data.child_collection_attributes).to.eql(childCollectionAttributes);
 
-      expect(data.first_child).to.be.undefined;
-      expect(data.second_child).to.be.undefined;
-      expect(data.child_collection).to.be.undefined;
+      expect(_.isUndefined(data.first_child)).to.equal(true);
+      expect(_.isUndefined(data.second_child)).to.equal(true);
+      expect(_.isUndefined(data.child_collection)).to.equal(true);
 
-      expect(subject.get("first_child_attributes")).to.be.undefined;
-      expect(subject.get("second_child_attributes")).to.be.undefined;
-      expect(subject.get("child_collection_attributes")).to.be.undefined;
+      expect(_.isUndefined(subject.get("first_child_attributes"))).to.equal(true);
+      expect(_.isUndefined(subject.get("second_child_attributes"))).to.equal(true);
+      expect(_.isUndefined(subject.get("child_collection_attributes"))).to.equal(true);
     });
   });
 });

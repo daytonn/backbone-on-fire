@@ -105,7 +105,7 @@ Backbone.OnFire.NestedModelSerializer = (function() {
         var relationship = this.get(attr);
         delete json[attr];
         if (relationship.models) {
-          json[attr + &quot;_attributes&quot;] = relationship.models.map(function(model) {
+          json[attr + &quot;_attributes&quot;] = _(relationship.models).map(function(model) {
             return model.toJSON.call(model);
           });
         } else {
@@ -143,7 +143,7 @@ Backbone.OnFire.NestedModelSerializer = (function() {
     _(this.relationships).each(function(relationshipClass, relationship) {
       delete json[relationship];
       if (this.get(relationship).models) {
-        json[relationship] = this.get(relationship).models.map(function(model) {
+        json[relationship] = _(this.get(relationship).models).map(function(model) {
           return _.clone(model.attributes);
         });
       } else {

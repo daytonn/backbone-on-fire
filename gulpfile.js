@@ -28,6 +28,7 @@ gulp.task('spec', function() {
 
 gulp.task('compile-app', function() {
   return gulp.src([
+    'vendor/json2.js',
     'node_modules/underwear/dist/string.js',
     'node_modules/underwear/dist/array.js',
     'node_modules/underwear/dist/utilities.js',

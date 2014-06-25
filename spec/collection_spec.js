@@ -17,9 +17,9 @@ describe("Collection", function() {
 
   describe("isNotEmpty", function() {
     it("inverts the isEmpty logic for convenience", function() {
-      expect(subject.isNotEmpty()).to.be.true;
+      expect(subject.isNotEmpty()).to.equal(true);
       subject.reset();
-      expect(subject.isNotEmpty()).to.be.false;
+      expect(subject.isNotEmpty()).to.equal(false);
     });
   });
 
