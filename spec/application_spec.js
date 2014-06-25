@@ -62,10 +62,12 @@ describe("Application", function() {
 
   describe("createController", function() {
     var controller;
+    var extendsApplicationController;
     beforeEach(function() {
+      extendsApplicationController = false;
       subject.createController("ApplicationController", {
         initialize: function() {
-          this.extendsApplicationController = true;
+          extendsApplicationController = true;
         }
       });
       controller = subject.createController("TestController", {
@@ -94,7 +96,7 @@ describe("Application", function() {
     });
 
     it("extends the application controller", function() {
-      expect(controller.extendsApplicationController).to.equal(true);
+      expect(extendsApplicationController).to.equal(true);
     });
 
     it("doesn't pollute the ApplicationController", function() {

@@ -6,4 +6,5 @@ beforeEach(function() {
 
 afterEach(function() {
   $("#mocha-fixtures").empty();
+  subject = undefined;
 });

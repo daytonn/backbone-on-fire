@@ -7,7 +7,7 @@ describe("Controller", function() {
 
   it("requires a name", function() {
     expect(function() {
-      Backbone.OnFire.Controller.extend()
+      Backbone.OnFire.Controller.extend();
     }).to.throwError("Backbone.OnFire.Controller.extend(name, options): name is undefined");
   });
 
@@ -41,13 +41,14 @@ describe("Controller", function() {
 
   describe("initialize", function() {
     it("calls initialize when instantiated", function() {
-      var TestController = Backbone.OnFire.Controller.extend("test", {
+      var called = false;
+      var TestController = Backbone.OnFire.Controller.extend("Test", {
         initialize: function() {
-          this.initialized = true;
+          called = true;
         }
       });
       subject = new TestController;
-      expect(subject.initialized).to.equal(true);
+      expect(called).to.equal(true);
     });
   });
 
