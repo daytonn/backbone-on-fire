@@ -954,7 +954,28 @@
         },
         {
             "file": "lib/model.js",
-            "line": 150,
+            "line": 149,
+            "description": "`set` parses the data before setting properties.",
+            "itemtype": "method",
+            "name": "set",
+            "params": [
+                {
+                    "name": "key",
+                    "description": "String key of property of Object of key/value pairs",
+                    "type": "String,Object"
+                },
+                {
+                    "name": "value",
+                    "description": "value of the defined key\n#param [options]  Options object",
+                    "type": "Object",
+                    "optional": true
+                }
+            ],
+            "class": "Model"
+        },
+        {
+            "file": "lib/model.js",
+            "line": 165,
             "description": "Method to process json with all serializers.",
             "itemtype": "method",
             "name": "",

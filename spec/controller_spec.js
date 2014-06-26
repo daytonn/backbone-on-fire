@@ -85,8 +85,8 @@ describe("Controller", function() {
     beforeEach(function() {
       handler = sinon.spy();
       dispatcher = _.clone(Backbone.Events);
-      sinon.spy(dispatcher, "on");
-      sinon.spy(dispatcher, "off");
+      spyOn(dispatcher, "on");
+      spyOn(dispatcher, "off");
       var TestController = Backbone.OnFire.Controller.extend("test", {
         dispatcher: dispatcher
       });

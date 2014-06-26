@@ -8,7 +8,7 @@ module.exports = function(config) {
       'node_modules/jquery/dist/jquery.js',
       'node_modules/underscore/underscore.js',
       'node_modules/backbone/backbone.js',
-      'spec/support/mocha-fixture.js',
+      'spec/support/**/*.js',
       'dist/backbone-on-fire.js',
       'spec/**/*_spec.js'
     ],

@@ -99,13 +99,15 @@
       if (!this.collection) throw new Error(&quot;CollectionView: collection is undefined.&quot;);
       this.modelViews = [];
       this.tagName = &quot;ul&quot;;
+      // TODO sort and reset events
       this.listenTo(this.collection, &quot;add&quot;, this.addItemView);
+      this.listenTo(this.collection, &quot;remove destroy&quot;, this.removeItemView);
       this.createItemViews();
     },
 
     render: function() {
-      if (this.modelViews.length) return this.$el;
       if (this.collection.isNotEmpty()) {
+        if (this.template) this.$el.html(this.template());
         this.renderItemViews();
       } else if (this.emptyTemplate) {
         this.$el.html(this.emptyTemplate());
@@ -140,9 +142,17 @@
     removeItemViews: function() {
       this.modelViews.each(function(modelView) {
         modelView.remove();
-        modelView = undefined;
+        modelView = null;
       });
       this.modelViews = [];
+    },
+
+    removeItemView: function(model) {
+      var modelView = _(this.modelViews).findWhere({ model: model });
+      modelView.remove();
+      var index = _(this.modelViews).indexOf(modelView);
+      delete this.modelViews[index];
+      this.modelViews.splice(index, 1);
     },
 
     remove: function() {

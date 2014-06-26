@@ -35,14 +35,23 @@ describe("Model", function() {
     });
   });
 
-  describe("parse", function() {
+  describe("set", function() {
     beforeEach(function() {
-      sinon.spy(subject, "deserialize");
-      subject.parse({});
+      spyOn(subject, "parse");
     });
 
-    afterEach(function() {
-      subject.deserialize.restore();
+    it("parses the data", function() {
+      subject.set("foo", "bar");
+      expect(subject.parse.calledWith({ foo: "bar" })).to.equal(true);
+      subject.set({ baz: "qux" });
+      expect(subject.parse.calledWith({ baz: "qux" })).to.equal(true);
+    });
+  });
+
+  describe("parse", function() {
+    beforeEach(function() {
+      spyOn(subject, "deserialize");
+      subject.parse({});
     });
 
     it("deserializes the attributes", function() {

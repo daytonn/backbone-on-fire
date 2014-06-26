@@ -47,6 +47,14 @@ describe("NestedModelSerializer", function() {
       expect(subject.get("child_collection").first().get("name")).to.equal("child collection 6");
       expect(subject.get("child_collection").last().get("name")).to.equal("child collection 7");
     });
+
+    it("doesn't double wrap relationships", function() {
+      expect(_(subject.attributes.first_child.attributes).size()).to.equal(2);
+      expect(_(subject.attributes.second_child.attributes).size()).to.equal(2);
+      subject.deserialize(subject.attributes);
+      expect(_(subject.attributes.first_child.attributes).size()).to.equal(2);
+      expect(_(subject.attributes.second_child.attributes).size()).to.equal(2);
+    });
   });
 
   describe("toJSON", function() {

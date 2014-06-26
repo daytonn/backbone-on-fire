@@ -168,7 +168,7 @@ Backbone.OnFire.NestedModelSerializer = (function() {
   */
   function instantiateRelationship(attributes, key, Class) {
     var value = attributes[key];
-    if (attributes[key] &amp;&amp; !isTypeof(Class, value)) {
+    if (value &amp;&amp; !(value instanceof Class)) {
       attributes[key] = new Class(value);
     }
   }

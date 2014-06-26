@@ -226,6 +226,21 @@
     */
     isPersisted: function() {
       return !this.isNew();
+    },
+
+    /**
+      &#x60;set&#x60; parses the data before setting properties.
+
+      @method set
+      @param key {String,Object} String key of property of Object of key/value pairs
+      @param [value] value of the defined key
+      #param [options] {Object} Options object
+    */
+    set: function(key, val, options) {
+      var attrs = {};
+      _.isObject(key) ? attrs = key : attrs[key] = val;
+      this.parse(attrs);
+      return Backbone.Model.prototype.set.call(this, key, val, options);
     }
   });
 

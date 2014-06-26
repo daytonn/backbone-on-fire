@@ -10,9 +10,7 @@ var specFiles = [
   'node_modules/jquery/dist/jquery.js',
   'node_modules/underscore/underscore.js',
   'node_modules/backbone/backbone.js',
-  'node_modules/chai-fuzzy/index.js',
-  'spec/support/chai-literals.js',
-  'spec/support/mocha-fixture.js',
+  'spec/support/**/*.js',
   'dist/backbone-on-fire.js',
   'spec/**/*_spec.js'
 ];
