@@ -368,7 +368,7 @@
         },
         {
             "file": "lib/serializers/nested_model_serializer.js",
-            "line": 54,
+            "line": 64,
             "description": "Converts nested relationship attributes to json.",
             "itemtype": "method",
             "name": "toJSON",
@@ -380,31 +380,21 @@
         },
         {
             "file": "lib/serializers/nested_model_serializer.js",
-            "line": 76,
-            "description": "Instantiate a relationship of a given type with the given attributes.",
+            "line": 86,
+            "description": "Determine if a given class is a collection.",
             "itemtype": "method",
-            "name": "instatiateRelationship",
+            "name": "isCollection",
             "access": "private",
             "tagname": "",
             "params": [
                 {
-                    "name": "attributes",
-                    "description": "Parent model attributes containing child attributes.",
-                    "type": "Object"
-                },
-                {
-                    "name": "key",
-                    "description": "Child attributes key.",
-                    "type": "String"
-                },
-                {
                     "name": "Class",
-                    "description": "Constructor function to instantiate with child attributes.",
+                    "description": "Suspect class.",
                     "type": "Function"
                 }
             ],
             "example": [
-                "\n    modelInstance.instantiateRelationship({ user: { id: 1 }}, \"user\", App.Models.User);"
+                "\n    isCollection(SomeCollection); // true\n    isCollection(SomeModel); // false"
             ],
             "class": "NestedModelSerializer"
         },

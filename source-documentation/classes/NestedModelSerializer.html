@@ -167,7 +167,7 @@
                 </li>
             
                 <li class="index-item method private">
-                    <a href="#method_instatiateRelationship">instatiateRelationship</a>
+                    <a href="#method_isCollection">isCollection</a>
 
                     
                     
@@ -352,25 +352,13 @@ stated in the <code>relationships</code> object.</p>
 </div>
 
         
-            <a name="method_instatiateRelationship" class="anchor-link"></a>
+            <a name="method_isCollection" class="anchor-link"></a>
 <div class="method item private">
-    <h3 class="name"><code>instatiateRelationship</code>
+    <h3 class="name"><code>isCollection</code>
 
     
         <div class="args">
             <span class="paren">(</span><ul class="args-list inline commas">
-            
-                <li class="arg">
-                    
-                        <code>attributes</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>key</code>
-                    
-                </li>
             
                 <li class="arg">
                     
@@ -411,7 +399,7 @@ stated in the <code>relationships</code> object.</p>
             
         
         
-        <a href="../files/lib_serializers_nested_model_serializer.js.html#l76"><code>lib&#x2F;serializers&#x2F;nested_model_serializer.js:76</code></a>
+        <a href="../files/lib_serializers_nested_model_serializer.js.html#l86"><code>lib&#x2F;serializers&#x2F;nested_model_serializer.js:86</code></a>
         
         </p>
 
@@ -424,7 +412,7 @@ stated in the <code>relationships</code> object.</p>
     <div class="extended-detail">
 
         <div class="description">
-            <p>Instantiate a relationship of a given type with the given attributes.</p>
+            <p>Determine if a given class is a collection.</p>
 
         </div>
 
@@ -436,38 +424,6 @@ stated in the <code>relationships</code> object.</p>
                 
                     <li class="param">
                         
-                            <code class="param-name">attributes</code>
-                            <span class="type">Object</span>
-                        
-
-                        
-
-                        <div class="param-description">
-                            <p>Parent model attributes containing child attributes.</p>
-
-                        </div>
-
-                        
-                    </li>
-                
-                    <li class="param">
-                        
-                            <code class="param-name">key</code>
-                            <span class="type">String</span>
-                        
-
-                        
-
-                        <div class="param-description">
-                            <p>Child attributes key.</p>
-
-                        </div>
-
-                        
-                    </li>
-                
-                    <li class="param">
-                        
                             <code class="param-name">Class</code>
                             <span class="type">Function</span>
                         
@@ -475,7 +431,7 @@ stated in the <code>relationships</code> object.</p>
                         
 
                         <div class="param-description">
-                            <p>Constructor function to instantiate with child attributes.</p>
+                            <p>Suspect class.</p>
 
                         </div>
 
@@ -493,7 +449,8 @@ stated in the <code>relationships</code> object.</p>
                 <h4>Example:</h4>
 
                 <div class="example-content">
-                    <pre class="code prettyprint"><code>modelInstance.instantiateRelationship({ user: { id: 1 }}, &quot;user&quot;, App.Models.User);</code></pre>
+                    <pre class="code prettyprint"><code>isCollection(SomeCollection); // true
+isCollection(SomeModel); // false</code></pre>
 
                 </div>
             </div>
@@ -623,7 +580,7 @@ compatability with <a href="http://api.rubyonrails.org/classes/ActiveRecord/Nest
             
         
         
-        <a href="../files/lib_serializers_nested_model_serializer.js.html#l54"><code>lib&#x2F;serializers&#x2F;nested_model_serializer.js:54</code></a>
+        <a href="../files/lib_serializers_nested_model_serializer.js.html#l64"><code>lib&#x2F;serializers&#x2F;nested_model_serializer.js:64</code></a>
         
         </p>
 

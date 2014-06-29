@@ -257,6 +257,16 @@
       return serializer[method] ? serializer[method].call(context, memo) : memo;
     }, json);
   }
+
+  function hasRelationship(model, relationshipName) {
+    return !!(model.relationships &amp;&amp; model.relationships[relationshipName] &amp;&amp; model.get(relationshipName));
+  }
+
+  function isNotRelatedInstance(value, relatedClass) {
+    return !(value instanceof relatedClass);
+  }
+
+
 })();
 
     </pre>

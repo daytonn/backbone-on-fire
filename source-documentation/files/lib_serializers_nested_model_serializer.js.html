@@ -126,9 +126,19 @@ Backbone.OnFire.NestedModelSerializer = (function() {
   */
   NestedModelSerializer.prototype.deserialize = function(json) {
     if (this.relationships) {
-      _(this.relationships).each(function(Class, attr) {
-        instantiateRelationship(json, attr, Class);
-      });
+      _(json).each(function(value, key) {
+        var relatedClass = this.relationships[key];
+        if (relatedClass) {
+          if (!(value instanceof relatedClass)) {
+            if (isCollection(relatedClass) &amp;&amp; this.get(key) instanceof relatedClass) {
+              this.get(key).add(value);
+              delete json[key];
+            } else {
+              json[key] = new relatedClass(value);
+            }
+          }
+        }
+      }, this);
     }
     return json;
   };
@@ -156,21 +166,17 @@ Backbone.OnFire.NestedModelSerializer = (function() {
   return NestedModelSerializer;
 
   /**
-    Instantiate a relationship of a given type with the given attributes.
+    Determine if a given class is a collection.
 
-    @method instatiateRelationship
+    @method isCollection
     @private
-    @param attributes {Object} Parent model attributes containing child attributes.
-    @param key {String} Child attributes key.
-    @param Class {Function} Constructor function to instantiate with child attributes.
+    @param Class {Function} Suspect class.
     @example
-        modelInstance.instantiateRelationship({ user: { id: 1 }}, &quot;user&quot;, App.Models.User);
+        isCollection(SomeCollection); // true
+        isCollection(SomeModel); // false
   */
-  function instantiateRelationship(attributes, key, Class) {
-    var value = attributes[key];
-    if (value &amp;&amp; !(value instanceof Class)) {
-      attributes[key] = new Class(value);
-    }
+  function isCollection(Class) {
+    return !!Class.__super__.model;
   }
 })();
 
