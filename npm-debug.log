@@ -1,0 +1,86 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'node',
+1 verbose cli   '/usr/local/bin/npm',
+1 verbose cli   'install',
+1 verbose cli   '--save-dev',
+1 verbose cli   'jqueryui' ]
+2 info using npm@1.4.10
+3 info using node@v0.10.28
+4 verbose node symlink /usr/local/bin/node
+5 warn package.json backbone-on-fire@0.0.0 No repository field.
+6 verbose readDependencies using package.json deps
+7 verbose cache add [ 'jqueryui', null ]
+8 verbose cache add name=undefined spec="jqueryui" args=["jqueryui",null]
+9 verbose parsed url { protocol: null,
+9 verbose parsed url   slashes: null,
+9 verbose parsed url   auth: null,
+9 verbose parsed url   host: null,
+9 verbose parsed url   port: null,
+9 verbose parsed url   hostname: null,
+9 verbose parsed url   hash: null,
+9 verbose parsed url   search: null,
+9 verbose parsed url   query: null,
+9 verbose parsed url   pathname: 'jqueryui',
+9 verbose parsed url   path: 'jqueryui',
+9 verbose parsed url   href: 'jqueryui' }
+10 silly lockFile b5d01966-jqueryui jqueryui
+11 verbose lock jqueryui /Users/daytonn/.npm/b5d01966-jqueryui.lock
+12 silly lockFile b5d01966-jqueryui jqueryui
+13 silly lockFile b5d01966-jqueryui jqueryui
+14 verbose addNamed [ 'jqueryui', '' ]
+15 verbose addNamed [ null, '*' ]
+16 silly lockFile 7a8dc95f-jqueryui jqueryui@
+17 verbose lock jqueryui@ /Users/daytonn/.npm/7a8dc95f-jqueryui.lock
+18 silly addNameRange { name: 'jqueryui', range: '*', hasData: false }
+19 verbose url raw jqueryui
+20 verbose url resolving [ 'https://registry.npmjs.org/', './jqueryui' ]
+21 verbose url resolved https://registry.npmjs.org/jqueryui
+22 info trying registry request attempt 1 at 23:47:09
+23 http GET https://registry.npmjs.org/jqueryui
+24 http 404 https://registry.npmjs.org/jqueryui
+25 verbose headers { date: 'Fri, 11 Jul 2014 04:47:09 GMT',
+25 verbose headers   server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+25 verbose headers   'content-type': 'application/json',
+25 verbose headers   'cache-control': 'max-age=0',
+25 verbose headers   'content-length': '52',
+25 verbose headers   'accept-ranges': 'bytes',
+25 verbose headers   via: '1.1 varnish',
+25 verbose headers   age: '0',
+25 verbose headers   'x-served-by': 'cache-ord1728-ORD',
+25 verbose headers   'x-cache': 'MISS',
+25 verbose headers   'x-cache-hits': '0',
+25 verbose headers   'x-timer': 'S1405054029.703466,VS0,VE246',
+25 verbose headers   'keep-alive': 'timeout=10, max=50',
+25 verbose headers   connection: 'Keep-Alive' }
+26 silly registry.get cb [ 404,
+26 silly registry.get   { date: 'Fri, 11 Jul 2014 04:47:09 GMT',
+26 silly registry.get     server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+26 silly registry.get     'content-type': 'application/json',
+26 silly registry.get     'cache-control': 'max-age=0',
+26 silly registry.get     'content-length': '52',
+26 silly registry.get     'accept-ranges': 'bytes',
+26 silly registry.get     via: '1.1 varnish',
+26 silly registry.get     age: '0',
+26 silly registry.get     'x-served-by': 'cache-ord1728-ORD',
+26 silly registry.get     'x-cache': 'MISS',
+26 silly registry.get     'x-cache-hits': '0',
+26 silly registry.get     'x-timer': 'S1405054029.703466,VS0,VE246',
+26 silly registry.get     'keep-alive': 'timeout=10, max=50',
+26 silly registry.get     connection: 'Keep-Alive' } ]
+27 silly lockFile 7a8dc95f-jqueryui jqueryui@
+28 silly lockFile 7a8dc95f-jqueryui jqueryui@
+29 error 404 404 Not Found: jqueryui
+29 error 404
+29 error 404 'jqueryui' is not in the npm registry.
+29 error 404 You should bug the author to publish it
+29 error 404 It was specified as a dependency of 'backbone-on-fire'
+29 error 404
+29 error 404 Note that you can also install from a
+29 error 404 tarball, folder, or http url, or git url.
+30 error System Darwin 13.2.0
+31 error command "node" "/usr/local/bin/npm" "install" "--save-dev" "jqueryui"
+32 error cwd /Users/daytonn/Development/backbone-on-fire
+33 error node -v v0.10.28
+34 error npm -v 1.4.10
+35 error code E404
+36 verbose exit [ 1, true ]

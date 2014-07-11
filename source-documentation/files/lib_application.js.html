@@ -136,6 +136,15 @@
     Dispatcher: _.clone(Backbone.Events),
     Router: new Router,
 
+    /**
+      Serializers to use for models.
+
+      @property serializers
+      @type Array
+      @default Backbone.OnFire.ActiveModelSerializers.all
+    */
+    serializers: Backbone.OnFire.ActiveModelSerializers.all,
+
     initialize: function() { return void(0); },
     /**
       Create a Controller constructor and an
@@ -169,7 +178,7 @@
           });
     */
     createController: function(name, options) {
-      var baseName = name.replace(/(c|C)ontroller$/, &#x27;&#x27;).toLowerCase();
+      var baseName = name.replace(/(c|C)ontroller$/, &#x27;&#x27;);
       var controllerName = baseName.constantize() + &quot;Controller&quot;;
       options = options || {};
 
@@ -178,8 +187,8 @@
         router: this.Router
       }));
 
-      var Controller = this.Controllers[baseName.constantize()] = Backbone.OnFire.Controller.extend(baseName, options);
-      if (baseName !== &quot;application&quot;) {
+      var Controller = this.Controllers[baseName] = Backbone.OnFire.Controller.extend(baseName, options);
+      if (baseName !== &quot;Application&quot;) {
         var controllerInstance = new Controller;
         return this[controllerName] = controllerInstance;
       }
@@ -234,7 +243,7 @@
     createCollection: function(name, options, classProperties) {
       options = options || {};
       var baseName = name.replace(/(c|C)ollection$/, &#x27;&#x27;);
-      var lowerName = baseName.toLowerCase();
+      var lowerName = baseName.underscore().toLowerCase();
       _(options).defaults({
         url: &quot;/&quot; + lowerName,
         model: this.Models[baseName.constantize().singularize()] || Backbone.Model

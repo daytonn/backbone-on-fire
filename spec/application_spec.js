@@ -36,6 +36,10 @@ describe("Application", function() {
     expect(_.isUndefined(subject.Controllers.Application)).to.equal(false);
   });
 
+  it("has default serializers", function() {
+    expect(subject.serializers).to.equal(Backbone.OnFire.ActiveModelSerializers.all);
+  });
+
   describe("with options", function() {
     var customDispatcher;
     beforeEach(function() {
@@ -156,18 +160,18 @@ describe("Application", function() {
     var collectionInstance;
 
     beforeEach(function() {
-      Model = subject.createModel("Test");
-      Collection = subject.createCollection("Tests");
+      Model = subject.createModel("TestModel");
+      Collection = subject.createCollection("TestModels");
 
       collectionInstance = new Collection([{ id: 1 }]);
     });
 
     it("assigns the collection constructor to the Collections namespace", function() {
-      expect(subject.Collections.Tests).to.equal(Collection);
+      expect(subject.Collections.TestModels).to.equal(Collection);
     });
 
     it("sets the url", function() {
-      expect(collectionInstance.url).to.equal("/tests");
+      expect(collectionInstance.url).to.equal("/test_models");
     });
 
     it("sets the model", function() {

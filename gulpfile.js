@@ -18,7 +18,7 @@ var specFiles = [
 gulp.task('spec', function() {
   return gulp.src(specFiles)
     .pipe(karma({
-      configFile: 'karma.conf.js',
+      configFile: 'karma.cli.conf.js',
       action: 'run'
     }))
     .on('error', function(err) { throw err; });

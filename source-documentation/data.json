@@ -486,7 +486,17 @@
         },
         {
             "file": "lib/application.js",
-            "line": 58,
+            "line": 57,
+            "description": "Serializers to use for models.",
+            "itemtype": "property",
+            "name": "serializers",
+            "type": "Array",
+            "default": "Backbone.OnFire.ActiveModelSerializers.all",
+            "class": "Application"
+        },
+        {
+            "file": "lib/application.js",
+            "line": 67,
             "description": "Create a Controller constructor and an\ninstance attached to the application object.\nAll Controller methods will be bound to\nit's context when instantiated.",
             "itemtype": "method",
             "name": "createController",
@@ -515,7 +525,7 @@
         },
         {
             "file": "lib/application.js",
-            "line": 106,
+            "line": 115,
             "description": "Create a Model constructor.",
             "itemtype": "method",
             "name": "createModel",
@@ -544,7 +554,7 @@
         },
         {
             "file": "lib/application.js",
-            "line": 135,
+            "line": 144,
             "description": "Create a Collection constructor.",
             "itemtype": "method",
             "name": "createCollection",
@@ -573,7 +583,7 @@
         },
         {
             "file": "lib/application.js",
-            "line": 164,
+            "line": 173,
             "description": "Initialize the application and start the history.",
             "itemtype": "method",
             "name": "start",
@@ -590,7 +600,7 @@
         },
         {
             "file": "lib/application.js",
-            "line": 181,
+            "line": 190,
             "description": "Create a Backbone On Fire application.",
             "itemtype": "method",
             "name": "create",
